@@ -44,13 +44,16 @@ if ("IntersectionObserver" in window) {
 }
 
 // ---------- site content ----------
-fetch("data/site.json")
+fetch("data/site.json", { cache: "no-store" })
   .then(r => r.json())
   .then(site => {
     document.getElementById("hero-eyebrow").textContent = site.hero_eyebrow;
     document.getElementById("hero-image").src = site.hero_image;
     document.getElementById("hero-cta-label").textContent = site.hero_cta_label;
     document.getElementById("hero-cta").href = site.hero_cta_url;
+    if (site.hero_title_lift !== undefined) {
+      document.querySelector(".hero").style.setProperty("--hero-lift", `${site.hero_title_lift}px`);
+    }
 
     document.getElementById("music-description").textContent = site.music_description;
     document.getElementById("spotify-embed").src =
@@ -118,7 +121,7 @@ function setupVideoPlayer(videoId) {
 }
 
 // ---------- links (streaming + social) ----------
-fetch("data/links.json")
+fetch("data/links.json", { cache: "no-store" })
   .then(r => r.json())
   .then(links => {
     const streamRow = document.getElementById("streaming-row");
