@@ -18,6 +18,7 @@ collections:
           - { label: "Hero Cover Image", name: "hero_image", widget: "image" }
           - { label: "Hero Button Text", name: "hero_cta_label", widget: "string" }
           - { label: "Hero Button Link", name: "hero_cta_url", widget: "string" }
+          - { label: "Bandcamp Track ID", name: "bandcamp_track_id", widget: "string", hint: "Makes the Hero Button open a floating Bandcamp player with a Buy button instead of leaving the site. Find this number by opening the track on Bandcamp, right-click → View Page Source, and search for track_id." }
           - { label: "Hero Title — Vertical Position", name: "hero_title_lift", widget: "number", hint: "How far up to lift the MINT SUIT title from the bottom of the image, in pixels. Positive = higher up, negative = lower down (can go below the default position). Try changing by 20-30 at a time.", value_type: "int", min: -400, max: 400 }
           - { label: "Listen Button — Spacing from Title", name: "hero_cta_gap", widget: "number", hint: "Space between the title and the 'Listen to «Redamancy»' text, in pixels. Positive = further apart, negative = closer together or overlapping.", value_type: "int", min: -200, max: 200 }
           - { label: "Music Description", name: "music_description", widget: "text" }

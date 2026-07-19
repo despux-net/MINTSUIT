@@ -72,6 +72,7 @@ fetch("data/site.json", { cache: "no-store" })
 
     document.getElementById("connect-intro").textContent = site.connect_intro;
 
+    setupBandcampModal(site.bandcamp_track_id);
     setupVideoPlayer(site.youtube_id);
   })
   .catch(() => { /* leave defaults in place */ });
@@ -135,6 +136,41 @@ fetch("data/design.json", { cache: "no-store" })
     }
   })
   .catch(() => { /* leave defaults in place */ });
+
+// ---------- bandcamp buy modal ----------
+function setupBandcampModal(trackId) {
+  const heroCta = document.getElementById("hero-cta");
+  const modal = document.getElementById("bandcamp-modal");
+  const modalClose = document.getElementById("modal-close");
+  const modalFrame = document.getElementById("bandcamp-frame");
+  if (!trackId || !heroCta || !modal || !modalFrame) return;
+
+  function openModal() {
+    modalFrame.src = `https://bandcamp.com/EmbeddedPlayer/track=${trackId}/size=large/bgcol=f4f1ea/linkcol=17161a/tracklist=false/artwork=small/transparent=true/`;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    modalFrame.src = "";
+  }
+
+  heroCta.addEventListener("click", e => {
+    e.preventDefault();
+    openModal();
+  });
+  if (modalClose) modalClose.addEventListener("click", closeModal);
+  modal.addEventListener("click", e => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+  });
+}
 
 // ---------- video (autoplay muted, custom sound toggle) ----------
 function setupVideoPlayer(videoId) {
