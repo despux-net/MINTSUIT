@@ -51,8 +51,12 @@ fetch("data/site.json", { cache: "no-store" })
     document.getElementById("hero-image").src = site.hero_image;
     document.getElementById("hero-cta-label").textContent = site.hero_cta_label;
     document.getElementById("hero-cta").href = site.hero_cta_url;
+    const heroEl = document.querySelector(".hero");
     if (site.hero_title_lift !== undefined) {
-      document.querySelector(".hero").style.setProperty("--hero-lift", `${site.hero_title_lift}px`);
+      heroEl.style.setProperty("--hero-lift", `${site.hero_title_lift}px`);
+    }
+    if (site.hero_cta_gap !== undefined) {
+      heroEl.style.setProperty("--hero-cta-gap", `${site.hero_cta_gap}px`);
     }
 
     document.getElementById("music-description").textContent = site.music_description;
