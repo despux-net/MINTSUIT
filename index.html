@@ -4,17 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MINT SUIT</title>
-<meta name="description" content="MINT SUIT — official site. Music, shows, and releases.">
+<meta name="description" content="MINT SUIT — night-driven sound, vaporwave and nostalgia. Listen to «Redamancy» and watch the official video.">
 
 <!-- Open Graph -->
 <meta property="og:title" content="MINT SUIT">
-<meta property="og:description" content="Official site of MINT SUIT.">
+<meta property="og:description" content="Night-driven sound, vaporwave and nostalgia. Listen to «Redamancy».">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://mintsuit.com/assets/cover.jpg">
 <meta property="og:url" content="https://mintsuit.com">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,500;1,9..144,340&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500;1,6..96,600&family=EB+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -25,19 +26,27 @@
   <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
   <ul id="nav-links">
     <li><a href="#music">Music</a></li>
+    <li><a href="#video">Video</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#shows">Shows</a></li>
     <li><a href="#connect">Connect</a></li>
   </ul>
 </nav>
 
 <header class="hero" id="top">
-  <div class="orb" aria-hidden="true"></div>
   <div class="pinstripe" aria-hidden="true"></div>
-  <div class="hero-inner">
-    <p class="eyebrow"><span class="seam"></span> Est. 2026</p>
-    <h1 class="display">Mint<br><em>Suit</em></h1>
-    <p class="tagline">Tailored sound. New releases, live dates, and everything MINT SUIT — straight from the source.</p>
+  <div class="hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow"><span class="seam"></span> Single · 2026</p>
+      <h1 class="display chrome">MINT<br>SUIT</h1>
+      <p class="tagline">Night-driven sound for cities that never sleep — vaporwave, chillwave, and a nostalgia dipped in silver.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="https://desco.bandcamp.com/track/redamancy" target="_blank" rel="noopener">Listen to «Redamancy»</a>
+        <a class="btn btn-line" href="#video">Watch the video</a>
+      </div>
+    </div>
+    <div class="hero-cover reveal">
+      <img src="assets/cover.jpg" alt="MINT SUIT — Redamancy cover art" width="1400" height="1400">
+    </div>
   </div>
   <div class="scroll-cue"><span class="line"></span> Scroll</div>
 </header>
@@ -45,16 +54,24 @@
 <section id="about">
   <div class="section-head reveal">
     <span class="eyebrow">01 — About</span>
-    <h2 class="display">The story so far</h2>
+    <h2 class="display">The aesthetic</h2>
   </div>
   <div class="about">
     <div class="about-visual reveal">
-      <div class="pinstripe"></div>
-      <span class="frame-label">Portrait — placeholder</span>
+      <img src="assets/cover-thumb.jpg" alt="" loading="lazy">
     </div>
     <div class="reveal">
-      <p><strong>MINT SUIT</strong> is a project built on restraint — clean lines, a cool palette, and songs cut down to exactly what they need.</p>
-      <p>Replace this paragraph with your own bio: where you're from, how the project started, and what the sound is about. Two or three short paragraphs is plenty — let the music do the rest.</p>
+      <p><strong>MINT SUIT</strong> builds soundscapes for the edge between memory and dream: warm synths, a future-funk groove, and a layer of lo-fi dust over everything — like a Polaroid of a city you never visited.</p>
+      <p>It's a suit stitched from neon light and skyscraper windows — R&amp;B, ambient, and synthwave sewn with the same thread: nostalgia, elegance, and a quiet melancholy calm.</p>
+      <div class="tag-list">
+        <span class="tag">R&amp;B / Soul</span>
+        <span class="tag">Vaporwave</span>
+        <span class="tag">Synthwave</span>
+        <span class="tag">Chillwave</span>
+        <span class="tag">Future Funk</span>
+        <span class="tag">Lo-fi</span>
+        <span class="tag">Nostalgia</span>
+      </div>
     </div>
   </div>
 </section>
@@ -62,26 +79,72 @@
 <section id="music">
   <div class="section-head reveal">
     <span class="eyebrow">02 — Music</span>
-    <h2 class="display">Latest releases</h2>
+    <h2 class="display">Now streaming</h2>
   </div>
-  <div id="track-list"></div>
+  <div class="spotify-embed reveal">
+    <iframe
+      src="https://open.spotify.com/embed/album/0QaoLaq8Jgbh6rFlF59GcL?utm_source=generator&theme=0"
+      width="100%"
+      height="352"
+      frameborder="0"
+      allowfullscreen
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      title="MINT SUIT on Spotify">
+    </iframe>
+  </div>
   <div class="streaming-row reveal" id="streaming-row"></div>
 </section>
 
-<section id="shows">
+<section id="video">
   <div class="section-head reveal">
-    <span class="eyebrow">03 — Shows</span>
-    <h2 class="display">On stage</h2>
+    <span class="eyebrow">03 — Video</span>
+    <h2 class="display">Redamancy — the video</h2>
   </div>
-  <div id="show-list"></div>
+  <div class="video-frame reveal" id="video-frame">
+    <iframe
+      id="yt-player"
+      data-video-id="aUUY3vvlHOk"
+      title="MINT SUIT — Redamancy (Official video)"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+    <div class="video-veil" aria-hidden="true"></div>
+    <div class="video-overlay">
+      <span class="video-label">MINT SUIT &mdash; Redamancy</span>
+      <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">
+        <span class="dot"></span> Unmute
+      </button>
+    </div>
+  </div>
 </section>
 
 <section id="connect">
   <div class="connect">
     <div class="reveal">
       <span class="eyebrow"><span class="seam"></span> 04 — Connect</span>
-      <h2 class="display" style="margin-top:22px;">Let's keep in touch.</h2>
-      <p class="email-line">For bookings and press, reach out at <a id="email-link" href="#">contact@mintsuit.com</a></p>
+      <h2 class="display" style="margin-top:22px;">Let's keep<br>in touch.</h2>
+      <p class="tagline-small">For bookings and press, send a message below.</p>
+      <form class="contact-form" id="contact-form">
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="5" required></textarea>
+        </div>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="access_key" value="b669ac9a-8f4b-4e5b-b6e1-fc3af5c6febd">
+        <input type="hidden" name="subject" value="New message from mintsuit.com">
+        <button type="submit" class="btn btn-solid">Send</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
     <div class="connect-links reveal" id="connect-links"></div>
   </div>
@@ -89,7 +152,7 @@
 
 <footer>
   <span>&copy; <span id="year"></span> MINT SUIT</span>
-  <span>Site by despux-net</span>
+  <span>Site by DESCO</span>
 </footer>
 
 <script src="script.js"></script>

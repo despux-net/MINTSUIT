@@ -35,63 +35,52 @@ if ("IntersectionObserver" in window) {
   revealEls.forEach(el => el.classList.add("is-visible"));
 }
 
-const playIcon = `<svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>`;
+// ---------- video (autoplay muted, custom sound toggle) ----------
+const ytFrame = document.getElementById("yt-player");
+if (ytFrame) {
+  const videoId = ytFrame.dataset.videoId;
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    loop: "1",
+    playlist: videoId,
+    controls: "0",
+    modestbranding: "1",
+    rel: "0",
+    playsinline: "1",
+    iv_load_policy: "3",
+    disablekb: "1",
+    enablejsapi: "1",
+    origin: location.origin
+  });
+  ytFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
 
-// ---------- tracks ----------
-fetch("data/tracks.json")
-  .then(r => r.json())
-  .then(tracks => {
-    const wrap = document.getElementById("track-list");
-    if (!tracks.length) {
-      wrap.innerHTML = `<div class="empty-state reveal"><p class="display">Nothing released yet</p><p>New tracks will show up here the moment they're out.</p></div>`;
-      return;
-    }
-    wrap.innerHTML = tracks.map(t => `
-      <a class="track reveal" href="${t.link}" target="_blank" rel="noopener">
-        <span class="idx display">${t.index}</span>
-        <img src="${t.cover}" alt="" loading="lazy">
-        <span class="title">${t.title}</span>
-        <span class="release">${t.release}</span>
-        <span class="play">${playIcon}</span>
-      </a>
-    `).join("");
-    wrap.querySelectorAll(".reveal").forEach(el => {
-      if ("IntersectionObserver" in window) {
-        const io2 = new IntersectionObserver(entries => {
-          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-visible"); io2.unobserve(e.target); } });
-        }, { threshold: 0.1 });
-        io2.observe(el);
+  const soundToggle = document.getElementById("sound-toggle");
+  let muted = true;
+
+  function ytCommand(func, args = []) {
+    ytFrame.contentWindow.postMessage(
+      JSON.stringify({ event: "command", func, args }),
+      "https://www.youtube-nocookie.com"
+    );
+  }
+
+  if (soundToggle) {
+    soundToggle.addEventListener("click", () => {
+      muted = !muted;
+      if (muted) {
+        ytCommand("mute");
+        soundToggle.innerHTML = `<span class="dot"></span> Unmute`;
+        soundToggle.setAttribute("aria-pressed", "false");
       } else {
-        el.classList.add("is-visible");
+        ytCommand("unMute");
+        ytCommand("setVolume", [100]);
+        soundToggle.innerHTML = `<span class="dot"></span> Mute`;
+        soundToggle.setAttribute("aria-pressed", "true");
       }
     });
-  })
-  .catch(() => {
-    document.getElementById("track-list").innerHTML =
-      `<div class="empty-state"><p class="display">Couldn't load tracks</p><p>Check that data/tracks.json is present.</p></div>`;
-  });
-
-// ---------- shows ----------
-fetch("data/shows.json")
-  .then(r => r.json())
-  .then(shows => {
-    const wrap = document.getElementById("show-list");
-    if (!shows.length) {
-      wrap.innerHTML = `<div class="empty-state reveal"><p class="display">No shows on the calendar yet</p><p>Check back soon — dates will land here first.</p></div>`;
-      return;
-    }
-    wrap.innerHTML = shows.map(s => `
-      <div class="show-row reveal">
-        <span class="date">${s.date}</span>
-        <span class="venue">${s.venue}<br><span class="city">${s.city}</span></span>
-        <a class="pill" href="${s.link}" target="_blank" rel="noopener">Tickets</a>
-      </div>
-    `).join("");
-  })
-  .catch(() => {
-    document.getElementById("show-list").innerHTML =
-      `<div class="empty-state"><p class="display">Couldn't load shows</p><p>Check that data/shows.json is present.</p></div>`;
-  });
+  }
+}
 
 // ---------- links (streaming + social) ----------
 fetch("data/links.json")
@@ -106,9 +95,41 @@ fetch("data/links.json")
     connectLinks.innerHTML = links.social.map(l =>
       `<a href="${l.url}" target="_blank" rel="noopener">${l.label} <span>&rarr;</span></a>`
     ).join("");
-
-    const emailLink = document.getElementById("email-link");
-    emailLink.textContent = links.email;
-    emailLink.href = `mailto:${links.email}`;
   })
   .catch(() => { /* leave defaults in place */ });
+
+// ---------- contact form ----------
+const contactForm = document.getElementById("contact-form");
+if (contactForm) {
+  const status = document.getElementById("form-status");
+  const submitBtn = contactForm.querySelector("button[type=submit]");
+
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    status.textContent = "Sending…";
+    status.className = "form-status";
+    submitBtn.disabled = true;
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(contactForm)
+      });
+      const result = await res.json();
+      if (result.success) {
+        status.textContent = "Thanks — your message is on its way.";
+        status.className = "form-status success";
+        contactForm.reset();
+      } else {
+        status.textContent = "Something went wrong. Please try again.";
+        status.className = "form-status error";
+      }
+    } catch (err) {
+      status.textContent = "Something went wrong. Please try again.";
+      status.className = "form-status error";
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}

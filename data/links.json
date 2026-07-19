@@ -1,14 +1,11 @@
 {
   "streaming": [
-    { "label": "Spotify", "url": "#" },
     { "label": "Apple Music", "url": "#" },
     { "label": "YouTube Music", "url": "#" },
-    { "label": "Bandcamp", "url": "#" }
+    { "label": "Bandcamp", "url": "https://desco.bandcamp.com/track/redamancy" }
   ],
   "social": [
-    { "label": "Instagram", "url": "#" },
-    { "label": "TikTok", "url": "#" },
-    { "label": "YouTube", "url": "#" }
-  ],
-  "email": "contact@mintsuit.com"
+    { "label": "Instagram", "url": "https://instagram.com/mint.suit" },
+    { "label": "YouTube", "url": "https://www.youtube.com/watch?v=aUUY3vvlHOk" }
+  ]
 }
