@@ -19,6 +19,14 @@ if (toggle) {
   );
 }
 
+// ---------- sticky nav ----------
+const siteNav = document.getElementById("site-nav");
+if (siteNav) {
+  const onNavScroll = () => siteNav.classList.toggle("scrolled", window.scrollY > 60);
+  onNavScroll();
+  window.addEventListener("scroll", onNavScroll, { passive: true });
+}
+
 // ---------- scroll reveal ----------
 const revealEls = document.querySelectorAll(".reveal");
 if ("IntersectionObserver" in window) {
@@ -70,12 +78,12 @@ if (ytFrame) {
       muted = !muted;
       if (muted) {
         ytCommand("mute");
-        soundToggle.innerHTML = `<span class="dot"></span> Unmute`;
+        soundToggle.textContent = "Unmute";
         soundToggle.setAttribute("aria-pressed", "false");
       } else {
         ytCommand("unMute");
         ytCommand("setVolume", [100]);
-        soundToggle.innerHTML = `<span class="dot"></span> Mute`;
+        soundToggle.textContent = "Mute";
         soundToggle.setAttribute("aria-pressed", "true");
       }
     });
@@ -88,12 +96,12 @@ fetch("data/links.json")
   .then(links => {
     const streamRow = document.getElementById("streaming-row");
     streamRow.innerHTML = links.streaming.map(l =>
-      `<a class="pill" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
+      `<a class="text-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
     ).join("");
 
     const connectLinks = document.getElementById("connect-links");
     connectLinks.innerHTML = links.social.map(l =>
-      `<a href="${l.url}" target="_blank" rel="noopener">${l.label} <span>&rarr;</span></a>`
+      `<a class="text-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
     ).join("");
   })
   .catch(() => { /* leave defaults in place */ });
