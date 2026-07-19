@@ -1,0 +1,14 @@
+{
+  "heading_font": "Bodoni Moda",
+  "body_font": "Jost",
+  "heading_scale": 100,
+  "body_scale": 100,
+  "bg_color": "#f4f1ea",
+  "text_color": "#17161a",
+  "hero_bg_color": "#17161a",
+  "about_bg_color": "#f4f1ea",
+  "music_bg_color": "#f4f1ea",
+  "connect_bg_color": "#f4f1ea",
+  "video_veil_color": "#000000",
+  "hero_image_focus_y": 32
+}

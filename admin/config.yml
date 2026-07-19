@@ -48,3 +48,20 @@ collections:
             fields:
               - { label: "Label", name: "label", widget: "string" }
               - { label: "URL", name: "url", widget: "string" }
+
+      - file: "data/design.json"
+        label: "Design & Appearance"
+        name: "design"
+        fields:
+          - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Bodoni Moda", "Playfair Display", "Cormorant Garamond", "DM Serif Display"], hint: "Used for MINT SUIT and all section titles." }
+          - { label: "Body Font", name: "body_font", widget: "select", options: ["Jost", "Inter", "Work Sans", "Space Grotesk"], hint: "Used for paragraphs, nav, buttons, and labels." }
+          - { label: "Heading Size", name: "heading_scale", widget: "number", value_type: "int", min: 60, max: 160, hint: "Percent. 100 = normal, 120 = 20% bigger, 80 = 20% smaller." }
+          - { label: "Body Text Size", name: "body_scale", widget: "number", value_type: "int", min: 60, max: 160, hint: "Percent. 100 = normal, 120 = 20% bigger, 80 = 20% smaller." }
+          - { label: "Page Background Color", name: "bg_color", widget: "color", hint: "Main background behind all text sections." }
+          - { label: "Text Color", name: "text_color", widget: "color", hint: "Main color for titles and paragraphs." }
+          - { label: "Hero Image Frame Color", name: "hero_bg_color", widget: "color", hint: "Shows briefly behind the hero photo while it loads." }
+          - { label: "About Section Background", name: "about_bg_color", widget: "color" }
+          - { label: "Music Section Background", name: "music_bg_color", widget: "color" }
+          - { label: "Connect Section Background", name: "connect_bg_color", widget: "color" }
+          - { label: "Video Tint Color", name: "video_veil_color", widget: "color", hint: "Tint over the video that keeps the text readable." }
+          - { label: "Hero Photo Vertical Focus", name: "hero_image_focus_y", widget: "number", value_type: "int", min: 0, max: 100, hint: "Which part of the hero photo stays centered. 0 = top of photo, 100 = bottom of photo." }

@@ -76,6 +76,66 @@ fetch("data/site.json", { cache: "no-store" })
   })
   .catch(() => { /* leave defaults in place */ });
 
+// ---------- design (fonts, sizes, colors) ----------
+const FONT_STACKS = {
+  "Bodoni Moda": `"Bodoni Moda", serif`,
+  "Playfair Display": `"Playfair Display", serif`,
+  "Cormorant Garamond": `"Cormorant Garamond", serif`,
+  "DM Serif Display": `"DM Serif Display", serif`,
+  "Jost": `"Jost", sans-serif`,
+  "Inter": `"Inter", sans-serif`,
+  "Work Sans": `"Work Sans", sans-serif`,
+  "Space Grotesk": `"Space Grotesk", sans-serif`
+};
+
+function hexToRgbTriplet(hex) {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || "");
+  if (!m) return null;
+  return [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)].join(",");
+}
+
+fetch("data/design.json", { cache: "no-store" })
+  .then(r => r.json())
+  .then(design => {
+    const root = document.documentElement.style;
+
+    if (design.heading_font && FONT_STACKS[design.heading_font]) {
+      root.setProperty("--font-heading", FONT_STACKS[design.heading_font]);
+    }
+    if (design.body_font && FONT_STACKS[design.body_font]) {
+      root.setProperty("--font-body", FONT_STACKS[design.body_font]);
+    }
+    if (design.heading_scale) root.setProperty("--heading-scale", design.heading_scale / 100);
+    if (design.body_scale) root.setProperty("--body-scale", design.body_scale / 100);
+
+    const bgRgb = hexToRgbTriplet(design.bg_color);
+    if (design.bg_color) root.setProperty("--bg", design.bg_color);
+    if (bgRgb) root.setProperty("--bg-rgb", bgRgb);
+
+    const textRgb = hexToRgbTriplet(design.text_color);
+    if (design.text_color) {
+      root.setProperty("--text", design.text_color);
+      if (textRgb) {
+        root.setProperty("--text-dim", `rgba(${textRgb},0.6)`);
+        root.setProperty("--hair", `rgba(${textRgb},0.16)`);
+        root.setProperty("--hair-soft", `rgba(${textRgb},0.08)`);
+      }
+    }
+
+    if (design.hero_bg_color) root.setProperty("--hero-bg", design.hero_bg_color);
+    if (design.about_bg_color) root.setProperty("--about-bg", design.about_bg_color);
+    if (design.music_bg_color) root.setProperty("--music-bg", design.music_bg_color);
+    if (design.connect_bg_color) root.setProperty("--connect-bg", design.connect_bg_color);
+
+    const veilRgb = hexToRgbTriplet(design.video_veil_color);
+    if (veilRgb) root.setProperty("--veil-rgb", veilRgb);
+
+    if (design.hero_image_focus_y !== undefined) {
+      root.setProperty("--hero-focus-y", design.hero_image_focus_y);
+    }
+  })
+  .catch(() => { /* leave defaults in place */ });
+
 // ---------- video (autoplay muted, custom sound toggle) ----------
 function setupVideoPlayer(videoId) {
   const ytFrame = document.getElementById("yt-player");

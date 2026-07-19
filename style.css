@@ -6,6 +6,22 @@
   --hair:rgba(23,22,26,0.16);
   --hair-soft:rgba(23,22,26,0.08);
   --ease:cubic-bezier(.16,.8,.24,1);
+
+  /* design-panel-controlled (defaults match the values above) */
+  --bg:var(--ivory);
+  --bg-rgb:244,241,234;
+  --text:var(--ink);
+  --text-dim:var(--ink-dim);
+  --font-heading:"Bodoni Moda", serif;
+  --font-body:"Jost", sans-serif;
+  --heading-scale:1;
+  --body-scale:1;
+  --hero-bg:var(--ink);
+  --about-bg:var(--bg);
+  --music-bg:var(--bg);
+  --connect-bg:var(--bg);
+  --veil-rgb:0,0,0;
+  --hero-focus-y:32;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -18,9 +34,9 @@ html{scroll-behavior:smooth;}
 }
 
 body{
-  background:var(--ivory);
-  color:var(--ink);
-  font-family:"Jost", sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
   font-weight:300;
   font-size:16px;
   line-height:1.6;
@@ -31,16 +47,16 @@ a{color:inherit;text-decoration:none;}
 button{font:inherit;background:none;border:0;color:inherit;}
 
 .wordmark{
-  font-family:"Bodoni Moda", serif;
+  font-family:var(--font-heading);
   font-weight:600;
   letter-spacing:-0.01em;
   line-height:1.04;
 }
 
 .eyebrow{
-  font-family:"Jost", sans-serif;
+  font-family:var(--font-body);
   font-weight:400;
-  font-size:0.72rem;
+  font-size:calc(0.72rem * var(--body-scale));
   letter-spacing:0.24em;
   text-transform:uppercase;
   margin-bottom:14px;
@@ -51,11 +67,11 @@ button{font:inherit;background:none;border:0;color:inherit;}
   display:inline-flex;
   align-items:center;
   gap:8px;
-  font-family:"Jost", sans-serif;
+  font-family:var(--font-body);
   font-weight:400;
   text-transform:uppercase;
   letter-spacing:0.1em;
-  font-size:0.8rem;
+  font-size:calc(0.8rem * var(--body-scale));
   position:relative;
   padding-bottom:5px;
   cursor:pointer;
@@ -87,15 +103,15 @@ button{font:inherit;background:none;border:0;color:inherit;}
   border-bottom:1px solid transparent;
 }
 .nav.scrolled{
-  background:rgba(244,241,234,0.92);
+  background:rgba(var(--bg-rgb, 244,241,234),0.92);
   backdrop-filter:blur(10px);
-  color:var(--ink);
+  color:var(--text);
   padding:18px 6vw;
   border-bottom:1px solid var(--hair);
 }
 
 .nav .mark{
-  font-family:"Bodoni Moda", serif;
+  font-family:var(--font-heading);
   font-weight:600;
   font-size:1.15rem;
   letter-spacing:0.04em;
@@ -111,7 +127,7 @@ button{font:inherit;background:none;border:0;color:inherit;}
 }
 
 .nav a{
-  font-family:"Jost", sans-serif;
+  font-family:var(--font-body);
   font-size:0.76rem;
   letter-spacing:0.14em;
   text-transform:uppercase;
@@ -144,7 +160,7 @@ button{font:inherit;background:none;border:0;color:inherit;}
   position:relative;
   width:100%;
   overflow:hidden;
-  background:var(--ink);
+  background:var(--hero-bg);
 }
 .panel-media img{
   width:100%; height:100%;
@@ -165,7 +181,7 @@ button{font:inherit;background:none;border:0;color:inherit;}
   inset:0;
 }
 .hero .panel-media img{
-  object-position:center 32%;
+  object-position:center calc(var(--hero-focus-y, 32) * 1%);
 }
 .hero::after{
   content:"";
@@ -186,7 +202,7 @@ button{font:inherit;background:none;border:0;color:inherit;}
 }
 .panel-caption > *{pointer-events:auto;}
 .hero .panel-caption{color:var(--paper); flex-direction:column; align-items:flex-start; gap:18px; padding-bottom:calc(56px + var(--hero-lift, 95px));}
-.hero .wordmark{font-size:clamp(2.4rem, 6vw, 4.6rem);}
+.hero .wordmark{font-size:calc(clamp(2.4rem, 6vw, 4.6rem) * var(--heading-scale));}
 .hero .text-link{margin-top:var(--hero-cta-gap, 4px);}
 
 /* ---------- panel-split (media + text) ---------- */
@@ -195,6 +211,9 @@ button{font:inherit;background:none;border:0;color:inherit;}
   grid-template-columns:1fr 1fr;
   min-height:78vh;
 }
+#about{background:var(--about-bg);}
+#music{background:var(--music-bg);}
+#connect{background:var(--connect-bg);}
 .panel-split .panel-media{
   aspect-ratio:auto;
   min-height:420px;
@@ -210,24 +229,24 @@ button{font:inherit;background:none;border:0;color:inherit;}
   padding:8vw 7vw;
 }
 .panel-text .wordmark{
-  font-size:clamp(1.9rem, 3.4vw, 2.8rem);
+  font-size:calc(clamp(1.9rem, 3.4vw, 2.8rem) * var(--heading-scale));
   margin-bottom:22px;
 }
 .body-copy{
-  font-size:1.02rem;
-  color:var(--ink-dim);
+  font-size:calc(1.02rem * var(--body-scale));
+  color:var(--text-dim);
   max-width:52ch;
   line-height:1.75;
 }
 .body-copy + .body-copy{margin-top:16px;}
-.body-copy strong{color:var(--ink); font-weight:500;}
+.body-copy strong{color:var(--text); font-weight:500;}
 
 .tag-row{
   margin-top:28px;
-  font-size:0.82rem;
+  font-size:calc(0.82rem * var(--body-scale));
   letter-spacing:0.05em;
   text-transform:uppercase;
-  color:var(--ink-dim);
+  color:var(--text-dim);
 }
 
 .spotify-embed{width:100%; height:100%; display:flex; align-items:center; background:var(--paper);}
@@ -265,15 +284,15 @@ button{font:inherit;background:none;border:0;color:inherit;}
 .video-veil{
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.6) 100%);
+  background:linear-gradient(180deg, rgba(var(--veil-rgb),0.1) 0%, rgba(var(--veil-rgb),0) 30%, rgba(var(--veil-rgb),0) 65%, rgba(var(--veil-rgb),0.6) 100%);
   pointer-events:none;
 }
 .video-panel .panel-caption{color:var(--paper); align-items:flex-end;}
 .caption-text .eyebrow{opacity:0.85;}
-.video-panel .wordmark{font-size:clamp(1.6rem, 3vw, 2.4rem);}
+.video-panel .wordmark{font-size:calc(clamp(1.6rem, 3vw, 2.4rem) * var(--heading-scale));}
 .sound-toggle{
-  font-family:"Jost", sans-serif;
-  font-size:0.78rem;
+  font-family:var(--font-body);
+  font-size:calc(0.78rem * var(--body-scale));
   letter-spacing:0.14em;
   text-transform:uppercase;
   position:relative;
@@ -301,33 +320,33 @@ button{font:inherit;background:none;border:0;color:inherit;}
 }
 .field{display:flex; flex-direction:column; gap:6px;}
 .field label{
-  font-size:0.72rem;
+  font-size:calc(0.72rem * var(--body-scale));
   letter-spacing:0.14em;
   text-transform:uppercase;
-  color:var(--ink-dim);
+  color:var(--text-dim);
 }
 .field input, .field textarea{
   background:transparent;
   border:0;
   border-bottom:1px solid var(--hair);
-  color:var(--ink);
-  font-family:"Jost", sans-serif;
+  color:var(--text);
+  font-family:var(--font-body);
   font-weight:300;
-  font-size:0.98rem;
+  font-size:calc(0.98rem * var(--body-scale));
   padding:8px 2px;
   resize:vertical;
   transition:border-color .3s var(--ease);
 }
-.field input:focus, .field textarea:focus{outline:none; border-color:var(--ink);}
+.field input:focus, .field textarea:focus{outline:none; border-color:var(--text);}
 .hp{position:absolute; opacity:0; height:0; width:0; pointer-events:none;}
 .submit-link{margin-top:6px; align-self:flex-start;}
 .form-status{
   font-size:0.8rem;
   letter-spacing:0.03em;
-  color:var(--ink-dim);
+  color:var(--text-dim);
   min-height:1.2em;
 }
-.form-status.success{color:var(--ink);}
+.form-status.success{color:var(--text);}
 .form-status.error{color:#a3453a;}
 
 /* ---------- reveal-on-scroll ---------- */
@@ -351,7 +370,7 @@ footer{
   font-size:0.72rem;
   letter-spacing:0.08em;
   text-transform:uppercase;
-  color:var(--ink-dim);
+  color:var(--text-dim);
 }
 
 /* ---------- responsive ---------- */
@@ -369,8 +388,8 @@ footer{
     top:0; right:0;
     height:100vh;
     width:min(78vw, 320px);
-    background:var(--ivory);
-    color:var(--ink);
+    background:var(--bg);
+    color:var(--text);
     flex-direction:column;
     justify-content:center;
     align-items:flex-start;
@@ -380,10 +399,10 @@ footer{
     transition:transform .45s var(--ease);
   }
   .nav ul.open{transform:translateX(0);}
-  .nav ul a{color:var(--ink); opacity:0.75;}
+  .nav ul a{color:var(--text); opacity:0.75;}
   .panel-caption{padding:36px 6vw;}
   .hero .panel-caption{padding-bottom:calc(36px + var(--hero-lift, 95px));}
-  .hero .wordmark{font-size:2.6rem;}
+  .hero .wordmark{font-size:calc(2.6rem * var(--heading-scale));}
   .panel-text{padding:60px 6vw;}
   footer{flex-direction:column; gap:8px; text-align:center;}
 }
