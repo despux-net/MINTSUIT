@@ -8,6 +8,7 @@
   "video_title": "Redamancy",
   "about_p2": "It's a suit stitched from neon light and skyscraper windows — R&B, ambient, and synthwave sewn with the same thread: nostalgia, elegance, and a quiet melancholy calm.",
   "hero_image": "/assets/uploads/rrtt.png",
+  "hero_title_lift": 111,
   "connect_intro": "For bookings and press, send a message.",
   "youtube_id": "aUUY3vvlHOk",
   "tags": [
@@ -19,6 +20,5 @@
     "Lo-fi",
     "Nostalgia"
   ],
-  "hero_cta_url": "https://desco.bandcamp.com/track/redamancy",
-  "hero_title_lift": 95
+  "hero_cta_url": "https://desco.bandcamp.com/track/redamancy"
 }
