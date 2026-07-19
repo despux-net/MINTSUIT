@@ -31,9 +31,9 @@ body{
 }
 
 .display{
-  font-family:"Bodoni Moda", serif;
+  font-family:"Playfair Display", serif;
   font-style:italic;
-  font-weight:500;
+  font-weight:600;
   letter-spacing:-0.01em;
 }
 
@@ -93,7 +93,7 @@ a{color:inherit;text-decoration:none;}
 }
 
 .nav .mark{
-  font-family:"Bodoni Moda", serif;
+  font-family:"Playfair Display", serif;
   font-style:italic;
   font-weight:600;
   font-size:1.15rem;
@@ -147,8 +147,9 @@ a{color:inherit;text-decoration:none;}
 .hero .eyebrow{margin-bottom:22px; display:flex; align-items:center; gap:14px;}
 
 .hero h1{
-  font-size:clamp(3.2rem, 8.4vw, 6.6rem);
-  line-height:0.96;
+  font-size:clamp(2.6rem, 6.4vw, 5.2rem);
+  line-height:1.02;
+  white-space:nowrap;
 }
 
 .hero p.tagline{
@@ -251,11 +252,13 @@ section{
 .reveal{
   opacity:0;
   transform:translateY(24px);
-  transition:opacity .8s var(--ease), transform .8s var(--ease);
+  filter:blur(14px);
+  transition:opacity 1.1s var(--ease), transform 1.1s var(--ease), filter 1.1s var(--ease);
 }
 .reveal.is-visible{
   opacity:1;
   transform:translateY(0);
+  filter:blur(0);
 }
 
 /* ---------- about ---------- */
@@ -369,7 +372,7 @@ section{
   pointer-events:none;
 }
 .video-label{
-  font-family:"Bodoni Moda", serif;
+  font-family:"Playfair Display", serif;
   font-style:italic;
   font-size:1.05rem;
   letter-spacing:0.03em;
@@ -407,6 +410,7 @@ section{
   display:grid;
   grid-template-columns:1.1fr 0.9fr;
   gap:8vw;
+  align-items:start;
 }
 .connect h2{
   font-size:clamp(2.2rem, 6vw, 4rem);
@@ -420,7 +424,7 @@ section{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  font-family:"Bodoni Moda", serif;
+  font-family:"Playfair Display", serif;
   font-style:italic;
   font-size:1.2rem;
   color:var(--silver);
@@ -431,19 +435,19 @@ section{
 .connect-links a span{font-family:"EB Garamond", serif; font-size:0.8rem; letter-spacing:0.04em; color:var(--silver-dim);}
 
 .tagline-small{
-  margin-top:24px;
+  margin-top:16px;
   font-size:1rem;
   color:var(--silver-dim);
 }
 
 .contact-form{
-  margin-top:32px;
+  margin-top:20px;
   display:flex;
   flex-direction:column;
-  gap:22px;
+  gap:14px;
   max-width:440px;
 }
-.field{display:flex; flex-direction:column; gap:8px;}
+.field{display:flex; flex-direction:column; gap:5px;}
 .field label{
   font-family:"EB Garamond", serif;
   font-style:italic;
@@ -458,7 +462,7 @@ section{
   font-family:"EB Garamond", serif;
   font-style:italic;
   font-size:1rem;
-  padding:12px 14px;
+  padding:9px 12px;
   resize:vertical;
   transition:border-color .3s var(--ease);
 }
