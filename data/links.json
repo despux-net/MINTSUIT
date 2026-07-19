@@ -1,0 +1,14 @@
+{
+  "streaming": [
+    { "label": "Spotify", "url": "#" },
+    { "label": "Apple Music", "url": "#" },
+    { "label": "YouTube Music", "url": "#" },
+    { "label": "Bandcamp", "url": "#" }
+  ],
+  "social": [
+    { "label": "Instagram", "url": "#" },
+    { "label": "TikTok", "url": "#" },
+    { "label": "YouTube", "url": "#" }
+  ],
+  "email": "contact@mintsuit.com"
+}

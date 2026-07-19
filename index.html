@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINT SUIT</title>
+<meta name="description" content="MINT SUIT — official site. Music, shows, and releases.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="MINT SUIT">
+<meta property="og:description" content="Official site of MINT SUIT.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mintsuit.com">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,500;1,9..144,340&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#top" class="mark">MINT SUIT</a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+  <ul id="nav-links">
+    <li><a href="#music">Music</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="orb" aria-hidden="true"></div>
+  <div class="pinstripe" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <p class="eyebrow"><span class="seam"></span> Est. 2026</p>
+    <h1 class="display">Mint<br><em>Suit</em></h1>
+    <p class="tagline">Tailored sound. New releases, live dates, and everything MINT SUIT — straight from the source.</p>
+  </div>
+  <div class="scroll-cue"><span class="line"></span> Scroll</div>
+</header>
+
+<section id="about">
+  <div class="section-head reveal">
+    <span class="eyebrow">01 — About</span>
+    <h2 class="display">The story so far</h2>
+  </div>
+  <div class="about">
+    <div class="about-visual reveal">
+      <div class="pinstripe"></div>
+      <span class="frame-label">Portrait — placeholder</span>
+    </div>
+    <div class="reveal">
+      <p><strong>MINT SUIT</strong> is a project built on restraint — clean lines, a cool palette, and songs cut down to exactly what they need.</p>
+      <p>Replace this paragraph with your own bio: where you're from, how the project started, and what the sound is about. Two or three short paragraphs is plenty — let the music do the rest.</p>
+    </div>
+  </div>
+</section>
+
+<section id="music">
+  <div class="section-head reveal">
+    <span class="eyebrow">02 — Music</span>
+    <h2 class="display">Latest releases</h2>
+  </div>
+  <div id="track-list"></div>
+  <div class="streaming-row reveal" id="streaming-row"></div>
+</section>
+
+<section id="shows">
+  <div class="section-head reveal">
+    <span class="eyebrow">03 — Shows</span>
+    <h2 class="display">On stage</h2>
+  </div>
+  <div id="show-list"></div>
+</section>
+
+<section id="connect">
+  <div class="connect">
+    <div class="reveal">
+      <span class="eyebrow"><span class="seam"></span> 04 — Connect</span>
+      <h2 class="display" style="margin-top:22px;">Let's keep in touch.</h2>
+      <p class="email-line">For bookings and press, reach out at <a id="email-link" href="#">contact@mintsuit.com</a></p>
+    </div>
+    <div class="connect-links reveal" id="connect-links"></div>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; <span id="year"></span> MINT SUIT</span>
+  <span>Site by despux-net</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

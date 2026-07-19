@@ -1,0 +1,26 @@
+[
+  {
+    "index": "01",
+    "title": "Replace with your track title",
+    "release": "2026",
+    "duration": "3:24",
+    "cover": "assets/cover-placeholder.svg",
+    "link": "#"
+  },
+  {
+    "index": "02",
+    "title": "Replace with your track title",
+    "release": "2026",
+    "duration": "2:57",
+    "cover": "assets/cover-placeholder.svg",
+    "link": "#"
+  },
+  {
+    "index": "03",
+    "title": "Replace with your track title",
+    "release": "2025",
+    "duration": "4:02",
+    "cover": "assets/cover-placeholder.svg",
+    "link": "#"
+  }
+]
