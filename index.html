@@ -36,12 +36,12 @@
 
 <header class="panel hero" id="top">
   <div class="panel-media">
-    <img src="assets/cover.jpg" alt="MINT SUIT — Redamancy cover art" width="1400" height="1400">
+    <img id="hero-image" src="assets/cover.jpg" alt="MINT SUIT — Redamancy cover art" width="1400" height="1400">
   </div>
   <div class="panel-caption">
-    <p class="eyebrow">Single — 2026</p>
+    <p class="eyebrow" id="hero-eyebrow">Single — 2026</p>
     <h1 class="wordmark">MINT SUIT</h1>
-    <a class="text-link" href="https://desco.bandcamp.com/track/redamancy" target="_blank" rel="noopener">Listen to «Redamancy» <span class="arrow">&rarr;</span></a>
+    <a class="text-link" id="hero-cta" href="https://desco.bandcamp.com/track/redamancy" target="_blank" rel="noopener"><span id="hero-cta-label">Listen to «Redamancy»</span> <span class="arrow">&rarr;</span></a>
   </div>
 </header>
 
@@ -49,7 +49,7 @@
   <div class="panel-media reveal">
     <div class="spotify-embed">
       <iframe
-        src="https://open.spotify.com/embed/album/0QaoLaq8Jgbh6rFlF59GcL?utm_source=generator&theme=0"
+        id="spotify-embed"
         width="100%"
         height="352"
         frameborder="0"
@@ -63,7 +63,7 @@
   <div class="panel-text reveal">
     <p class="eyebrow">Music</p>
     <h2 class="wordmark">Now streaming</h2>
-    <p class="body-copy">The debut single, out now — a night drive through neon and static.</p>
+    <p class="body-copy" id="music-description">The debut single, out now — a night drive through neon and static.</p>
     <div class="link-list" id="streaming-row"></div>
   </div>
 </section>
@@ -72,7 +72,6 @@
   <div class="panel-media reveal">
     <iframe
       id="yt-player"
-      data-video-id="aUUY3vvlHOk"
       title="MINT SUIT — Redamancy (Official video)"
       loading="lazy"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -83,7 +82,7 @@
   <div class="panel-caption reveal">
     <div class="caption-text">
       <p class="eyebrow">Video</p>
-      <h2 class="wordmark">Redamancy</h2>
+      <h2 class="wordmark" id="video-title">Redamancy</h2>
     </div>
     <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">Unmute</button>
   </div>
@@ -91,14 +90,14 @@
 
 <section class="panel panel-split reverse" id="about">
   <div class="panel-media reveal">
-    <img src="assets/cover-thumb.jpg" alt="" loading="lazy">
+    <img id="about-image" src="assets/cover-thumb.jpg" alt="" loading="lazy">
   </div>
   <div class="panel-text reveal">
     <p class="eyebrow">About</p>
     <h2 class="wordmark">The aesthetic</h2>
-    <p class="body-copy"><strong>MINT SUIT</strong> builds soundscapes for the edge between memory and dream: warm synths, a future-funk groove, and a layer of lo-fi dust over everything — like a Polaroid of a city you never visited.</p>
-    <p class="body-copy">It's a suit stitched from neon light and skyscraper windows — R&amp;B, ambient, and synthwave sewn with the same thread: nostalgia, elegance, and a quiet melancholy calm.</p>
-    <p class="tag-row">R&amp;B / Soul &nbsp;·&nbsp; Vaporwave &nbsp;·&nbsp; Synthwave &nbsp;·&nbsp; Chillwave &nbsp;·&nbsp; Future Funk &nbsp;·&nbsp; Lo-fi &nbsp;·&nbsp; Nostalgia</p>
+    <p class="body-copy" id="about-p1">MINT SUIT builds soundscapes for the edge between memory and dream: warm synths, a future-funk groove, and a layer of lo-fi dust over everything — like a Polaroid of a city you never visited.</p>
+    <p class="body-copy" id="about-p2">It's a suit stitched from neon light and skyscraper windows — R&amp;B, ambient, and synthwave sewn with the same thread: nostalgia, elegance, and a quiet melancholy calm.</p>
+    <p class="tag-row" id="about-tags">R&amp;B / Soul &nbsp;·&nbsp; Vaporwave &nbsp;·&nbsp; Synthwave &nbsp;·&nbsp; Chillwave &nbsp;·&nbsp; Future Funk &nbsp;·&nbsp; Lo-fi &nbsp;·&nbsp; Nostalgia</p>
   </div>
 </section>
 
@@ -106,7 +105,7 @@
   <div class="panel-text reveal">
     <p class="eyebrow">Connect</p>
     <h2 class="wordmark">Let's keep in touch</h2>
-    <p class="body-copy">For bookings and press, send a message.</p>
+    <p class="body-copy" id="connect-intro">For bookings and press, send a message.</p>
     <form class="contact-form" id="contact-form">
       <div class="field">
         <label for="cf-name">Name</label>

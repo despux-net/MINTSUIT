@@ -1,0 +1,48 @@
+backend:
+  name: github
+  repo: despux-net/MINTSUIT
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - file: "data/site.json"
+        label: "Homepage Content"
+        name: "homepage"
+        fields:
+          - { label: "Hero Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero Cover Image", name: "hero_image", widget: "image" }
+          - { label: "Hero Button Text", name: "hero_cta_label", widget: "string" }
+          - { label: "Hero Button Link", name: "hero_cta_url", widget: "string" }
+          - { label: "Music Description", name: "music_description", widget: "text" }
+          - { label: "Spotify Album ID", name: "spotify_album_id", widget: "string", hint: "The id in your Spotify album URL: open.spotify.com/album/THIS-PART" }
+          - { label: "Video Title", name: "video_title", widget: "string" }
+          - { label: "YouTube Video ID", name: "youtube_id", widget: "string", hint: "The id in the YouTube URL: youtube.com/watch?v=THIS-PART" }
+          - { label: "About Image", name: "about_image", widget: "image" }
+          - { label: "About Paragraph 1", name: "about_p1", widget: "text" }
+          - { label: "About Paragraph 2", name: "about_p2", widget: "text" }
+          - label: "Genre Tags"
+            name: "tags"
+            widget: "list"
+          - { label: "Connect Intro", name: "connect_intro", widget: "string" }
+
+      - file: "data/links.json"
+        label: "Streaming & Social Links"
+        name: "links"
+        fields:
+          - label: "Streaming Links"
+            name: "streaming"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+          - label: "Social Links"
+            name: "social"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }

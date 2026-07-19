@@ -1,6 +1,6 @@
 # MINT SUIT — sitio web
 
-Sitio de una sola página, minimalista y elegante, para promocionar la música de MINT SUIT.
+Sitio de una sola página, estilo editorial de lujo (inspirado en casas de moda como Chanel), para promocionar la música de MINT SUIT.
 
 ## Estructura
 
@@ -8,80 +8,44 @@ Sitio de una sola página, minimalista y elegante, para promocionar la música d
 index.html          → estructura de la página
 style.css            → todos los estilos (paleta, tipografía, animaciones)
 script.js            → carga el contenido dinámico desde /data
-data/tracks.json      → lista de canciones (título, año, link de streaming)
-data/shows.json       → fechas de shows (vacío por ahora → muestra "sin shows aún")
-data/links.json       → links de streaming, redes sociales y email de contacto
-assets/               → imágenes (por ahora solo un placeholder de portada)
-CNAME                 → necesario para que GitHub Pages reconozca mintsuit.com
+data/site.json       → todo el texto e imágenes de la página (hero, about, música, video)
+data/links.json      → links de streaming y redes sociales
+assets/              → imágenes del sitio
+admin/               → panel de administración (Decap CMS) — ver abajo
+CNAME                → necesario para que GitHub Pages reconozca mintsuit.com
 ```
 
-## 1. Copiar a tu computadora
+## Editar el contenido — panel de administración
 
-Copia toda esta carpeta a:
-`C:\Users\DESPUJOS\Music\album\MINT SUIT`
+El sitio tiene un panel visual en **mintsuit.com/admin** para cambiar textos, imágenes y links sin tocar código.
 
-## 2. Contenido que falta reemplazar
+**Configuración inicial (una sola vez):**
 
-- `data/tracks.json` — reemplaza los títulos, años y el campo `"link"` con la URL real de cada canción en Spotify/Apple Music/etc. También puedes reemplazar `"cover"` con tus propias imágenes (súbelas a `assets/`).
-- `data/links.json` — reemplaza los `"url": "#"` con tus links reales de streaming y redes, y el email de contacto.
-- `data/shows.json` — cuando tengas fechas, agrega objetos así: `{"date":"2026-09-12","venue":"Nombre del venue","city":"Ciudad","link":"https://..."}`
-- `index.html` — el párrafo de bio en la sección "About" (busca `<strong>MINT SUIT</strong> is a project...`) está en inglés como placeholder; reemplázalo con tu biografía real, en el idioma que prefieras.
-- `assets/cover-placeholder.svg` — reemplázalo con tus portadas reales cuando las tengas.
+1. Crea una cuenta gratis en [netlify.com](https://netlify.com).
+2. "Add new site" → "Import an existing project" → conecta tu cuenta de GitHub → selecciona el repo `despux-net/MINTSUIT`.
+3. Acepta los valores por defecto y dale a "Deploy" (no hace falta configurar nada más — no vamos a usar el hosting de Netlify, solo su sistema de login; el sitio real sigue viviendo en GitHub Pages / mintsuit.com).
+4. Listo. Entra a `mintsuit.com/admin`, haz login con tu cuenta de GitHub, y edita.
 
-## 3. Subir a GitHub
+Cada cambio que guardes en el panel crea un commit directo en el repo de GitHub, y GitHub Pages vuelve a publicar el sitio solo (tarda 1-2 minutos).
 
-Desde la carpeta del proyecto (con Git instalado):
+Los visitantes del sitio no ven ni pueden acceder a este panel — solo funciona si iniciás sesión con una cuenta de GitHub que tenga acceso al repo.
 
-```bash
-cd "C:\Users\DESPUJOS\Music\album\MINT SUIT"
-git init
-git remote add origin https://github.com/despux-net/MINTSUIT.git
-git add .
-git commit -m "Sitio inicial MINT SUIT"
-git branch -M main
-git push -u origin main
-```
+## Configurar el DNS en Namecheap
 
-Si el repositorio ya tiene contenido (README inicial, licencia, etc.), primero haz `git pull origin main --allow-unrelated-histories` antes del push, o clona el repo vacío y copia los archivos dentro en vez de hacer `git init`.
+Registros ya configurados para apuntar `mintsuit.com` a GitHub Pages:
 
-## 4. Activar GitHub Pages
-
-1. En GitHub, entra al repo `despux-net/MINTSUIT`.
-2. Ve a **Settings → Pages**.
-3. En "Build and deployment", elige **Deploy from a branch**.
-4. Selecciona la rama `main` y la carpeta `/ (root)`.
-5. Guarda. GitHub te dará una URL tipo `https://despux-net.github.io/MINTSUIT/`.
-6. En la misma pantalla de Pages, en "Custom domain", escribe `mintsuit.com` y guarda (esto ya está preparado por el archivo `CNAME` que subiste, pero confirmarlo en la interfaz activa el certificado HTTPS).
-
-## 5. Configurar el DNS en Namecheap
-
-Como compraste el dominio en Namecheap y aún no configuraste el DNS (según la captura), sigue esto:
-
-1. Entra a Namecheap → **Domain List** → click en **Manage** junto a `mintsuit.com`.
-2. Ve a la pestaña **Advanced DNS**.
-3. Agrega estos registros (bórralos si ya existe algún "Parking Page" por defecto):
-
-**Para el dominio raíz `mintsuit.com` (4 registros A, apuntando a GitHub Pages):**
-
-| Type | Host | Value | TTL |
-|---|---|---|---|
-| A Record | @ | 185.199.108.153 | Automatic |
-| A Record | @ | 185.199.109.153 | Automatic |
-| A Record | @ | 185.199.110.153 | Automatic |
-| A Record | @ | 185.199.111.153 | Automatic |
-
-**Para `www.mintsuit.com` (opcional pero recomendado):**
-
-| Type | Host | Value | TTL |
-|---|---|---|---|
-| CNAME Record | www | despux-net.github.io. | Automatic |
-
-4. Guarda los cambios. La propagación del DNS puede tardar entre 15 minutos y 24 horas.
-5. Vuelve a GitHub → Settings → Pages y verifica que aparezca "DNS check successful" y que puedas activar **Enforce HTTPS**.
+| Type | Host | Value |
+|---|---|---|
+| A Record | @ | 185.199.108.153 |
+| A Record | @ | 185.199.109.153 |
+| A Record | @ | 185.199.110.153 |
+| A Record | @ | 185.199.111.153 |
+| CNAME Record | www | despux-net.github.io. |
 
 ## Notas de diseño
 
-- Paleta: negro verdoso profundo de fondo, acento menta apagado (no neón) y un dorado tipo "brass" como acento secundario elegante.
-- Tipografía: `Fraunces` (serif con carácter, para títulos) + `Space Grotesk` (sans moderna, para texto y detalles).
-- El motivo de líneas diagonales (pinstripe) hace referencia al nombre "Suit" — como la tela de un traje — y se repite como textura de fondo y en los separadores.
+- Estilo editorial de lujo/minimalismo: paneles full-bleed apilados, mucho whitespace, imágenes grandes.
+- Paleta casi monocromática: marfil/blanco roto de fondo, negro carbón para texto — el color lo aportan solo las imágenes.
+- Tipografía: `Bodoni Moda` (serif recto, de carácter, para títulos) + `Jost` (sans fina en mayúsculas, para nav/labels/CTAs).
+- Microinteracciones sutiles: subrayado progresivo en hover, zoom leve en imágenes, fade suave al aparecer en scroll.
 - Todo respeta `prefers-reduced-motion` y es responsive desde mobile.

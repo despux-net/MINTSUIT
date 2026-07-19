@@ -43,10 +43,37 @@ if ("IntersectionObserver" in window) {
   revealEls.forEach(el => el.classList.add("is-visible"));
 }
 
+// ---------- site content ----------
+fetch("data/site.json")
+  .then(r => r.json())
+  .then(site => {
+    document.getElementById("hero-eyebrow").textContent = site.hero_eyebrow;
+    document.getElementById("hero-image").src = site.hero_image;
+    document.getElementById("hero-cta-label").textContent = site.hero_cta_label;
+    document.getElementById("hero-cta").href = site.hero_cta_url;
+
+    document.getElementById("music-description").textContent = site.music_description;
+    document.getElementById("spotify-embed").src =
+      `https://open.spotify.com/embed/album/${site.spotify_album_id}?utm_source=generator&theme=0`;
+
+    document.getElementById("video-title").textContent = site.video_title;
+
+    document.getElementById("about-image").src = site.about_image;
+    document.getElementById("about-p1").textContent = site.about_p1;
+    document.getElementById("about-p2").textContent = site.about_p2;
+    document.getElementById("about-tags").textContent = site.tags.join("  ·  ");
+
+    document.getElementById("connect-intro").textContent = site.connect_intro;
+
+    setupVideoPlayer(site.youtube_id);
+  })
+  .catch(() => { /* leave defaults in place */ });
+
 // ---------- video (autoplay muted, custom sound toggle) ----------
-const ytFrame = document.getElementById("yt-player");
-if (ytFrame) {
-  const videoId = ytFrame.dataset.videoId;
+function setupVideoPlayer(videoId) {
+  const ytFrame = document.getElementById("yt-player");
+  if (!ytFrame || !videoId) return;
+
   const params = new URLSearchParams({
     autoplay: "1",
     mute: "1",
