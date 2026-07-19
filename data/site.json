@@ -1,5 +1,6 @@
 {
   "hero_cta_label": "Listen to «Redamancy»",
+  "hero_cta_gap": 0,
   "music_description": "The debut single, out now — a night drive through neon and static.",
   "hero_eyebrow": "Single — 2026",
   "about_image": "/assets/uploads/portada-mint-suit.png",
@@ -20,6 +21,5 @@
     "Lo-fi",
     "Nostalgia"
   ],
-  "hero_cta_url": "https://desco.bandcamp.com/track/redamancy",
-  "hero_cta_gap": 4
+  "hero_cta_url": "https://desco.bandcamp.com/track/redamancy"
 }
