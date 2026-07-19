@@ -17,16 +17,15 @@ CNAME                → necesario para que GitHub Pages reconozca mintsuit.com
 
 ## Editar el contenido — panel de administración
 
-El sitio tiene un panel visual en **mintsuit.com/admin** para cambiar textos, imágenes y links sin tocar código.
+El sitio tiene un panel visual para cambiar textos, imágenes y links sin tocar código, en:
 
-**Configuración inicial (una sola vez):**
+**https://mintsuit.netlify.app/admin**
 
-1. Crea una cuenta gratis en [netlify.com](https://netlify.com).
-2. "Add new site" → "Import an existing project" → conecta tu cuenta de GitHub → selecciona el repo `despux-net/MINTSUIT`.
-3. Acepta los valores por defecto y dale a "Deploy" (no hace falta configurar nada más — no vamos a usar el hosting de Netlify, solo su sistema de login; el sitio real sigue viviendo en GitHub Pages / mintsuit.com).
-4. Listo. Entra a `mintsuit.com/admin`, haz login con tu cuenta de GitHub, y edita.
+(No uses `mintsuit.com/admin` para esto — el login de GitHub solo funciona desde el dominio `.netlify.app`, porque el sitio real vive en GitHub Pages y Netlify solo se usa como sistema de login del panel, no como hosting.)
 
-Cada cambio que guardes en el panel crea un commit directo en el repo de GitHub, y GitHub Pages vuelve a publicar el sitio solo (tarda 1-2 minutos).
+Entra a esa URL, haz clic en "Login with GitHub", inicia sesión con la cuenta que tiene acceso al repo `despux-net/MINTSUIT`, y edita.
+
+Cada cambio que guardes en el panel crea un commit directo en el repo de GitHub, y GitHub Pages vuelve a publicar el sitio (mintsuit.com) solo, en 1-2 minutos.
 
 Los visitantes del sitio no ven ni pueden acceder a este panel — solo funciona si iniciás sesión con una cuenta de GitHub que tenga acceso al repo.
 
