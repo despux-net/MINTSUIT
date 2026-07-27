@@ -22,7 +22,14 @@ collections:
           - { label: "Hero Title — Vertical Position", name: "hero_title_lift", widget: "number", hint: "How far up to lift the MINT SUIT title from the bottom of the image, in pixels. Positive = higher up, negative = lower down (can go below the default position). Try changing by 20-30 at a time.", value_type: "int", min: -400, max: 400 }
           - { label: "Listen Button — Spacing from Title", name: "hero_cta_gap", widget: "number", hint: "Space between the title and the 'Listen to «Redamancy»' text, in pixels. Positive = further apart, negative = closer together or overlapping.", value_type: "int", min: -200, max: 200 }
           - { label: "Music Description", name: "music_description", widget: "text" }
-          - { label: "Spotify Album ID", name: "spotify_album_id", widget: "string", hint: "The id in your Spotify album URL: open.spotify.com/album/THIS-PART" }
+          - label: "Spotify Playlist (releases in the player)"
+            name: "spotify_releases"
+            widget: "list"
+            hint: "Each release becomes a button above the Spotify player. The first one plays when the page loads."
+            fields:
+              - { label: "Release Title", name: "title", widget: "string" }
+              - { label: "Spotify Album ID", name: "spotify_id", widget: "string", hint: "The id in the Spotify URL: open.spotify.com/album/THIS-PART" }
+          - { label: "Spotify Album ID (fallback)", name: "spotify_album_id", widget: "string", required: false, hint: "Only used if the list above is empty." }
           - { label: "Video Title", name: "video_title", widget: "string" }
           - { label: "YouTube Video ID", name: "youtube_id", widget: "string", hint: "The id in the YouTube URL: youtube.com/watch?v=THIS-PART" }
           - { label: "About Image", name: "about_image", widget: "image" }
@@ -31,7 +38,29 @@ collections:
           - label: "Genre Tags"
             name: "tags"
             widget: "list"
+          - { label: "Biography Title", name: "bio_title", widget: "string" }
+          - { label: "Biography Intro", name: "bio_intro", widget: "text" }
+          - label: "Biography Points"
+            name: "bio_points"
+            widget: "list"
+            hint: "Each point shows as a label on the left and its description on the right."
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Description", name: "text", widget: "text" }
           - { label: "Connect Intro", name: "connect_intro", widget: "string" }
+
+      - file: "data/gallery.json"
+        label: "Gallery"
+        name: "gallery"
+        fields:
+          - { label: "Gallery Eyebrow", name: "gallery_eyebrow", widget: "string" }
+          - { label: "Gallery Title", name: "gallery_title", widget: "string" }
+          - label: "Images"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
 
       - file: "data/links.json"
         label: "Streaming & Social Links"

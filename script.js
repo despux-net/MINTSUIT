@@ -60,8 +60,7 @@ fetch("data/site.json", { cache: "no-store" })
     }
 
     document.getElementById("music-description").textContent = site.music_description;
-    document.getElementById("spotify-embed").src =
-      `https://open.spotify.com/embed/album/${site.spotify_album_id}?utm_source=generator&theme=0`;
+    setupReleases(site.spotify_releases, site.spotify_album_id);
 
     document.getElementById("video-title").textContent = site.video_title;
 
@@ -70,12 +69,171 @@ fetch("data/site.json", { cache: "no-store" })
     document.getElementById("about-p2").textContent = site.about_p2;
     document.getElementById("about-tags").textContent = site.tags.join("  ·  ");
 
+    renderBio(site);
+
     document.getElementById("connect-intro").textContent = site.connect_intro;
 
     setupBandcampModal(site.bandcamp_track_id);
     setupVideoPlayer(site.youtube_id);
   })
   .catch(() => { /* leave defaults in place */ });
+
+// ---------- music: spotify release switcher ----------
+function spotifyEmbedUrl(id) {
+  return `https://open.spotify.com/embed/album/${id}?utm_source=generator&theme=0`;
+}
+
+function setupReleases(releases, fallbackId) {
+  const frame = document.getElementById("spotify-embed");
+  const row = document.getElementById("release-switch");
+  if (!frame) return;
+
+  const list = (releases || []).filter(r => r && r.spotify_id);
+  if (!list.length) {
+    if (fallbackId) frame.src = spotifyEmbedUrl(fallbackId);
+    if (row) row.hidden = true;
+    return;
+  }
+
+  frame.src = spotifyEmbedUrl(list[0].spotify_id);
+  frame.title = `MINT SUIT — ${list[0].title || "Spotify"}`;
+
+  // A single release needs no switcher.
+  if (!row || list.length < 2) {
+    if (row) row.hidden = true;
+    return;
+  }
+
+  row.textContent = "";
+  const buttons = list.map((release, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "release-tab";
+    btn.setAttribute("role", "tab");
+    btn.setAttribute("aria-selected", String(i === 0));
+    btn.textContent = release.title || `Release ${i + 1}`;
+    btn.addEventListener("click", () => {
+      frame.src = spotifyEmbedUrl(release.spotify_id);
+      frame.title = `MINT SUIT — ${release.title || "Spotify"}`;
+      buttons.forEach(b => b.setAttribute("aria-selected", String(b === btn)));
+    });
+    row.appendChild(btn);
+    return btn;
+  });
+}
+
+// ---------- biography ----------
+function renderBio(site) {
+  if (site.bio_title) document.getElementById("bio-title").textContent = site.bio_title;
+  if (site.bio_intro) document.getElementById("bio-intro").textContent = site.bio_intro;
+
+  const list = document.getElementById("bio-list");
+  if (!list) return;
+  const points = (site.bio_points || []).filter(p => p && (p.label || p.text));
+  if (!points.length) {
+    list.hidden = true;
+    return;
+  }
+
+  list.textContent = "";
+  points.forEach(point => {
+    const dt = document.createElement("dt");
+    dt.textContent = point.label || "";
+    const dd = document.createElement("dd");
+    dd.textContent = point.text || "";
+    list.append(dt, dd);
+  });
+}
+
+// ---------- gallery ----------
+fetch("data/gallery.json", { cache: "no-store" })
+  .then(r => r.json())
+  .then(gallery => {
+    const grid = document.getElementById("gallery-grid");
+    const section = document.getElementById("gallery");
+    const items = (gallery.items || []).filter(i => i && i.image);
+    if (!grid || !items.length) {
+      if (section) section.hidden = true;
+      return;
+    }
+
+    if (gallery.gallery_eyebrow) {
+      document.getElementById("gallery-eyebrow").textContent = gallery.gallery_eyebrow;
+    }
+    if (gallery.gallery_title) {
+      document.getElementById("gallery-title").textContent = gallery.gallery_title;
+    }
+
+    grid.textContent = "";
+    items.forEach(item => {
+      const caption = item.caption || "";
+
+      const fig = document.createElement("figure");
+      fig.className = "gallery-item";
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "gallery-open";
+      btn.setAttribute("aria-label", caption ? `Enlarge — ${caption}` : "Enlarge image");
+
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = caption;
+      img.loading = "lazy";
+
+      btn.appendChild(img);
+      fig.appendChild(btn);
+
+      if (caption) {
+        const cap = document.createElement("figcaption");
+        cap.textContent = caption;
+        fig.appendChild(cap);
+      }
+
+      btn.addEventListener("click", () => openLightbox(item.image, caption));
+      grid.appendChild(fig);
+    });
+  })
+  .catch(() => {
+    const section = document.getElementById("gallery");
+    if (section) section.hidden = true;
+  });
+
+const lightbox = document.getElementById("gallery-lightbox");
+const lightboxImage = document.getElementById("lightbox-image");
+const lightboxCaption = document.getElementById("lightbox-caption");
+let lightboxOpener = null;
+
+function openLightbox(src, caption) {
+  if (!lightbox) return;
+  lightboxOpener = document.activeElement;
+  lightboxImage.src = src;
+  lightboxImage.alt = caption || "";
+  lightboxCaption.textContent = caption || "";
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  document.getElementById("lightbox-close").focus();
+}
+
+function closeLightbox() {
+  if (!lightbox || !lightbox.classList.contains("open")) return;
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  lightboxImage.removeAttribute("src");
+  if (lightboxOpener) lightboxOpener.focus();
+}
+
+if (lightbox) {
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", e => {
+    if (e.target === lightbox || e.target.classList.contains("lightbox-figure")) closeLightbox();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeLightbox();
+  });
+}
 
 // ---------- design (fonts, sizes, colors) ----------
 const FONT_STACKS = {

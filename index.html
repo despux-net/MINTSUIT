@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MINT SUIT</title>
-<meta name="description" content="MINT SUIT — night-driven sound, vaporwave and nostalgia. Listen to «Redamancy» and watch the official video.">
+<meta name="description" content="MINT SUIT — night-driven sound, vaporwave and nostalgia. Listen to «Sex &amp; Velvet» and «Redamancy», and watch the official video.">
 
 <!-- Open Graph -->
 <meta property="og:title" content="MINT SUIT">
-<meta property="og:description" content="Night-driven sound, vaporwave and nostalgia. Listen to «Redamancy».">
+<meta property="og:description" content="Night-driven sound, vaporwave and nostalgia. Listen to «Sex &amp; Velvet» and «Redamancy».">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://mintsuit.com/assets/cover.jpg">
 <meta property="og:url" content="https://mintsuit.com">
@@ -30,6 +30,7 @@
     <li><a href="#music">Music</a></li>
     <li><a href="#video">Video</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#connect">Connect</a></li>
   </ul>
 </nav>
@@ -64,6 +65,7 @@
     <p class="eyebrow">Music</p>
     <h2 class="wordmark">Now streaming</h2>
     <p class="body-copy" id="music-description">The debut single, out now — a night drive through neon and static.</p>
+    <div class="release-switch" id="release-switch" role="tablist" aria-label="Releases"></div>
     <div class="link-list" id="streaming-row"></div>
   </div>
 </section>
@@ -99,6 +101,23 @@
     <p class="body-copy" id="about-p2">It's a suit stitched from neon light and skyscraper windows — R&amp;B, ambient, and synthwave sewn with the same thread: nostalgia, elegance, and a quiet melancholy calm.</p>
     <p class="tag-row" id="about-tags">R&amp;B / Soul &nbsp;·&nbsp; Vaporwave &nbsp;·&nbsp; Synthwave &nbsp;·&nbsp; Chillwave &nbsp;·&nbsp; Future Funk &nbsp;·&nbsp; Lo-fi &nbsp;·&nbsp; Nostalgia</p>
   </div>
+</section>
+
+<section class="panel bio-panel" id="bio">
+  <div class="bio-inner reveal">
+    <p class="eyebrow">Biography</p>
+    <h2 class="wordmark" id="bio-title">Mint Suit</h2>
+    <p class="body-copy lead" id="bio-intro">Mint Suit is an independent electronic music project characterized by its atmospheric approach and attention to detail.</p>
+    <dl class="bio-list" id="bio-list"></dl>
+  </div>
+</section>
+
+<section class="panel gallery-panel" id="gallery">
+  <div class="gallery-head reveal">
+    <p class="eyebrow" id="gallery-eyebrow">Gallery</p>
+    <h2 class="wordmark" id="gallery-title">Artwork</h2>
+  </div>
+  <div class="gallery-grid reveal" id="gallery-grid"></div>
 </section>
 
 <section class="panel panel-split" id="connect">
@@ -142,6 +161,14 @@
     <button class="modal-close" id="modal-close" type="button" aria-label="Close">&times;</button>
     <iframe id="bandcamp-frame" title="MINT SUIT — Redamancy on Bandcamp" loading="lazy"></iframe>
   </div>
+</div>
+
+<div class="modal-overlay lightbox" id="gallery-lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close">&times;</button>
+  <figure class="lightbox-figure">
+    <img id="lightbox-image" alt="">
+    <figcaption id="lightbox-caption"></figcaption>
+  </figure>
 </div>
 
 <script src="script.js"></script>
