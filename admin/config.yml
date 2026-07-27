@@ -22,14 +22,15 @@ collections:
           - { label: "Hero Title — Vertical Position", name: "hero_title_lift", widget: "number", hint: "How far up to lift the MINT SUIT title from the bottom of the image, in pixels. Positive = higher up, negative = lower down (can go below the default position). Try changing by 20-30 at a time.", value_type: "int", min: -400, max: 400 }
           - { label: "Listen Button — Spacing from Title", name: "hero_cta_gap", widget: "number", hint: "Space between the title and the 'Listen to «Redamancy»' text, in pixels. Positive = further apart, negative = closer together or overlapping.", value_type: "int", min: -200, max: 200 }
           - { label: "Music Description", name: "music_description", widget: "text" }
-          - label: "Spotify Playlist (releases in the player)"
+          - label: "Spotify Releases (all songs shown in the player)"
             name: "spotify_releases"
             widget: "list"
-            hint: "Each release becomes a button above the Spotify player. The first one plays when the page loads."
+            hint: "Every release here gets its own player, stacked top to bottom, so all the songs are visible at once. Add a row for each new single."
             fields:
               - { label: "Release Title", name: "title", widget: "string" }
               - { label: "Spotify Album ID", name: "spotify_id", widget: "string", hint: "The id in the Spotify URL: open.spotify.com/album/THIS-PART" }
-          - { label: "Spotify Album ID (fallback)", name: "spotify_album_id", widget: "string", required: false, hint: "Only used if the list above is empty." }
+          - { label: "Spotify Playlist ID", name: "spotify_playlist_id", widget: "string", required: false, hint: "Optional. If you make a real playlist in Spotify with all your songs, paste its id here (open.spotify.com/playlist/THIS-PART) and it replaces the stacked players above with one single playlist player." }
+          - { label: "Spotify Album ID (fallback)", name: "spotify_album_id", widget: "string", required: false, hint: "Only used if the releases list above is empty." }
           - { label: "Video Title", name: "video_title", widget: "string" }
           - { label: "YouTube Video ID", name: "youtube_id", widget: "string", hint: "The id in the YouTube URL: youtube.com/watch?v=THIS-PART" }
           - { label: "About Image", name: "about_image", widget: "image" }

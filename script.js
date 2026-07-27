@@ -60,7 +60,7 @@ fetch("data/site.json", { cache: "no-store" })
     }
 
     document.getElementById("music-description").textContent = site.music_description;
-    setupReleases(site.spotify_releases, site.spotify_album_id);
+    renderSpotify(site);
 
     document.getElementById("video-title").textContent = site.video_title;
 
@@ -78,47 +78,48 @@ fetch("data/site.json", { cache: "no-store" })
   })
   .catch(() => { /* leave defaults in place */ });
 
-// ---------- music: spotify release switcher ----------
-function spotifyEmbedUrl(id) {
-  return `https://open.spotify.com/embed/album/${id}?utm_source=generator&theme=0`;
+// ---------- music: spotify players ----------
+function spotifyFrame(path, title, height) {
+  const frame = document.createElement("iframe");
+  frame.src = `https://open.spotify.com/embed/${path}?utm_source=generator&theme=0`;
+  frame.title = title;
+  frame.width = "100%";
+  frame.height = height;
+  frame.loading = "lazy";
+  frame.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+  frame.allowFullscreen = true;
+  frame.setAttribute("frameborder", "0");
+  return frame;
 }
 
-function setupReleases(releases, fallbackId) {
-  const frame = document.getElementById("spotify-embed");
-  const row = document.getElementById("release-switch");
-  if (!frame) return;
+function renderSpotify(site) {
+  const stack = document.getElementById("spotify-stack");
+  if (!stack) return;
+  stack.textContent = "";
 
-  const list = (releases || []).filter(r => r && r.spotify_id);
-  if (!list.length) {
-    if (fallbackId) frame.src = spotifyEmbedUrl(fallbackId);
-    if (row) row.hidden = true;
+  // A real Spotify playlist wins: one player listing every track in it.
+  if (site.spotify_playlist_id) {
+    stack.classList.add("is-playlist");
+    stack.appendChild(spotifyFrame(`playlist/${site.spotify_playlist_id}`, "MINT SUIT — Playlist", 452));
     return;
   }
 
-  frame.src = spotifyEmbedUrl(list[0].spotify_id);
-  frame.title = `MINT SUIT — ${list[0].title || "Spotify"}`;
+  stack.classList.remove("is-playlist");
+  const releases = (site.spotify_releases || []).filter(r => r && r.spotify_id);
 
-  // A single release needs no switcher.
-  if (!row || list.length < 2) {
-    if (row) row.hidden = true;
+  if (!releases.length) {
+    if (site.spotify_album_id) {
+      stack.appendChild(spotifyFrame(`album/${site.spotify_album_id}`, "MINT SUIT on Spotify", 352));
+    }
     return;
   }
 
-  row.textContent = "";
-  const buttons = list.map((release, i) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "release-tab";
-    btn.setAttribute("role", "tab");
-    btn.setAttribute("aria-selected", String(i === 0));
-    btn.textContent = release.title || `Release ${i + 1}`;
-    btn.addEventListener("click", () => {
-      frame.src = spotifyEmbedUrl(release.spotify_id);
-      frame.title = `MINT SUIT — ${release.title || "Spotify"}`;
-      buttons.forEach(b => b.setAttribute("aria-selected", String(b === btn)));
-    });
-    row.appendChild(btn);
-    return btn;
+  // One release per row, so the whole catalogue is visible and playable at once.
+  // The artist embed can't do this — it only lists Spotify's "top tracks",
+  // which leaves brand-new singles out until they pick up plays.
+  releases.forEach(release => {
+    const title = release.title || "Spotify";
+    stack.appendChild(spotifyFrame(`album/${release.spotify_id}`, `MINT SUIT — ${title}`, 152));
   });
 }
 

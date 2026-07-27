@@ -249,40 +249,21 @@ button{font:inherit;background:none;border:0;color:inherit;}
   color:var(--text-dim);
 }
 
-.spotify-embed{width:100%; height:100%; display:flex; align-items:center; background:var(--paper);}
-.spotify-embed iframe{width:100%; border:0;}
-
-/* ---------- release switcher ---------- */
-.release-switch{
-  margin-top:28px;
+.spotify-embed{
+  width:100%; height:100%;
   display:flex;
-  flex-wrap:wrap;
-  gap:10px 26px;
+  flex-direction:column;
+  gap:12px;
+  padding:28px;
+  background:var(--paper);
+  overflow-y:auto;
 }
-.release-tab{
-  font-family:var(--font-body);
-  font-size:calc(0.8rem * var(--body-scale));
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  position:relative;
-  padding-bottom:5px;
-  cursor:pointer;
-  color:var(--text-dim);
-  transition:color .3s var(--ease);
-}
-.release-tab::after{
-  content:"";
-  position:absolute;
-  left:0; bottom:0;
-  height:1px; width:100%;
-  background:currentColor;
-  opacity:0;
-  transition:opacity .3s var(--ease);
-}
-.release-tab:hover{color:var(--text);}
-.release-tab:hover::after{opacity:0.35;}
-.release-tab[aria-selected="true"]{color:var(--text);}
-.release-tab[aria-selected="true"]::after{opacity:1;}
+.spotify-embed iframe{width:100%; border:0; flex:0 0 auto;}
+/* Auto margins centre the stack but collapse when it overflows, so the first
+   player never ends up clipped above the scroll area (justify-content would). */
+.spotify-embed iframe:first-child{margin-top:auto;}
+.spotify-embed iframe:last-child{margin-bottom:auto;}
+.spotify-embed.is-playlist{padding:20px;}
 
 /* ---------- biography ---------- */
 .bio-panel{

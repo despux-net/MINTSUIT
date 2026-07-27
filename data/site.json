@@ -1,10 +1,11 @@
 {
   "hero_cta_label": "Listen to «Redamancy»",
   "hero_cta_gap": -200,
-  "music_description": "Two singles, out now — a night drive through neon and static. Pick a track below.",
+  "music_description": "Every MINT SUIT track, out now — a night drive through neon and static.",
   "hero_eyebrow": "Single — 2026",
   "about_image": "/assets/uploads/portada-mint-suit.png",
   "spotify_album_id": "4UXFa15mrNsj3sln9fe8L7",
+  "spotify_playlist_id": "",
   "spotify_releases": [
     { "title": "Sex & Velvet", "spotify_id": "4UXFa15mrNsj3sln9fe8L7" },
     { "title": "Redamancy", "spotify_id": "0QaoLaq8Jgbh6rFlF59GcL" }
