@@ -1,11 +1,26 @@
 {
   "streaming": [
-    { "label": "Apple Music", "url": "#" },
-    { "label": "YouTube Music", "url": "#" },
-    { "label": "Bandcamp", "url": "https://desco.bandcamp.com/track/redamancy" }
+    {
+      "label": "Apple Music",
+      "url": "#"
+    },
+    {
+      "label": "YouTube Music",
+      "url": "#"
+    },
+    {
+      "label": "Bandcamp",
+      "url": "https://desco.bandcamp.com/track/redamancy"
+    }
   ],
   "social": [
-    { "label": "Instagram", "url": "https://instagram.com/mint.suit" },
-    { "label": "YouTube", "url": "https://www.youtube.com/watch?v=aUUY3vvlHOk" }
+    {
+      "label": "Instagram",
+      "url": "https://instagram.com/despujos"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=aUUY3vvlHOk"
+    }
   ]
 }
