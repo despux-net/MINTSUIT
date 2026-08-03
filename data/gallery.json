@@ -3,16 +3,16 @@
   "gallery_title": "Artwork",
   "items": [
     {
+      "image": "/assets/uploads/hungry-lips.jpg",
+      "caption": "Hungry Lips — Single, 2026"
+    },
+    {
       "image": "/assets/uploads/mint-suit-2.jpg",
       "caption": "Sex & Velvet — Single, 2026"
     },
     {
       "image": "/assets/uploads/portada-mint-suit.png",
       "caption": "Redamancy — Single, 2026"
-    },
-    {
-      "image": "/assets/uploads/rrtt.png",
-      "caption": "MINT SUIT — Visual identity"
     }
   ]
 }
