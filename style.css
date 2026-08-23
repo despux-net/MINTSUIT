@@ -123,6 +123,18 @@ h1 {
   color: #3a4a3f;
 }
 
+h2 {
+  margin: 0 0 20px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-variant: small-caps;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: #6b6350;
+  text-align: center;
+}
+
 /* ---------- ornamental rule ---------- */
 
 .rule {
@@ -177,6 +189,18 @@ h1 {
   text-align: right;
   color: #7a7364;
   font-size: 13px;
+}
+
+.tracks a {
+  color: #1f4034;
+  text-decoration: underline;
+}
+
+.tracks a:visited { color: #5d4a6e; }
+
+.tracks a:hover {
+  color: #7d1f2a;
+  background: #f1ecda;
 }
 
 .tags {
