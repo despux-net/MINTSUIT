@@ -1,19 +1,31 @@
 # MINT SUIT — sitio web
 
-Sitio de una sola página, estilo editorial de lujo (inspirado en casas de moda como Chanel), para promocionar la música de MINT SUIT.
+Sitio de una sola página, estilo internet de principios de los 2000 pero elegante:
+mármol de Carrara, Times New Roman y bordes biselados. Sin JavaScript, sin fuentes
+externas, sin animaciones. Solo la portada de *Sublime* y su descripción.
 
 ## Estructura
 
 ```
-index.html          → estructura de la página
-style.css            → todos los estilos (paleta, tipografía, animaciones)
-script.js            → carga el contenido dinámico desde /data
-data/site.json       → todo el texto e imágenes de la página (hero, about, música, video)
-data/links.json      → links de streaming y redes sociales
-assets/              → imágenes del sitio
-admin/               → panel de administración (Decap CMS) — ver abajo
-CNAME                → necesario para que GitHub Pages reconozca mintsuit.com
+index.html               → la página entera (HTML estático, sin JS)
+style.css                → todos los estilos
+assets/sublime.jpg       → portada del álbum (1000×1000)
+assets/sublime-og.jpg    → portada para redes sociales (600×600)
+assets/marble.jpg        → textura de mármol blanco, generada y tileable
+assets/marble-dark.jpg   → textura de mármol verde para las placas
+assets/favicon.ico       → ícono de la pestaña
+CNAME                    → necesario para que GitHub Pages reconozca mintsuit.com
 ```
+
+La portada original `mintsuit unique.png` (3000×3000) vive solo en local: está en
+`.gitignore`, igual que el resto de los archivos fuente pesados.
+
+Las texturas de mármol se generaron por código (ruido fractal + función seno para
+las vetas) y se repiten sin costura: no son fotos con licencia de terceros.
+
+> **Nota:** `admin/` (Decap CMS) y `data/*.json` quedaron del sitio anterior y ya no
+> alimentan la página. El contenido ahora se edita directamente en `index.html`.
+> Se pueden borrar cuando quieras.
 
 ## Editar el contenido — panel de administración
 
@@ -43,8 +55,11 @@ Registros ya configurados para apuntar `mintsuit.com` a GitHub Pages:
 
 ## Notas de diseño
 
-- Estilo editorial de lujo/minimalismo: paneles full-bleed apilados, mucho whitespace, imágenes grandes.
-- Paleta casi monocromática: marfil/blanco roto de fondo, negro carbón para texto — el color lo aportan solo las imágenes.
-- Tipografía: `Bodoni Moda` (serif recto, de carácter, para títulos) + `Jost` (sans fina en mayúsculas, para nav/labels/CTAs).
-- Microinteracciones sutiles: subrayado progresivo en hover, zoom leve en imágenes, fade suave al aparecer en scroll.
-- Todo respeta `prefers-reduced-motion` y es responsive desde mobile.
+- Y2K elegante: columna centrada de ancho fijo, placas de mármol verde arriba y abajo,
+  losa de mármol blanco en el medio, bordes `ridge` / `outset` / `groove`.
+- Tipografía del sistema, como en 2001: Times New Roman para títulos (versalitas muy
+  espaciadas) y Georgia para el texto. Cero fuentes web.
+- Paleta: marfil y gris de las vetas, verde profundo de las placas, oro apagado
+  (`#a08f5f`) para los adornos y los marcos.
+- Cero JavaScript y cero dependencias externas: la página es dos archivos y cuatro imágenes.
+- Responsive con un solo `@media` a 620px, para que se vea bien en el teléfono.
