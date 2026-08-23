@@ -246,3 +246,131 @@ a.button:active  { border-style: inset; }
   .slab p { text-align: left; }
   .tracks { font-size: 14px; }
 }
+
+/* ===========================================================
+   The gold portal — video pop-up for the tracks that have one
+   =========================================================== */
+
+.tracks a.portal::after {
+  content: " \25B8";          /* a small play arrow marks the ones with video */
+  color: #a08f5f;
+  text-decoration: none;
+}
+
+body.locked { overflow: hidden; }
+
+.portal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 99;
+  overflow-y: auto;
+  padding: 26px 14px;
+  background: #0b120e;
+  background: rgba(9, 16, 12, 0.88);
+  text-align: center;
+}
+
+.portal-overlay.open { display: block; }
+
+.portal-box {
+  max-width: 740px;
+  margin: 0 auto;
+  text-align: left;
+  background: #16281f url("assets/marble-dark.jpg") repeat;
+  background-size: 400px auto;
+  border: 10px ridge #c8a54c;
+  box-shadow: 0 0 0 2px #6d5622, 0 0 34px rgba(200, 165, 76, 0.45);
+}
+
+/* ---------- brass title bar ---------- */
+
+.portal-bar {
+  position: relative;
+  padding: 9px 44px;
+  background: #c3a04a;
+  background: linear-gradient(#f2e3b4, #cdaa55 52%, #a9883a);
+  border-bottom: 3px ridge #7d6224;
+  color: #33270c;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-variant: small-caps;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-shadow: 0 1px 0 #f2e5bb;
+}
+
+.portal-bar .orn {
+  padding: 0 10px;
+  color: #7d6224;
+  font-size: 12px;
+}
+
+.portal-close {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  padding: 0 8px 2px;
+  background: #dcc47e;
+  border: 2px outset #efe0b0;
+  color: #3a2c0d;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17px;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.portal-close:active { border-style: inset; }
+
+/* ---------- the screen (16:9 without leaving 2001) ---------- */
+
+/* The bevel lives on the wrapper so that .portal-screen's 56.25% padding
+   resolves against exactly the width the video occupies — a percentage
+   padding is measured against the containing block, not the element. */
+.portal-stage {
+  margin: 10px;
+  background: #000;
+  border: 3px inset #8c6c26;
+}
+
+.portal-screen {
+  position: relative;
+  height: 0;
+  padding-top: 56.25%;
+}
+
+.portal-screen iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- footer strip ---------- */
+
+.portal-foot {
+  margin: 0;
+  padding: 9px;
+  border-top: 2px groove #8c6c26;
+  text-align: center;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.22em;
+}
+
+.portal-foot a          { color: #d9c489; text-decoration: underline; }
+.portal-foot a:visited  { color: #c3ab6f; }
+.portal-foot a:hover    { color: #fff3cd; }
+
+@media (max-width: 620px) {
+  .portal-overlay { padding: 14px 8px; }
+
+  /* One frame only. At this width the outer ridge and the inner bevel end up
+     17px apart and read as a duplicated border rather than as a mount. */
+  .portal-box { border-width: 6px; }
+  .portal-stage { margin: 0; border: 0; }
+
+  .portal-bar { font-size: 14px; letter-spacing: 0.14em; padding: 8px 38px; }
+  .portal-bar .orn { padding: 0 5px; }
+}

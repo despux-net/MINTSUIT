@@ -53,22 +53,30 @@
     <table class="tracks">
       <tr>
         <td class="n">1.</td>
-        <td><a href="https://mintsuit.bandcamp.com/track/sex-velvet">Sex &amp; Velvet</a></td>
+        <td><a class="portal" href="https://youtu.be/x-wJ-A42-pY"
+           data-video="x-wJ-A42-pY"
+           data-bandcamp="https://mintsuit.bandcamp.com/track/sex-velvet">Sex &amp; Velvet</a></td>
         <td class="t">3:15</td>
       </tr>
       <tr>
         <td class="n">2.</td>
-        <td><a href="https://mintsuit.bandcamp.com/track/hungry-lips-2">Hungry Lips</a></td>
+        <td><a class="portal" href="https://youtu.be/FflMTTXD4K4"
+           data-video="FflMTTXD4K4"
+           data-bandcamp="https://mintsuit.bandcamp.com/track/hungry-lips-2">Hungry Lips</a></td>
         <td class="t">3:27</td>
       </tr>
       <tr>
         <td class="n">3.</td>
-        <td><a href="https://mintsuit.bandcamp.com/track/y2ks-eyes">Y2Ks Eyes</a></td>
+        <td><a class="portal" href="https://youtu.be/PB9pXTUkyd8"
+           data-video="PB9pXTUkyd8"
+           data-bandcamp="https://mintsuit.bandcamp.com/track/y2ks-eyes">Y2Ks Eyes</a></td>
         <td class="t">3:20</td>
       </tr>
       <tr>
         <td class="n">4.</td>
-        <td><a href="https://mintsuit.bandcamp.com/track/redamancy">Redamancy</a></td>
+        <td><a class="portal" href="https://youtu.be/aUUY3vvlHOk"
+           data-video="aUUY3vvlHOk"
+           data-bandcamp="https://mintsuit.bandcamp.com/track/redamancy">Redamancy</a></td>
         <td class="t">3:40</td>
       </tr>
       <tr>
@@ -114,6 +122,33 @@
   </div>
 
 </div>
+
+<div class="portal-overlay" id="portal" aria-hidden="true">
+  <div class="portal-box" role="dialog" aria-modal="true" aria-labelledby="portal-title">
+
+    <div class="portal-bar">
+      <span class="orn">&#10022;</span>
+      <span id="portal-title">&nbsp;</span>
+      <span class="orn">&#10022;</span>
+      <button class="portal-close" id="portal-close" type="button" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="portal-stage">
+      <div class="portal-screen">
+        <iframe id="portal-frame" title="MINT SUIT video" frameborder="0"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <p class="portal-foot">
+      <a id="portal-bc" href="https://mintsuit.bandcamp.com/album/sublime">Also on Bandcamp</a>
+    </p>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
