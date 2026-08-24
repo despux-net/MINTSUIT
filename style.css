@@ -58,6 +58,16 @@ body {
   color: #cdc6b2;
 }
 
+.plaque .elsewhere {
+  margin-bottom: 8px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.plaque a         { color: #d9c489; text-decoration: underline; }
+.plaque a:visited { color: #c0a86c; }
+.plaque a:hover   { color: #fff3cd; }
+
 .plaque.bottom .tiny {
   margin-top: 4px;
   font-size: 11px;
@@ -204,6 +214,8 @@ body {
   color: #7d1f2a;
   background: #f1ecda;
 }
+
+.slab .sub + .rule { margin-top: 22px; }
 
 .tags {
   text-align: center !important;
