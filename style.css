@@ -39,6 +39,8 @@ body {
 .plaque p { margin: 0; }
 
 .artist {
+  margin: 0;
+  font-weight: normal;
   font-family: "Times New Roman", Times, serif;
   font-size: 30px;
   font-variant: small-caps;
@@ -96,7 +98,7 @@ body {
 
 /* ---------- type ---------- */
 
-h1 {
+.album {
   margin: 0 0 6px;
   font-family: "Times New Roman", Times, serif;
   font-size: 52px;
@@ -123,7 +125,7 @@ h1 {
   color: #3a4a3f;
 }
 
-h2 {
+.section {
   margin: 0 0 20px;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
@@ -241,7 +243,7 @@ a.button:active  { border-style: inset; }
   body { padding: 18px 10px 34px; font-size: 15px; }
   .slab { padding: 26px 20px 30px; }
   .artist { font-size: 21px; letter-spacing: 0.3em; text-indent: 0.3em; }
-  h1 { font-size: 38px; }
+  .album { font-size: 38px; }
   .lead { font-size: 17px; }
   .slab p { text-align: left; }
   .tracks { font-size: 14px; }
