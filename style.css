@@ -4,8 +4,8 @@
    =========================================================== */
 
 html {
-  background: #e8e5dd url("assets/marble.jpg") repeat;
-  background-size: 620px auto;
+  background: #efece4 url("assets/marble.jpg") repeat;
+  background-size: 820px auto;
 }
 
 body {
@@ -28,8 +28,8 @@ body {
 /* ---------- green marble plaques (header / footer) ---------- */
 
 .plaque {
-  background: #16281f url("assets/marble-dark.jpg") repeat;
-  background-size: 400px auto;
+  background: #182a21 url("assets/marble-dark.jpg") repeat;
+  background-size: 480px auto;
   border: 4px ridge #4a5f4f;
   padding: 16px 20px;
   text-align: center;
@@ -78,7 +78,7 @@ body {
 /* ---------- the white marble slab ---------- */
 
 .slab {
-  background: #fbfaf6 url("assets/marble.jpg") repeat;
+  background: #faf8f3 url("assets/marble.jpg") repeat;
   background-size: 700px auto;
   border-left: 4px ridge #cfc7ae;
   border-right: 4px ridge #cfc7ae;
@@ -125,7 +125,7 @@ body {
   font-size: 12px;
   font-variant: small-caps;
   letter-spacing: 0.24em;
-  color: #7a7364;
+  color: #746d60;
 }
 
 .lead {
@@ -191,7 +191,7 @@ body {
 
 .tracks .n {
   width: 34px;
-  color: #94795b;
+  color: #846953;
   font-style: italic;
   text-align: right;
 }
@@ -199,7 +199,7 @@ body {
 .tracks .t {
   width: 56px;
   text-align: right;
-  color: #7a7364;
+  color: #746d60;
   font-size: 13px;
 }
 
@@ -222,7 +222,7 @@ body {
   font-size: 11px;
   font-variant: small-caps;
   letter-spacing: 0.2em;
-  color: #86806f;
+  color: #746e60;
   margin-bottom: 30px !important;
 }
 
@@ -233,8 +233,8 @@ body {
 a.button {
   display: inline-block;
   padding: 11px 30px;
-  background: #16281f url("assets/marble-dark.jpg") repeat;
-  background-size: 300px auto;
+  background: #182a21 url("assets/marble-dark.jpg") repeat;
+  background-size: 360px auto;
   border: 4px outset #b9a77a;
   color: #eee7d2;
   font-family: "Times New Roman", Times, serif;
@@ -291,8 +291,8 @@ body.locked { overflow: hidden; }
   max-width: 740px;
   margin: 0 auto;
   text-align: left;
-  background: #16281f url("assets/marble-dark.jpg") repeat;
-  background-size: 400px auto;
+  background: #182a21 url("assets/marble-dark.jpg") repeat;
+  background-size: 480px auto;
   border: 10px ridge #c8a54c;
   box-shadow: 0 0 0 2px #6d5622, 0 0 34px rgba(200, 165, 76, 0.45);
 }

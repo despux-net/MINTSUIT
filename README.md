@@ -20,8 +20,12 @@ CNAME                    → necesario para que GitHub Pages reconozca mintsuit.
 La portada original `mintsuit unique.png` (3000×3000) vive solo en local: está en
 `.gitignore`, igual que el resto de los archivos fuente pesados.
 
-Las texturas de mármol se generaron por código (ruido fractal + función seno para
-las vetas) y se repiten sin costura: no son fotos con licencia de terceros.
+Las texturas de mármol se generaron por código: el ruido se construye en el dominio
+de Fourier —que es periódico por definición, así que el mosaico cierra exacto— y las
+vetas son las crestas donde una fase con deriva cruza un entero. El término lineal
+tiene que pesar más que la deriva; si no, las vetas se cierran en bucles y el
+resultado parece un mapa de curvas de nivel en vez de piedra. No son fotos con
+licencia de terceros.
 
 > **Nota:** `admin/` (Decap CMS) y `data/*.json` quedaron del sitio anterior y ya no
 > alimentan la página. El contenido ahora se edita directamente en `index.html`.
@@ -59,7 +63,7 @@ Registros ya configurados para apuntar `mintsuit.com` a GitHub Pages:
   losa de mármol blanco en el medio, bordes `ridge` / `outset` / `groove`.
 - Tipografía del sistema, como en 2001: Times New Roman para títulos (versalitas muy
   espaciadas) y Georgia para el texto. Cero fuentes web.
-- Paleta: marfil y gris de las vetas, verde profundo de las placas, oro apagado
+- Paleta: blanco marfil y gris de las vetas, verde profundo de las placas, oro apagado
   (`#a08f5f`) para los adornos y los marcos.
 - Cero JavaScript y cero dependencias externas: la página es dos archivos y cuatro imágenes.
 - Responsive con un solo `@media` a 620px, para que se vea bien en el teléfono.
