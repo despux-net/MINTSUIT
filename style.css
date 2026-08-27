@@ -1,17 +1,16 @@
 /* ===========================================================
    MINT SUIT — Sublime
-   One page. Marble, Times New Roman, and the year 2000.
+   One page. Black, Times New Roman, and the year 2000.
    =========================================================== */
 
 html {
-  background: #efece4 url("assets/marble.jpg") repeat;
-  background-size: 820px auto;
+  background: #000;
 }
 
 body {
   margin: 0;
   padding: 34px 16px 60px;
-  color: #2c2b27;
+  color: #d7d3c8;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 1.72;
@@ -25,12 +24,11 @@ body {
   text-align: left;
 }
 
-/* ---------- green marble plaques (header / footer) ---------- */
+/* ---------- plaques (header / footer) ---------- */
 
 .plaque {
-  background: #182a21 url("assets/marble-dark.jpg") repeat;
-  background-size: 480px auto;
-  border: 4px ridge #4a5f4f;
+  background: #070707;
+  border: 4px ridge #33312b;
   padding: 16px 20px;
   text-align: center;
   color: #ece6d6;
@@ -47,7 +45,6 @@ body {
   letter-spacing: 0.42em;
   text-indent: 0.42em;
   color: #e6dcc0;
-  text-shadow: 1px 1px 0 #000;
 }
 
 .plaque.bottom {
@@ -55,7 +52,7 @@ body {
   font-size: 12px;
   letter-spacing: 0.16em;
   font-variant: small-caps;
-  color: #cdc6b2;
+  color: #9a9384;
 }
 
 .plaque .elsewhere {
@@ -65,23 +62,22 @@ body {
 }
 
 .plaque a         { color: #d9c489; text-decoration: underline; }
-.plaque a:visited { color: #c0a86c; }
+.plaque a:visited { color: #b8a165; }
 .plaque a:hover   { color: #fff3cd; }
 
 .plaque.bottom .tiny {
   margin-top: 4px;
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: #8d9a8f;
+  color: #7d776b;
 }
 
-/* ---------- the white marble slab ---------- */
+/* ---------- the slab ---------- */
 
 .slab {
-  background: #faf8f3 url("assets/marble.jpg") repeat;
-  background-size: 700px auto;
-  border-left: 4px ridge #cfc7ae;
-  border-right: 4px ridge #cfc7ae;
+  background: #0d0d0d;
+  border-left: 4px ridge #262420;
+  border-right: 4px ridge #262420;
   padding: 40px 44px 44px;
   text-align: center;
 }
@@ -92,8 +88,8 @@ body {
 
 .frame {
   display: inline-block;
-  border: 9px ridge #c4b287;
-  background: #fff;
+  border: 9px ridge #6d5c33;
+  background: #000;
   padding: 5px;
   margin-bottom: 30px;
 }
@@ -103,7 +99,7 @@ body {
   width: 100%;
   max-width: 520px;
   height: auto;
-  border: 1px solid #6d6555;
+  border: 1px solid #2e2b25;
 }
 
 /* ---------- type ---------- */
@@ -115,7 +111,7 @@ body {
   font-weight: normal;
   font-style: italic;
   line-height: 1.05;
-  color: #1d2a22;
+  color: #f2eee3;
   text-align: center;
 }
 
@@ -125,14 +121,14 @@ body {
   font-size: 12px;
   font-variant: small-caps;
   letter-spacing: 0.24em;
-  color: #746d60;
+  color: #8b8478;
 }
 
 .lead {
   text-align: center !important;
   font-size: 19px;
   font-style: italic;
-  color: #3a4a3f;
+  color: #cfc8b6;
 }
 
 .section {
@@ -143,7 +139,7 @@ body {
   font-variant: small-caps;
   letter-spacing: 0.32em;
   text-indent: 0.32em;
-  color: #6b6350;
+  color: #9a8f70;
   text-align: center;
 }
 
@@ -160,7 +156,7 @@ body {
   content: "";
   display: inline-block;
   width: 33%;
-  border-top: 1px solid #b6ae9a;
+  border-top: 1px solid #2d2b26;
   vertical-align: middle;
 }
 
@@ -178,20 +174,20 @@ body {
   width: 100%;
   margin: 0 auto 22px;
   border-collapse: collapse;
-  border: 2px groove #cbc3aa;
+  border: 2px groove #2a2823;
   font-size: 15px;
 }
 
 .tracks td {
   padding: 7px 12px;
-  border-bottom: 1px solid #ddd7c6;
+  border-bottom: 1px solid #201e1a;
 }
 
 .tracks tr:last-child td { border-bottom: 0; }
 
 .tracks .n {
   width: 34px;
-  color: #846953;
+  color: #98835f;
   font-style: italic;
   text-align: right;
 }
@@ -199,20 +195,20 @@ body {
 .tracks .t {
   width: 56px;
   text-align: right;
-  color: #746d60;
+  color: #8b8478;
   font-size: 13px;
 }
 
 .tracks a {
-  color: #1f4034;
+  color: #e2ddce;
   text-decoration: underline;
 }
 
-.tracks a:visited { color: #5d4a6e; }
+.tracks a:visited { color: #a99cc0; }
 
 .tracks a:hover {
-  color: #7d1f2a;
-  background: #f1ecda;
+  color: #ffd98a;
+  background: #17150f;
 }
 
 .slab .sub + .rule { margin-top: 22px; }
@@ -222,7 +218,7 @@ body {
   font-size: 11px;
   font-variant: small-caps;
   letter-spacing: 0.2em;
-  color: #746e60;
+  color: #837c6e;
   margin-bottom: 30px !important;
 }
 
@@ -233,16 +229,14 @@ body {
 a.button {
   display: inline-block;
   padding: 11px 30px;
-  background: #182a21 url("assets/marble-dark.jpg") repeat;
-  background-size: 360px auto;
-  border: 4px outset #b9a77a;
+  background: #121110;
+  border: 4px outset #7d6a3e;
   color: #eee7d2;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   font-variant: small-caps;
   letter-spacing: 0.2em;
   text-decoration: none;
-  text-shadow: 1px 1px 0 #000;
 }
 
 a.button:visited { color: #eee7d2; }
@@ -280,8 +274,8 @@ body.locked { overflow: hidden; }
   z-index: 99;
   overflow-y: auto;
   padding: 26px 14px;
-  background: #0b120e;
-  background: rgba(9, 16, 12, 0.88);
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
   text-align: center;
 }
 
@@ -291,8 +285,7 @@ body.locked { overflow: hidden; }
   max-width: 740px;
   margin: 0 auto;
   text-align: left;
-  background: #182a21 url("assets/marble-dark.jpg") repeat;
-  background-size: 480px auto;
+  background: #0d0d0d;
   border: 10px ridge #c8a54c;
   box-shadow: 0 0 0 2px #6d5622, 0 0 34px rgba(200, 165, 76, 0.45);
 }
