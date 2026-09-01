@@ -10,7 +10,7 @@ html {
 body {
   margin: 0;
   padding: 34px 16px 60px;
-  color: #d7d3c8;
+  color: #d3d7da;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 1.72;
@@ -28,10 +28,10 @@ body {
 
 .plaque {
   background: #070707;
-  border: 4px ridge #33312b;
+  border: 4px ridge #2f3134;
   padding: 16px 20px;
   text-align: center;
-  color: #ece6d6;
+  color: #e9ecee;
 }
 
 .plaque p { margin: 0; }
@@ -47,7 +47,7 @@ body {
   font-size: 30px;
   letter-spacing: 0.42em;
   text-indent: 0.42em;
-  color: #e6dcc0;
+  color: #eef1f3;
 }
 
 .plaque.bottom {
@@ -55,7 +55,7 @@ body {
   font-size: 12px;
   letter-spacing: 0.16em;
   font-variant: small-caps;
-  color: #9a9384;
+  color: #979b9f;
 }
 
 .plaque .elsewhere {
@@ -64,23 +64,23 @@ body {
   letter-spacing: 0.16em;
 }
 
-.plaque a         { color: #d9c489; text-decoration: underline; }
-.plaque a:visited { color: #b8a165; }
-.plaque a:hover   { color: #fff3cd; }
+.plaque a         { color: #dfe4e8; text-decoration: underline; }
+.plaque a:visited { color: #b2b8be; }
+.plaque a:hover   { color: #ffffff; }
 
 .plaque.bottom .tiny {
   margin-top: 4px;
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: #7d776b;
+  color: #7b8085;
 }
 
 /* ---------- the slab ---------- */
 
 .slab {
   background: #0d0d0d;
-  border-left: 4px ridge #262420;
-  border-right: 4px ridge #262420;
+  border-left: 4px ridge #26282a;
+  border-right: 4px ridge #26282a;
   padding: 40px 44px 44px;
   text-align: center;
 }
@@ -91,7 +91,7 @@ body {
 
 .frame {
   display: inline-block;
-  border: 9px ridge #6d5c33;
+  border: 9px ridge #7a7f85;
   background: #000;
   padding: 5px;
   margin-bottom: 30px;
@@ -102,7 +102,7 @@ body {
   width: 100%;
   max-width: 520px;
   height: auto;
-  border: 1px solid #2e2b25;
+  border: 1px solid #2c2e30;
 }
 
 /* ---------- type ---------- */
@@ -114,7 +114,7 @@ body {
   font-weight: normal;
   font-style: italic;
   line-height: 1.05;
-  color: #f2eee3;
+  color: #f4f6f7;
   text-align: center;
 }
 
@@ -124,14 +124,14 @@ body {
   font-size: 12px;
   font-variant: small-caps;
   letter-spacing: 0.24em;
-  color: #8b8478;
+  color: #898e93;
 }
 
 .lead {
   text-align: center !important;
   font-size: 19px;
   font-style: italic;
-  color: #cfc8b6;
+  color: #c9ced3;
 }
 
 .section {
@@ -159,14 +159,14 @@ body {
   content: "";
   display: inline-block;
   width: 33%;
-  border-top: 1px solid #2d2b26;
+  border-top: 1px solid #2c2e30;
   vertical-align: middle;
 }
 
 .rule span {
   display: inline-block;
   padding: 0 14px;
-  color: #a08f5f;
+  color: #b9bec4;
   font-size: 14px;
   vertical-align: middle;
 }
@@ -198,7 +198,7 @@ body {
 .tracks .t {
   width: 56px;
   text-align: right;
-  color: #8b8478;
+  color: #898e93;
   font-size: 13px;
 }
 
@@ -233,8 +233,8 @@ a.button {
   display: inline-block;
   padding: 11px 30px;
   background: #121110;
-  border: 4px outset #7d6a3e;
-  color: #eee7d2;
+  border: 4px outset #6f7479;
+  color: #eef1f3;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   font-variant: small-caps;
@@ -242,8 +242,8 @@ a.button {
   text-decoration: none;
 }
 
-a.button:visited { color: #eee7d2; }
-a.button:hover   { color: #fff8e2; }
+a.button:visited { color: #eef1f3; }
+a.button:hover   { color: #ffffff; }
 a.button:active  { border-style: inset; }
 
 /* ---------- small screens ---------- */
@@ -302,19 +302,19 @@ body.hold-page {
   font-variant: small-caps;
   letter-spacing: 0.3em;
   text-indent: 0.3em;
-  color: #cfc8b6;
+  color: #c9ced3;
 }
 
 .reach {
   margin: 0;
   font-size: 15px;
   font-style: italic;
-  color: #d7d3c8;
+  color: #d3d7da;
 }
 
-.reach a         { color: #d9c489; text-decoration: underline; }
-.reach a:visited { color: #c3ab6f; }
-.reach a:hover   { color: #fff3cd; }
+.reach a         { color: #dfe4e8; text-decoration: underline; }
+.reach a:visited { color: #bcc2c8; }
+.reach a:hover   { color: #ffffff; }
 
 .hold .elsewhere {
   margin: 0;
@@ -323,9 +323,9 @@ body.hold-page {
   letter-spacing: 0.2em;
 }
 
-.hold .elsewhere a         { color: #d9c489; text-decoration: underline; }
-.hold .elsewhere a:visited { color: #b8a165; }
-.hold .elsewhere a:hover   { color: #fff3cd; }
+.hold .elsewhere a         { color: #dfe4e8; text-decoration: underline; }
+.hold .elsewhere a:visited { color: #b2b8be; }
+.hold .elsewhere a:hover   { color: #ffffff; }
 
 @media (max-width: 620px) {
   body.hold-page { padding: 28px 14px; }
@@ -339,7 +339,7 @@ body.hold-page {
 
 .tracks a.portal::after {
   content: " \25B8";          /* a small play arrow marks the ones with video */
-  color: #a08f5f;
+  color: #b9bec4;
   text-decoration: none;
 }
 
@@ -444,9 +444,9 @@ body.locked { overflow: hidden; }
   letter-spacing: 0.22em;
 }
 
-.portal-foot a          { color: #d9c489; text-decoration: underline; }
-.portal-foot a:visited  { color: #c3ab6f; }
-.portal-foot a:hover    { color: #fff3cd; }
+.portal-foot a          { color: #dfe4e8; text-decoration: underline; }
+.portal-foot a:visited  { color: #bcc2c8; }
+.portal-foot a:hover    { color: #ffffff; }
 
 @media (max-width: 620px) {
   .portal-overlay { padding: 14px 8px; }
