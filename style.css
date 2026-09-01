@@ -256,6 +256,81 @@ a.button:active  { border-style: inset; }
 }
 
 /* ===========================================================
+   Holding page — New York out of focus, the record in front of it
+   =========================================================== */
+
+body.hold-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 44px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bled 30px past every edge: a blur samples beyond the element it is on, and
+   without the overscan the four sides wash out into a pale frame. */
+.backdrop {
+  position: fixed;
+  top: -30px;
+  right: -30px;
+  bottom: -30px;
+  left: -30px;
+  z-index: -1;
+  background: #000 url("assets/nyc.jpg") center center / cover no-repeat;
+  filter: blur(3px) brightness(0.4) saturate(1.15);
+}
+
+.hold {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.hold .frame { margin-bottom: 32px; }
+
+.hold .frame img { max-width: 340px; }
+
+.hold .artist { margin-bottom: 16px; }
+
+.notice {
+  margin: 0 0 24px;
+  font-size: 15px;
+  font-variant: small-caps;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #cfc8b6;
+}
+
+.reach {
+  margin: 0;
+  font-size: 15px;
+  font-style: italic;
+  color: #d7d3c8;
+}
+
+.reach a         { color: #d9c489; text-decoration: underline; }
+.reach a:visited { color: #c3ab6f; }
+.reach a:hover   { color: #fff3cd; }
+
+.hold .elsewhere {
+  margin: 0;
+  font-size: 12px;
+  font-variant: small-caps;
+  letter-spacing: 0.2em;
+}
+
+.hold .elsewhere a         { color: #d9c489; text-decoration: underline; }
+.hold .elsewhere a:visited { color: #b8a165; }
+.hold .elsewhere a:hover   { color: #fff3cd; }
+
+@media (max-width: 620px) {
+  body.hold-page { padding: 28px 14px; }
+  .hold .frame { margin-bottom: 24px; }
+  .notice { font-size: 13px; letter-spacing: 0.24em; text-indent: 0.24em; }
+}
+
+/* ===========================================================
    The gold portal — video pop-up for the tracks that have one
    =========================================================== */
 
