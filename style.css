@@ -36,12 +36,15 @@ body {
 
 .plaque p { margin: 0; }
 
+/* The wordmark follows the cover art: Segoe UI, italic. The emoji cut is
+   asked for first, but it carries no Latin of its own on most systems, so
+   the stack lands on the text face beside it — which is the look anyway. */
 .artist {
   margin: 0;
   font-weight: normal;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Segoe UI Emoji", "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-style: italic;
   font-size: 30px;
-  font-variant: small-caps;
   letter-spacing: 0.42em;
   text-indent: 0.42em;
   color: #e6dcc0;
