@@ -1,0 +1,15 @@
+media: assets
+
+content:
+  - name: notice
+    label: Holding page
+    path: data/notice.json
+    type: file
+    format: json
+    fields:
+      - name: notice
+        label: Notice
+        type: string
+        description: >-
+          The line shown under MINT SUIT on the holding page.
+          Write it exactly as it should read; it is published as typed.

@@ -297,12 +297,21 @@ body.hold-page {
 .hold .artist { margin-bottom: 16px; }
 
 .notice {
-  margin: 0 0 24px;
+  margin: 0;
   font-size: 15px;
   font-variant: small-caps;
   letter-spacing: 0.3em;
   text-indent: 0.3em;
   color: #c9ced3;
+}
+
+.est {
+  margin: 26px 0 0;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: #7b8085;
 }
 
 .reach {
@@ -317,7 +326,7 @@ body.hold-page {
 .reach a:hover   { color: #ffffff; }
 
 .hold .elsewhere {
-  margin: 0;
+  margin: 0 0 34px;
   font-size: 12px;
   font-variant: small-caps;
   letter-spacing: 0.2em;
@@ -331,6 +340,35 @@ body.hold-page {
   body.hold-page { padding: 28px 14px; }
   .hold .frame { margin-bottom: 24px; }
   .notice { font-size: 13px; letter-spacing: 0.24em; text-indent: 0.24em; }
+}
+
+/* Wide enough for a spread: the cover moves off centre to the left and the
+   type sits beside it, the pair centred as one block. Below this the page
+   stays stacked — two columns at 700px would leave the text in a gutter.
+   The indents go to zero because they exist to re-centre a letter-spaced
+   line, and a line set flush left does not want them. */
+@media (min-width: 760px) {
+  .hold { max-width: 880px; }
+
+  .spread {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    margin-bottom: 36px;
+    text-align: left;
+  }
+
+  .hold .frame { flex: none; margin-bottom: 0; }
+
+  /* Shrink-to-fit, not stretch: a column that takes the whole remaining width
+     leaves its short lines stranded at the left of a wide empty box, and the
+     pair stops reading as centred even though the flex container is. */
+  .titles { flex: 0 1 auto; min-width: 0; }
+
+  .hold .artist { margin-bottom: 18px; text-indent: 0; }
+
+  .notice { text-indent: 0; }
 }
 
 /* ===========================================================
