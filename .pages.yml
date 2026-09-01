@@ -3,13 +3,14 @@ media: assets
 content:
   - name: notice
     label: Holding page
-    path: data/notice.json
+    path: data/notice.txt
     type: file
-    format: json
+    format: raw
     fields:
-      - name: notice
+      - name: body
         label: Notice
-        type: string
+        type: text
         description: >-
-          The line shown under MINT SUIT on the holding page.
-          Write it exactly as it should read; it is published as typed.
+          The text shown beside MINT SUIT on the holding page. Write it as it
+          should read; a blank line starts a new paragraph. Leave it empty and
+          the page keeps its own default.

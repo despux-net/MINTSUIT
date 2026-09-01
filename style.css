@@ -305,6 +305,24 @@ body.hold-page {
   color: #c9ced3;
 }
 
+/* A long notice is prose, not a label: the small caps and the wide tracking
+   that make three words look deliberate make three paragraphs unreadable. The
+   script swaps this class in once the text passes a sentence or so. */
+.notice-long {
+  font-variant: normal;
+  letter-spacing: normal;
+  text-indent: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: left;
+  max-width: 46ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notice-long p { margin: 0 0 0.9em; }
+.notice-long p:last-child { margin-bottom: 0; }
+
 .est {
   margin: 26px 0 0;
   font-size: 11px;
@@ -339,7 +357,14 @@ body.hold-page {
 @media (max-width: 620px) {
   body.hold-page { padding: 28px 14px; }
   .hold .frame { margin-bottom: 24px; }
-  .notice { font-size: 13px; letter-spacing: 0.24em; text-indent: 0.24em; }
+  /* Only the short label gets the tighter tracking here. Without the :not,
+     this rule sits later in the sheet than .notice-long and puts the wide
+     letter-spacing back on a paragraph that must be read. */
+  .notice:not(.notice-long) {
+    font-size: 13px;
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+  }
 }
 
 /* Wide enough for a spread: the cover moves off centre to the left and the
