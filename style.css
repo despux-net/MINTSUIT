@@ -323,6 +323,65 @@ body.hold-page {
 .notice-long p { margin: 0 0 0.9em; }
 .notice-long p:last-child { margin-bottom: 0; }
 
+/* ---------- the records: two equal columns, stacked on a phone ---------- */
+
+.records {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+  margin-top: 34px;
+}
+
+.album-card {
+  width: 100%;
+  max-width: 360px;
+}
+
+.hold .album-card .frame { margin-bottom: 18px; }
+.hold .album-card .frame img { max-width: 100%; }
+
+.record {
+  margin: 0 0 4px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.1;
+  color: #f4f6f7;
+}
+
+.record a         { color: #f4f6f7; text-decoration: underline; }
+.record a:hover   { color: #ffffff; }
+
+.kind {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: #898e93;
+}
+
+.blurb {
+  margin: 0;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #c9ced3;
+}
+
+@media (min-width: 760px) {
+  .records {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 56px;
+  }
+
+  .album-card { flex: 1 1 0; }
+}
+
 .est span { white-space: nowrap; }
 
 .est {
@@ -376,26 +435,6 @@ body.hold-page {
    line, and a line set flush left does not want them. */
 @media (min-width: 760px) {
   .hold { max-width: 880px; }
-
-  .spread {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 48px;
-    margin-bottom: 36px;
-    text-align: left;
-  }
-
-  .hold .frame { flex: none; margin-bottom: 0; }
-
-  /* Shrink-to-fit, not stretch: a column that takes the whole remaining width
-     leaves its short lines stranded at the left of a wide empty box, and the
-     pair stops reading as centred even though the flex container is. */
-  .titles { flex: 0 1 auto; min-width: 0; }
-
-  .hold .artist { margin-bottom: 18px; text-indent: 0; }
-
-  .notice { text-indent: 0; }
 }
 
 /* ===========================================================
