@@ -384,6 +384,9 @@ body.hold-page {
 
 .est span { white-space: nowrap; }
 
+.est a         { color: #b2b8be; text-decoration: underline; }
+.est a:hover   { color: #ffffff; }
+
 .est {
   margin: 26px 0 0;
   font-size: 11px;

@@ -1,8 +1,8 @@
 # MINT SUIT
 
-> MINT SUIT is a music project. Sublime, a seven-track EP recorded between
-> 2018 and 2024, was released on August 22, 2026. This site is the official
-> home of the record: https://mintsuit.com/
+> MINT SUIT is a music project. Its records are Global Report, an album from
+> 2017, and Sublime, a seven-track EP from 2019. This site is the official
+> home of both: https://mintsuit.com/
 
 MINT SUIT makes music as a hobby. There is no schedule behind it and nothing
 to keep up with — tracks get finished when they get finished, which is why
@@ -12,11 +12,12 @@ that hosted them shut down and nobody kept copies.
 
 Genres: R&B/Soul, Experimental, Plunderphonic, Pop, Vaporwave.
 
-## Global Report (album)
+## Global Report (album, 2017)
 
-The newest MINT SUIT album. Cover: https://mintsuit.com/assets/global-report.jpg
+- On Bandcamp: https://mintsuit.bandcamp.com/album/global-report
+- Cover: https://mintsuit.com/assets/global-report.jpg
 
-## Sublime (EP, 2026)
+## Sublime (EP, 2019)
 
 Sublime follows the journey of a night filled with attraction and romance.
 From the very first touch in "Sex & Velvet" to the unforgettable high of
