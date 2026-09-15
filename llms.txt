@@ -1,7 +1,7 @@
 # MINT SUIT
 
 > MINT SUIT is a music project. Its records are Global Report, an album from
-> 2017, and Sublime, a seven-track EP from 2019. This site is the official
+> 2017, and Sublime, a seven-track album from 2019. This site is the official
 > home of both: https://mintsuit.com/
 
 MINT SUIT makes music as a hobby. There is no schedule behind it and nothing
@@ -20,7 +20,7 @@ reports.
 - On Bandcamp: https://mintsuit.bandcamp.com/album/global-report
 - Cover: https://mintsuit.com/assets/global-report.jpg
 
-## Sublime (EP, 2019)
+## Sublime (album, 2019)
 
 Sublime follows the journey of a night filled with attraction and romance.
 From the very first touch in "Sex & Velvet" to the unforgettable high of
