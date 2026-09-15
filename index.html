@@ -100,6 +100,8 @@
       <p class="kind">EP &middot; 2019</p>
       <p class="blurb">A night of attraction and romance, from the first touch in
         &ldquo;Sex &amp; Velvet&rdquo; to the high of &ldquo;Divine&rdquo;.</p>
+      <p class="redeem"><button type="button" class="show-codes"
+         data-album="sublime" data-title="Sublime">Show download codes</button></p>
     </section>
 
     <section class="album-card">
@@ -111,6 +113,8 @@
       <p class="kind">Album &middot; 2017</p>
       <p class="blurb">An ambient collection stitched together from American
         and Japanese weather reports.</p>
+      <p class="redeem"><button type="button" class="show-codes"
+         data-album="global-report" data-title="Global Report">Show download codes</button></p>
     </section>
 
   </div>
@@ -121,7 +125,21 @@
 
 </main>
 
+<div class="portal-overlay codes-overlay" role="dialog" aria-modal="true" aria-labelledby="codes-title">
+  <div class="portal-box codes-box">
+    <div class="portal-bar">
+      <span class="codes-title" id="codes-title"></span>
+      <button type="button" class="portal-close" aria-label="Close">&times;</button>
+    </div>
+    <p class="codes-notice">Redeem your code at
+      <a href="https://mintsuit.bandcamp.com/yum" target="_blank" rel="noopener">mintsuit.bandcamp.com/yum</a></p>
+    <ul class="codes-list"></ul>
+    <p class="portal-foot">Each code works once. If one has already been used, try the next.</p>
+  </div>
+</div>
+
 <script src="script.js"></script>
+<script src="codes.js"></script>
 
 </body>
 </html>
