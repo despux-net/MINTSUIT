@@ -470,7 +470,7 @@ body.hold-page {
 .reach a:hover   { color: #ffffff; }
 
 .hold .elsewhere {
-  margin: 0 0 34px;
+  margin: 18px 0 0;
   font-size: 12px;
   font-variant: small-caps;
   letter-spacing: 0.2em;
