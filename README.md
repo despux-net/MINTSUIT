@@ -45,20 +45,6 @@ Cada cambio que guardes en el panel crea un commit directo en el repo de GitHub,
 
 Los visitantes del sitio no ven ni pueden acceder a este panel — solo funciona si iniciás sesión con una cuenta de GitHub que tenga acceso al repo.
 
-## Códigos de descarga de Bandcamp
-
-Debajo de cada álbum hay un botón *Show download codes* que abre una ventana con
-los códigos de ese álbum en columna, cada uno con su botón para copiarlo, y el
-aviso para canjearlo en https://mintsuit.bandcamp.com/yum.
-
-- La lista está en `data/codes.json` y es **pública**: cualquiera puede verla.
-- Los CSV originales de Bandcamp se guardan en `codes/`, que está en `.gitignore`.
-
-Bandcamp no avisa cuándo se canjea un código, así que la lista no se actualiza
-sola. Para sacar los ya usados, exportá de nuevo los códigos desde Bandcamp (el
-CSV trae **solo los no canjeados**), reemplazá el archivo en `codes/` y pedile a
-Claude que regenere `data/codes.json`.
-
 ## Configurar el DNS en Namecheap
 
 Registros ya configurados para apuntar `mintsuit.com` a GitHub Pages:
