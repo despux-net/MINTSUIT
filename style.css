@@ -36,18 +36,20 @@ body {
 
 .plaque p { margin: 0; }
 
-/* The wordmark follows the cover art: Segoe UI, italic. The emoji cut is
-   asked for first, but it carries no Latin of its own on most systems, so
-   the stack lands on the text face beside it — which is the look anyway. */
+/* The wordmark is cut in Roman inscriptional capitals: Cinzel, drawn after
+   the lettering on Trajan's Column. It is the one web font on the site, and
+   the request asks only for the letters the name uses, so it stays a few
+   kilobytes. Without it the stack falls back to upright Times capitals. */
 .artist {
   margin: 0;
-  font-weight: normal;
-  font-family: "Segoe UI Emoji", "Segoe UI", Tahoma, Verdana, sans-serif;
-  font-style: italic;
-  font-size: 30px;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
+  font-family: "Cinzel", "Trajan Pro", "Times New Roman", Times, serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 34px;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
   color: #eef1f3;
+  text-shadow: 0 1px 0 #000, 0 0 18px rgba(0, 0, 0, 0.6);
 }
 
 .plaque.bottom {
@@ -251,7 +253,7 @@ a.button:active  { border-style: inset; }
 @media (max-width: 620px) {
   body { padding: 18px 10px 34px; font-size: 15px; }
   .slab { padding: 26px 20px 30px; }
-  .artist { font-size: 21px; letter-spacing: 0.3em; text-indent: 0.3em; }
+  .artist { font-size: 24px; letter-spacing: 0.26em; text-indent: 0.26em; }
   .album { font-size: 38px; }
   .lead { font-size: 17px; }
   .slab p { text-align: left; }
