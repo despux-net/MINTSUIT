@@ -1,0 +1,11 @@
+/* TEAM */
+Artist: MINT SUIT
+By: Marcos Despujos
+Contact: mintsuitmusic [at] gmail.com
+Instagram: @despujos
+
+/* SITE */
+Established: 2019
+Last update: 2026-09-16
+Language: English
+Standards: HTML, CSS
