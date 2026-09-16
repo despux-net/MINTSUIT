@@ -425,6 +425,25 @@ body.hold-page {
   .presentation-title { font-size: 20px; }
 }
 
+/* The logo closes the page: a small print in the same bevelled frame as the
+   covers, only thinner, so it reads as a signature rather than a third record. */
+.logo-mark {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 3px;
+  border: 5px ridge #7a7f85;
+  background: #000;
+  line-height: 0;
+}
+
+.logo-mark img {
+  display: block;
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #2c2e30;
+}
+
 .est span { white-space: nowrap; }
 
 .est a         { color: #b2b8be; text-decoration: underline; }
