@@ -382,6 +382,47 @@ body.hold-page {
   .album-card { flex: 1 1 0; }
 }
 
+/* ---------- the presentation: prose under the records ---------- */
+
+.hold .rule { margin: 44px 0 30px; }
+
+.presentation {
+  max-width: 62ch;
+  margin: 0 auto 38px;
+  text-align: left;
+}
+
+.presentation-title {
+  margin: 0 0 22px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.25;
+  text-align: center;
+  color: #f4f6f7;
+}
+
+.presentation p {
+  margin: 0 0 1em;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #c9ced3;
+}
+
+.presentation p:last-child { margin-bottom: 0; }
+
+/* The record's name opens its paragraph like a dateline. */
+.presentation .signal {
+  font-variant: small-caps;
+  letter-spacing: 0.14em;
+  color: #f4f6f7;
+}
+
+@media (max-width: 620px) {
+  .presentation-title { font-size: 20px; }
+}
+
 .est span { white-space: nowrap; }
 
 .est a         { color: #b2b8be; text-decoration: underline; }
