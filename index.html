@@ -114,7 +114,7 @@ layout: null
 <body class="hold-page">
 
 {%- comment -%} Left empty in the panel, the stylesheet's New York skyline shows. {%- endcomment %}
-<div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url }}&quot;)"{% endif %}></div>
+<div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}></div>
 
 <main class="hold">
 
@@ -143,7 +143,7 @@ layout: null
 {% for record in records %}
     <section class="album-card">
       <a class="frame" href="{{ record.url | escape }}">
-        <img src="{{ record.cover | relative_url }}" width="1000" height="1000"
+        <img src="{{ record.cover | relative_url | escape }}" width="1000" height="1000"
              alt="{{ top.wordmark | escape }} &mdash; {{ record.title | escape }}, album cover">
       </a>
       <h2 class="record"><a href="{{ record.url | escape }}">{{ record.title | escape }}</a></h2>
@@ -168,7 +168,7 @@ layout: null
   </section>
 {% if bottom.logo and bottom.logo != "" %}
   <div class="logo-mark">
-    <img src="{{ bottom.logo | relative_url }}" width="360" height="271" alt="{{ bottom.logo_alt | escape }}">
+    <img src="{{ bottom.logo | relative_url | escape }}" width="360" height="271" alt="{{ bottom.logo_alt | escape }}">
   </div>
 {% endif %}
   <p class="elsewhere">
