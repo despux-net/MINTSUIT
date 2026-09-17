@@ -36,20 +36,24 @@ body {
 
 .plaque p { margin: 0; }
 
-/* The wordmark is cut in Roman inscriptional capitals: Cinzel, drawn after
-   the lettering on Trajan's Column. It is the one web font on the site, and
-   the request asks only for the letters the name uses, so it stays a few
-   kilobytes. Without it the stack falls back to upright Times capitals. */
+/* The wordmark keeps the Roman capital, cut thin: Cormorant SC at its lightest,
+   a classical face whose hairlines carry the same inscriptional essence as the
+   heavier Trajan cut without the weight. It is the one web font on the site,
+   and the request asks only for the letters the name uses, so it stays a few
+   kilobytes. Without it the stack falls back to upright Times capitals.
+
+   Thin strokes need a little more size and a little less tracking than the
+   heavy cut did, or the line falls apart into separate letters. */
 .artist {
   margin: 0;
-  font-family: "Cinzel", "Trajan Pro", "Times New Roman", Times, serif;
-  font-weight: 600;
+  font-family: "Cormorant SC", "Cinzel", "Trajan Pro", "Times New Roman", Times, serif;
+  font-weight: 300;
   font-style: normal;
-  font-size: 34px;
-  letter-spacing: 0.34em;
-  text-indent: 0.34em;
-  color: #eef1f3;
-  text-shadow: 0 1px 0 #000, 0 0 18px rgba(0, 0, 0, 0.6);
+  font-size: 39px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #f4f6f7;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 22px rgba(0, 0, 0, 0.7);
 }
 
 .plaque.bottom {
@@ -253,7 +257,7 @@ a.button:active  { border-style: inset; }
 @media (max-width: 620px) {
   body { padding: 18px 10px 34px; font-size: 15px; }
   .slab { padding: 26px 20px 30px; }
-  .artist { font-size: 24px; letter-spacing: 0.26em; text-indent: 0.26em; }
+  .artist { font-size: 28px; letter-spacing: 0.24em; text-indent: 0.24em; }
   .album { font-size: 38px; }
   .lead { font-size: 17px; }
   .slab p { text-align: left; }
