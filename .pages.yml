@@ -14,3 +14,18 @@ content:
           The text shown beside MINT SUIT on the holding page. Write it as it
           should read; a blank line starts a new paragraph. Leave it empty and
           the page keeps its own default.
+
+  - name: background
+    label: Background
+    path: data/background.json
+    type: file
+    format: json
+    fields:
+      - name: image
+        label: Background image
+        type: image
+        description: >-
+          The photo behind the whole page. Upload a new one or pick one already
+          in assets; the file can have any name. It is shown blurred and
+          darkened, so a JPG under 1 MB is plenty. Leave it empty and the page
+          goes back to the New York skyline.

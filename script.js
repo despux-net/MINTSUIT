@@ -44,3 +44,61 @@
     .catch(function () { /* the markup keeps whatever it shipped with */ });
 
 })();
+
+
+/* The background photo is picked in data/background.json, which the Pages CMS
+   panel writes whenever a new image is uploaded, so the file name can be
+   anything. The image is loaded before it is shown; if the file is missing,
+   empty, or points at an image that will not load, the New York skyline
+   takes its place, and a slow network gets it too rather than a black page. */
+
+(function () {
+
+  var el = document.querySelector('.backdrop');
+  if (!el) return;
+
+  var FALLBACK = 'assets/nyc.jpg';
+  var shown = false;
+  var timer;
+
+  /* Names typed by hand can hold spaces; ones that are already escaped
+     are left alone so they are not escaped twice. */
+  function address(src) {
+    return /%[0-9a-f]{2}/i.test(src) ? src : encodeURI(src);
+  }
+
+  function show(src) {
+    if (shown) return;
+    shown = true;
+    clearTimeout(timer);
+    el.style.backgroundImage = 'url("' + address(src).replace(/"/g, '%22') + '")';
+    el.className += ' ready';
+  }
+
+  function load(src, onFail) {
+    var img = new Image();
+    img.onload = function () { show(src); };
+    img.onerror = onFail;
+    img.src = address(src);
+  }
+
+  function fallback() {
+    load(FALLBACK, function () { show(FALLBACK); });
+  }
+
+  /* Past this, stop waiting for the chosen photo and show the default. */
+  timer = setTimeout(fallback, 4000);
+
+  if (typeof fetch !== 'function') return fallback();
+
+  fetch('data/background.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : {}; })
+    .then(function (data) {
+      var src = data && typeof data.image === 'string' ? data.image.trim() : '';
+      if (!src) return fallback();
+      if (!/^https?:\/\//.test(src)) src = src.replace(/^\/+/, '');
+      load(src, fallback);
+    })
+    .catch(fallback);
+
+})();

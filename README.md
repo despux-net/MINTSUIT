@@ -31,19 +31,21 @@ licencia de terceros.
 > alimentan la página. El contenido ahora se edita directamente en `index.html`.
 > Se pueden borrar cuando quieras.
 
-## Editar el contenido — panel de administración
+## Editar el contenido — Pages CMS
 
-El sitio tiene un panel visual para cambiar textos, imágenes y links sin tocar código, en:
+El sitio se edita desde **https://app.pagescms.org**: entrá con la cuenta de GitHub
+que tiene acceso a `despux-net/MINTSUIT` y elegí ese repo. La configuración del panel
+está en `.pages.yml`.
 
-**https://mintsuit.netlify.app/admin**
+- **Holding page** → el texto de dedicatoria bajo MINT SUIT (`data/notice.txt`).
+- **Background** → la foto de fondo de toda la página (`data/background.json`).
+  Subí una imagen nueva o elegí una de `assets/`, guardá, y listo. El nombre del
+  archivo puede ser cualquiera: la página lee la ruta que guarda el panel. Si el
+  campo queda vacío o la imagen no carga, vuelve el skyline de Nueva York.
+  Conviene un JPG de menos de 1 MB: se muestra desenfocado y oscurecido.
 
-(No uses `mintsuit.com/admin` para esto — el login de GitHub solo funciona desde el dominio `.netlify.app`, porque el sitio real vive en GitHub Pages y Netlify solo se usa como sistema de login del panel, no como hosting.)
-
-Entra a esa URL, haz clic en "Login with GitHub", inicia sesión con la cuenta que tiene acceso al repo `despux-net/MINTSUIT`, y edita.
-
-Cada cambio que guardes en el panel crea un commit directo en el repo de GitHub, y GitHub Pages vuelve a publicar el sitio (mintsuit.com) solo, en 1-2 minutos.
-
-Los visitantes del sitio no ven ni pueden acceder a este panel — solo funciona si iniciás sesión con una cuenta de GitHub que tenga acceso al repo.
+Cada vez que guardás se crea un commit en GitHub y mintsuit.com se republica solo
+en 1-2 minutos. Los visitantes no ven el panel.
 
 ## Configurar el DNS en Namecheap
 
