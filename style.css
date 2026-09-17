@@ -274,7 +274,9 @@ body.hold-page {
 }
 
 /* Bled 30px past every edge: a blur samples beyond the element it is on, and
-   without the overscan the four sides wash out into a pale frame. */
+   without the overscan the four sides wash out into a pale frame. The photo
+   chosen in the panel arrives as an inline style on the element; this one is
+   the default when that field is empty. */
 .backdrop {
   position: fixed;
   top: -30px;
@@ -285,18 +287,6 @@ body.hold-page {
   background: #000 url("assets/nyc.jpg") center center / cover no-repeat;
   filter: blur(3px) brightness(0.4) saturate(1.15);
 }
-
-/* With scripts on, the photo is chosen in data/background.json, so the
-   default is not fetched up front: the backdrop waits black and fades in
-   once script.js has the right image loaded. Without scripts the skyline
-   above stays exactly as it was. */
-.js .backdrop {
-  background-image: none;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.js .backdrop.ready { opacity: 1; }
 
 .hold {
   width: 100%;

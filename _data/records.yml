@@ -1,0 +1,13 @@
+records:
+  - title: Sublime
+    kind: Album
+    year: "2019"
+    url: https://mintsuit.bandcamp.com/album/sublime
+    cover: /assets/sublime.jpg
+    blurb: A night of attraction and romance, from the first touch in “Sex & Velvet” to the high of “Divine”.
+  - title: Global Report
+    kind: Album
+    year: "2017"
+    url: https://mintsuit.bandcamp.com/album/global-report
+    cover: /assets/global-report.jpg
+    blurb: An ambient collection stitched together from American and Japanese weather reports.

@@ -1,15 +1,21 @@
+---
+layout: null
+permalink: /404.html
+---
+{%- assign top = site.data.top -%}
+{%- assign page_text = site.data.not_found -%}
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#000000">
-<title>MINT SUIT &mdash; Page not found</title>
+<title>{{ page_text.page_title | escape }}</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="/assets/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;display=swap&amp;text=MINTSU">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;display=swap&amp;text={{ top.wordmark | url_encode }}">
 <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -18,24 +24,24 @@
 <div class="page">
 
   <div class="plaque">
-    <h1 class="artist">MINT&nbsp;SUIT</h1>
+    <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
   </div>
 
   <div class="slab">
 
-    <h2 class="album">404</h2>
-    <p class="sub">The page you asked for is not here</p>
+    <h2 class="album">{{ page_text.heading | escape }}</h2>
+    <p class="sub">{{ page_text.message | escape }}</p>
 
     <div class="rule"><span>&#10022;</span></div>
 
     <p class="go">
-      <a class="button" href="/">Back to the record</a>
+      <a class="button" href="/">{{ page_text.button | escape }}</a>
     </p>
 
   </div>
 
   <div class="plaque bottom">
-    <p>&copy; 2019 MINT SUIT &nbsp;&middot;&nbsp; All rights reserved</p>
+    <p>{{ page_text.footer | escape }}</p>
   </div>
 
 </div>

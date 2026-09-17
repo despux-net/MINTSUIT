@@ -1,106 +1,105 @@
+---
+layout: null
+---
+{%- comment -%}
+  Everything this page shows comes from _data/, which is edited in Pages CMS.
+  The markup and the structured data below are built from it at publish time.
+{%- endcomment -%}
+{%- assign top = site.data.top -%}
+{%- assign share = site.data.sharing -%}
+{%- assign records = site.data.records.records -%}
+{%- assign text = site.data.presentation -%}
+{%- assign bottom = site.data.bottom -%}
+{%- assign background = site.data.background.image | strip -%}
+{%- assign home = "/" | absolute_url -%}
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#000000">
-<script>document.documentElement.className += ' js';</script>
 <meta name="google-site-verification" content="BnBIf478BiV4xo74loHMY_x8kmQGPE7cRNkZ8mEJ8gU" />
-<title>MINT SUIT</title>
-<link rel="canonical" href="https://mintsuit.com/">
-<meta name="description" content="MINT SUIT &mdash; official site. The page is under construction. In the meantime the record is on Bandcamp, and the videos are on YouTube.">
-<meta name="author" content="MINT SUIT">
-<meta name="copyright" content="&copy; 2019 MINT SUIT">
+<title>{{ share.page_title | escape }}</title>
+<link rel="canonical" href="{{ home }}">
+<meta name="description" content="{{ share.description | escape }}">
+<meta name="author" content="{{ top.wordmark | escape }}">
+<meta name="copyright" content="&copy; 2019 {{ top.wordmark | escape }}">
 <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
-<meta name="dcterms.title" content="MINT SUIT">
-<meta name="dcterms.creator" content="MINT SUIT">
+<meta name="dcterms.title" content="{{ top.wordmark | escape }}">
+<meta name="dcterms.creator" content="{{ top.wordmark | escape }}">
 <meta name="dcterms.created" content="2019">
 <meta name="dcterms.issued" content="2019">
-<meta name="dcterms.rights" content="&copy; 2019 MINT SUIT">
+<meta name="dcterms.rights" content="&copy; 2019 {{ top.wordmark | escape }}">
 
-<meta property="og:title" content="MINT SUIT">
-<meta property="og:description" content="Official site. Page under construction.">
+<meta property="og:title" content="{{ share.page_title | escape }}">
+<meta property="og:description" content="{{ share.share_description | escape }}">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://mintsuit.com/assets/sublime-og.jpg">
-<meta property="og:url" content="https://mintsuit.com/">
-<meta property="og:site_name" content="MINT SUIT">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="MINT SUIT — Sublime and Global Report">
+<meta property="og:image" content="{{ share.share_image | absolute_url }}">
+<meta property="og:url" content="{{ home }}">
+<meta property="og:site_name" content="{{ top.wordmark | escape }}">
+<meta property="og:image:alt" content="{{ share.share_image_alt | escape }}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mintsuit.com/assets/sublime-og.jpg">
+<meta name="twitter:image" content="{{ share.share_image | absolute_url }}">
 
-<link rel="icon" href="assets/favicon.ico">
-<link rel="author" href="humans.txt">
+<link rel="icon" href="/assets/favicon.ico">
+<link rel="author" href="/humans.txt">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "MusicGroup",
-      "@id": "https://mintsuit.com/#artist",
-      "name": "MINT SUIT",
-      "alternateName": "MINTSUIT",
+      "@id": "{{ home }}#artist",
+      "name": {{ top.wordmark | jsonify }},
+      "alternateName": {{ top.wordmark | remove: " " | jsonify }},
       "foundingDate": "2019",
-      "url": "https://mintsuit.com/",
-      "image": "https://mintsuit.com/assets/sublime.jpg",
-      "email": "mintsuitmusic@gmail.com",
+      "url": "{{ home }}",
+      "image": {{ records.first.cover | absolute_url | jsonify }},
+      "email": {{ bottom.email | jsonify }},
       "description": "MINT SUIT makes music as a hobby. There have been songs since 2013, uploaded under a different artist name; most of them are gone. Sublime came together between 2018 and 2024.",
-      "genre": [
-        "R&B/Soul",
-        "Experimental",
-        "Plunderphonic",
-        "Pop",
-        "Vaporwave"
-      ],
+      "genre": ["R&B/Soul", "Experimental", "Plunderphonic", "Pop", "Vaporwave"],
       "sameAs": [
-        "https://mintsuit.bandcamp.com",
-        "https://www.youtube.com/@mintsuitmusic",
-        "https://instagram.com/despujos"
+        {%- for link in bottom.links %}
+        {{ link.url | jsonify }}{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
       ],
       "album": [
+        {%- for record in records %}
         {
           "@type": "MusicAlbum",
-          "name": "Global Report",
-          "datePublished": "2017",
-          "image": "https://mintsuit.com/assets/global-report.jpg",
-          "url": "https://mintsuit.bandcamp.com/album/global-report",
-          "byArtist": { "@id": "https://mintsuit.com/#artist" }
-        },
-        {
-          "@type": "MusicAlbum",
-          "name": "Sublime",
-          "datePublished": "2019",
-          "image": "https://mintsuit.com/assets/sublime.jpg",
-          "url": "https://mintsuit.bandcamp.com/album/sublime",
-          "byArtist": { "@id": "https://mintsuit.com/#artist" }
-        }
+          "name": {{ record.title | jsonify }},
+          "datePublished": {{ record.year | append: "" | jsonify }},
+          "image": {{ record.cover | absolute_url | jsonify }},
+          "url": {{ record.url | jsonify }},
+          "byArtist": { "@id": "{{ home }}#artist" }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
       ]
     },
     {
       "@type": "WebSite",
-      "@id": "https://mintsuit.com/#website",
-      "url": "https://mintsuit.com/",
-      "name": "MINT SUIT",
-      "publisher": { "@id": "https://mintsuit.com/#artist" },
+      "@id": "{{ home }}#website",
+      "url": "{{ home }}",
+      "name": {{ top.wordmark | jsonify }},
+      "publisher": { "@id": "{{ home }}#artist" },
       "inLanguage": "en",
       "dateCreated": "2019",
       "datePublished": "2019",
       "copyrightYear": 2019,
-      "copyrightHolder": { "@id": "https://mintsuit.com/#artist" }
+      "copyrightHolder": { "@id": "{{ home }}#artist" }
     },
     {
       "@type": "WebPage",
-      "@id": "https://mintsuit.com/#webpage",
-      "url": "https://mintsuit.com/",
-      "name": "MINT SUIT",
+      "@id": "{{ home }}#webpage",
+      "url": "{{ home }}",
+      "name": {{ share.page_title | jsonify }},
       "inLanguage": "en",
-      "isPartOf": { "@id": "https://mintsuit.com/#website" },
-      "about": { "@id": "https://mintsuit.com/#artist" },
-      "primaryImageOfPage": "https://mintsuit.com/assets/sublime-og.jpg",
+      "isPartOf": { "@id": "{{ home }}#website" },
+      "about": { "@id": "{{ home }}#artist" },
+      "primaryImageOfPage": {{ share.share_image | absolute_url | jsonify }},
       "datePublished": "2019",
       "copyrightYear": 2019,
-      "copyrightHolder": { "@id": "https://mintsuit.com/#artist" }
+      "copyrightHolder": { "@id": "{{ home }}#artist" }
     }
   ]
 }
@@ -108,76 +107,81 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;display=swap&amp;text=MINTSU">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;display=swap&amp;text={{ top.wordmark | url_encode }}">
+<link rel="stylesheet" href="/style.css">
 </head>
 
 <body class="hold-page">
 
-<div class="backdrop"></div>
+{%- comment -%} Left empty in the panel, the stylesheet's New York skyline shows. {%- endcomment %}
+<div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url }}&quot;)"{% endif %}></div>
 
 <main class="hold">
 
-  <h1 class="artist">MINT&nbsp;SUIT</h1>
-  <div class="notice">Page under construction</div>
+  <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
+{%- comment -%}
+  One short line reads as a label in spaced small caps; anything longer, or
+  more than one line, is prose and gets ordinary type in paragraphs.
+{%- endcomment -%}
+{%- assign notice_lines = "" | split: "" -%}
+{%- assign raw_lines = top.notice | strip | newline_to_br | split: "<br />" -%}
+{%- for line in raw_lines -%}
+  {%- assign trimmed = line | strip -%}
+  {%- if trimmed != "" -%}{%- assign notice_lines = notice_lines | push: trimmed -%}{%- endif -%}
+{%- endfor -%}
+{%- if notice_lines.size == 1 and notice_lines.first.size <= 90 %}
+  <div class="notice">{{ notice_lines.first | escape }}</div>
+{%- elsif notice_lines.size > 0 %}
+  <div class="notice notice-long">
+    {%- for line in notice_lines %}
+    <p>{{ line | escape }}</p>
+    {%- endfor %}
+  </div>
+{%- endif %}
 
   <div class="records">
-
+{% for record in records %}
     <section class="album-card">
-      <a class="frame" href="https://mintsuit.bandcamp.com/album/sublime">
-        <img src="assets/sublime.jpg" width="1000" height="1000"
-             alt="MINT SUIT &mdash; Sublime, album cover">
+      <a class="frame" href="{{ record.url | escape }}">
+        <img src="{{ record.cover | relative_url }}" width="1000" height="1000"
+             alt="{{ top.wordmark | escape }} &mdash; {{ record.title | escape }}, album cover">
       </a>
-      <h2 class="record"><a href="https://mintsuit.bandcamp.com/album/sublime">Sublime</a></h2>
-      <p class="kind">Album &middot; 2019</p>
-      <p class="blurb">A night of attraction and romance, from the first touch in
-        &ldquo;Sex &amp; Velvet&rdquo; to the high of &ldquo;Divine&rdquo;.</p>
+      <h2 class="record"><a href="{{ record.url | escape }}">{{ record.title | escape }}</a></h2>
+      <p class="kind">{{ record.kind | escape }}{% if record.year and record.year != "" %} &middot; {{ record.year | escape }}{% endif %}</p>
+      {%- if record.blurb and record.blurb != "" %}
+      <p class="blurb">{{ record.blurb | escape }}</p>
+      {%- endif %}
     </section>
-
-    <section class="album-card">
-      <a class="frame" href="https://mintsuit.bandcamp.com/album/global-report">
-        <img src="assets/global-report.jpg" width="1000" height="1000"
-             alt="MINT SUIT &mdash; Global Report, album cover">
-      </a>
-      <h2 class="record"><a href="https://mintsuit.bandcamp.com/album/global-report">Global Report</a></h2>
-      <p class="kind">Album &middot; 2017</p>
-      <p class="blurb">An ambient collection stitched together from American
-        and Japanese weather reports.</p>
-    </section>
-
+{% endfor %}
   </div>
 
   <div class="rule"><span>&#10022;</span></div>
 
   <section class="presentation">
-    <h2 class="presentation-title">MINT SUIT presents: two frequencies, one signal &mdash; Global&nbsp;Report and Sublime</h2>
+    {%- if text.title and text.title != "" %}
+    <h2 class="presentation-title">{{ text.title | escape }}</h2>
+    {%- endif %}
+    {%- for paragraph in text.paragraphs %}
 
-    <p>I make music as MINT SUIT. Two collections exist under that name. They were never meant to match.</p>
-
-    <p><span class="signal">Global Report.</span> 2017. A forecast that never resolves. Sourced entirely from Japanese and North American weather broadcasts, 80s and 90s, pulled down into a slower register until the voice on the other end stops informing you and starts seducing you instead &mdash; the way certainty always did, back when a man in a suit could promise you tomorrow&rsquo;s sky and you believed him. No tracks. No titles. Two transmissions only: Side&nbsp;A, 21:34. Side&nbsp;B, 22:22. Forty-four minutes, uninterrupted, because a signal doesn&rsquo;t pause to be liked. It fades, it distorts, it finds itself again on another frequency. You don&rsquo;t select a favorite moment. You are placed inside the broadcast and left there.</p>
-
-    <p><span class="signal">Sublime.</span> 2019. The same instinct, dressed for the counter display. Beauty commercials. Perfume campaigns. The whispering voice that has sold eternal youth since before either of us were born, now slowed just enough to sound like it&rsquo;s confiding in you personally. Warmer. Faster. Built to move product, and bodies. Eight discrete transmissions this time, because desire needs a runtime it can return to: Sex &amp; Velvet, 3:15. Hungry Lips, 3:27. Vanilla, 2:48. Y2Ks Eyes, 3:20. Redamancy, 3:40. Pick You Up At&nbsp;8, 4:07. DEMO #01 indulges itself to 6:00, a campaign that forgot to end. Divine closes the display at 1:18 &mdash; the shortest promise, the fastest close.</p>
-
-    <p>Forty-four minutes of weather you cannot escape. Twenty-eight minutes of glamour you can loop indefinitely. Both are the same transmission, sold twice, in two different decades of the same eternal season.</p>
+    <p>{% if paragraph.lead and paragraph.lead != "" %}<span class="signal">{{ paragraph.lead | escape }}</span> {% endif %}{{ paragraph.text | escape }}</p>
+    {%- endfor %}
   </section>
-
+{% if bottom.logo and bottom.logo != "" %}
   <div class="logo-mark">
-    <img src="assets/logo-perfil.jpg" width="360" height="271" alt="MINT SUIT logo">
+    <img src="{{ bottom.logo | relative_url }}" width="360" height="271" alt="{{ bottom.logo_alt | escape }}">
   </div>
-
+{% endif %}
   <p class="elsewhere">
-    <a href="https://mintsuit.bandcamp.com">Bandcamp</a> &nbsp;&middot;&nbsp;
-    <a href="https://www.youtube.com/@mintsuitmusic">YouTube</a> &nbsp;&middot;&nbsp;
-    <a href="https://instagram.com/despujos">Instagram</a>
+    {%- for link in bottom.links %}
+    <a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %} &nbsp;&middot;&nbsp;{% endunless %}
+    {%- endfor %}
   </p>
 
-  <p class="est">Est&nbsp;2019 &nbsp;&middot; <span>MINT&nbsp;SUIT by Marcos&nbsp;Despujos</span>
-    &nbsp;&middot; <span>Please get in touch at
-    <a href="mailto:mintsuitmusic@gmail.com">mintsuitmusic@gmail.com</a></span></p>
+  <p class="est">{{ bottom.established | escape | replace: " ", "&nbsp;" }} &nbsp;&middot; <span>{{ bottom.byline | escape }}</span>
+    &nbsp;&middot; <span>{{ bottom.contact | escape }}
+    <a href="mailto:{{ bottom.email | escape }}">{{ bottom.email | escape }}</a></span></p>
 
 </main>
-
-<script src="script.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,14 @@
+# GitHub Pages builds the site with Jekyll. The pages are plain HTML with a
+# little Liquid; everything they show lives in _data/ and is edited from
+# Pages CMS (see .pages.yml and the README).
+
+url: https://mintsuit.com
+
+exclude:
+  - README.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: null

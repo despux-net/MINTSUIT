@@ -1,31 +1,181 @@
-media: assets
+# Pages CMS (https://app.pagescms.org) — everything the site shows is edited
+# here. Each entry is one file in _data/; saving commits it, and GitHub Pages
+# rebuilds mintsuit.com in a minute or two.
+
+media:
+  input: assets
+  output: /assets
 
 content:
-  - name: notice
-    label: Holding page
-    path: data/notice.txt
+
+  - name: top
+    label: Top of the page
+    path: _data/top.yml
     type: file
-    format: raw
     fields:
-      - name: body
-        label: Notice
+      - name: wordmark
+        label: Name at the top
+        type: string
+        required: true
+        description: The big title, set in Roman capitals.
+      - name: notice
+        label: Line under the name
         type: text
         description: >-
-          The text shown beside MINT SUIT on the holding page. Write it as it
-          should read; a blank line starts a new paragraph. Leave it empty and
-          the page keeps its own default.
+          One short line shows in spaced small caps. Several lines, or one long
+          line, show as ordinary paragraphs. Leave it empty to hide it.
 
   - name: background
     label: Background
-    path: data/background.json
+    path: _data/background.yml
     type: file
-    format: json
     fields:
       - name: image
         label: Background image
         type: image
         description: >-
-          The photo behind the whole page. Upload a new one or pick one already
-          in assets; the file can have any name. It is shown blurred and
-          darkened, so a JPG under 1 MB is plenty. Leave it empty and the page
-          goes back to the New York skyline.
+          The photo behind the whole page; the file can have any name. It is
+          shown blurred and darkened, so a JPG under 1 MB is plenty. Leave it
+          empty and the New York skyline comes back.
+
+  - name: records
+    label: Records
+    path: _data/records.yml
+    type: file
+    fields:
+      - name: records
+        label: Records
+        type: object
+        list: true
+        description: Shown side by side, in this order. Drag to reorder.
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: kind
+            label: Type
+            type: string
+            description: For example Album or EP.
+          - name: year
+            label: Year
+            type: string
+          - name: url
+            label: Link
+            type: string
+            description: Where the cover and the title go, usually Bandcamp.
+          - name: cover
+            label: Cover
+            type: image
+            description: A square image works best.
+          - name: blurb
+            label: Short description
+            type: text
+
+  - name: presentation
+    label: Presentation
+    path: _data/presentation.yml
+    type: file
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: paragraphs
+        label: Paragraphs
+        type: object
+        list: true
+        fields:
+          - name: lead
+            label: Opening words (optional)
+            type: string
+            description: >-
+              Set in small caps at the start of the paragraph, like
+              "Global Report." Leave empty for a plain paragraph.
+          - name: text
+            label: Text
+            type: text
+            required: true
+
+  - name: bottom
+    label: Logo, links and footer
+    path: _data/bottom.yml
+    type: file
+    fields:
+      - name: logo
+        label: Logo
+        type: image
+        description: Shown small and centred under the presentation. Leave empty to hide it.
+      - name: logo_alt
+        label: Logo description
+        type: string
+        description: Read aloud by screen readers.
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Text
+            type: string
+            required: true
+          - name: url
+            label: Address
+            type: string
+            required: true
+      - name: established
+        label: Established
+        type: string
+      - name: byline
+        label: Byline
+        type: string
+      - name: contact
+        label: Text before the email
+        type: string
+      - name: email
+        label: Email
+        type: string
+
+  - name: sharing
+    label: Search and sharing
+    path: _data/sharing.yml
+    type: file
+    fields:
+      - name: page_title
+        label: Browser tab title
+        type: string
+      - name: description
+        label: Search description
+        type: text
+        description: The summary Google may show under the link.
+      - name: share_description
+        label: Share description
+        type: text
+        description: Shown when the link is posted on social media or in chats.
+      - name: share_image
+        label: Share image
+        type: image
+        description: 1200 × 630 works best.
+      - name: share_image_alt
+        label: Share image description
+        type: string
+
+  - name: not_found
+    label: Page not found (404)
+    path: _data/not_found.yml
+    type: file
+    fields:
+      - name: page_title
+        label: Browser tab title
+        type: string
+      - name: heading
+        label: Heading
+        type: string
+      - name: message
+        label: Message
+        type: string
+      - name: button
+        label: Button text
+        type: string
+      - name: footer
+        label: Footer
+        type: string

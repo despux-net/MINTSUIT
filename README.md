@@ -7,7 +7,7 @@ externas, sin animaciones. Solo la portada de *Sublime* y su descripción.
 ## Estructura
 
 ```
-index.html               → la página entera (HTML estático, sin JS)
+index.html               → plantilla de la página (Jekyll); el contenido está en _data/
 style.css                → todos los estilos
 assets/sublime.jpg       → portada del álbum (1000×1000)
 assets/sublime-og.jpg    → portada para redes sociales (600×600)
@@ -33,19 +33,28 @@ licencia de terceros.
 
 ## Editar el contenido — Pages CMS
 
-El sitio se edita desde **https://app.pagescms.org**: entrá con la cuenta de GitHub
-que tiene acceso a `despux-net/MINTSUIT` y elegí ese repo. La configuración del panel
-está en `.pages.yml`.
+Todo lo que se ve en la página —textos, portadas, fondo, logo, enlaces, footer, la
+página 404 y lo que aparece al compartir el link— se edita desde
+**https://app.pagescms.org**: entrá con la cuenta de GitHub que tiene acceso a
+`despux-net/MINTSUIT` y elegí ese repo.
 
-- **Holding page** → el texto de dedicatoria bajo MINT SUIT (`data/notice.txt`).
-- **Background** → la foto de fondo de toda la página (`data/background.json`).
-  Subí una imagen nueva o elegí una de `assets/`, guardá, y listo. El nombre del
-  archivo puede ser cualquiera: la página lee la ruta que guarda el panel. Si el
-  campo queda vacío o la imagen no carga, vuelve el skyline de Nueva York.
-  Conviene un JPG de menos de 1 MB: se muestra desenfocado y oscurecido.
+| En el panel | Archivo | Qué cambia |
+|---|---|---|
+| Top of the page | `_data/top.yml` | el nombre MINT SUIT y la línea de dedicatoria |
+| Background | `_data/background.yml` | la foto de fondo |
+| Records | `_data/records.yml` | los álbumes: portada, título, tipo, año, link, descripción; se pueden agregar, quitar y reordenar |
+| Presentation | `_data/presentation.yml` | el título y los párrafos del texto largo |
+| Logo, links and footer | `_data/bottom.yml` | el logo, los enlaces y el pie |
+| Search and sharing | `_data/sharing.yml` | título de la pestaña, descripción para Google, imagen y texto al compartir |
+| Page not found (404) | `_data/not_found.yml` | los textos de la página de error |
 
-Cada vez que guardás se crea un commit en GitHub y mintsuit.com se republica solo
-en 1-2 minutos. Los visitantes no ven el panel.
+Las imágenes se suben desde el mismo panel a `assets/` y pueden tener cualquier
+nombre. Cada vez que guardás se crea un commit y GitHub Pages recompila el sitio con
+Jekyll en 1-2 minutos. La configuración del panel está en `.pages.yml`.
+
+`index.html` y `404.html` son plantillas: el contenido no se edita ahí sino en
+`_data/`. Los datos estructurados para Google (álbumes, links, imágenes) se arman solos
+a partir de lo mismo.
 
 ## Configurar el DNS en Namecheap
 
