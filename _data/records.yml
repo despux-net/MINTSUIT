@@ -4,40 +4,8 @@ records:
     year: "2019"
     url: https://mintsuit.bandcamp.com/album/sublime
     cover: /assets/sublime.jpg
-    tracks:
-      - title: Sex & Velvet
-        length: "3:15"
-        url: https://mintsuit.bandcamp.com/track/sex-velvet
-      - title: Hungry Lips
-        length: "3:27"
-        url: https://mintsuit.bandcamp.com/track/hungry-lips-2
-      - title: Vanilla
-        length: "2:48"
-        url: https://mintsuit.bandcamp.com/track/vanilla
-      - title: Y2Ks Eyes
-        length: "3:20"
-        url: https://mintsuit.bandcamp.com/track/y2ks-eyes
-      - title: Redamancy
-        length: "3:40"
-        url: https://mintsuit.bandcamp.com/track/redamancy
-      - title: Pick You Up At 8
-        length: "4:07"
-        url: https://mintsuit.bandcamp.com/track/pick-you-up-at-8
-      - title: "DEMO #01"
-        length: "6:00"
-        url: https://mintsuit.bandcamp.com/track/demo-01
-      - title: Divine
-        length: "1:18"
-        url: https://mintsuit.bandcamp.com/track/divine
   - title: Global Report
     kind: Album
     year: "2017"
     url: https://mintsuit.bandcamp.com/album/global-report
     cover: /assets/global-report.jpg
-    tracks:
-      - title: Global Report [Side A]
-        length: "21:34"
-        url: https://mintsuit.bandcamp.com/track/global-report-side-a
-      - title: Global Report [Side B]
-        length: "22:22"
-        url: https://mintsuit.bandcamp.com/track/global-report-side-b

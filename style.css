@@ -636,33 +636,40 @@ body.locked { overflow: hidden; }
 }
 
 /* ===========================================================
-   The skin — an early-2000s fashion magazine online
+   The skin — an early-2000s fashion magazine, after dark
    ===========================================================
 
-   The page is dressed like a fashion title's website from around 2002:
-   an 800px ivory page with a double rule, set on a faint pinstripe, a
-   photographic masthead, a spaced-capitals section bar, Georgia for the
-   reading text and Verdana for the small labels, and one accent, a deep
-   bordeaux. Everything is flat and printed-looking: hairlines instead of
-   bevels, no glow, no pixel type. On a desktop the modules sit in two
-   columns; on a phone they stack in one (see the end of the file). */
+   The page keeps the manners of a fashion title's website from around
+   2002 — a framed page with a double rule, a photographic masthead,
+   navigation in spaced capitals between rules, covers mounted like prints,
+   Georgia for the story — and sees them through a vaporwave night: a deep
+   violet ground, ivory type, and the genre's three colours (pink, lilac,
+   cyan) used sparingly, as hairlines, a drop cap and a split-colour shadow
+   on the name. Everything stays flat: no glass, no glow boxes. On a desktop
+   the modules sit in two columns; on a phone they stack in one (see the
+   end of the file). */
 
 body.hold-page {
   display: block;
   min-height: 0;
   padding: 32px 0 48px;
-  background-color: #efe9df;
-  /* a faint pinstripe, like the paper of a lookbook */
-  background-image: repeating-linear-gradient(45deg, #e7dfd2 0 1px, transparent 1px 7px);
-  color: #1b1a18;
+  background-color: #0e0a18;
+  /* a faint pinstripe over a dusk that deepens down the page */
+  background-image:
+    repeating-linear-gradient(45deg, rgba(185, 140, 255, 0.07) 0 1px, transparent 1px 7px),
+    linear-gradient(#22123a 0, #0e0a18 520px);
+  background-repeat: repeat, no-repeat;
+  color: #ece4f5;
   font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
 }
 
+::selection { color: #0e0a18; background: #ff71ce; }
+
 /* :where() keeps these at the weight of a bare 'a', so every component
    below can set its own link colour without a fight. */
-:where(body.hold-page) a         { color: #7d1a2a; }
-:where(body.hold-page) a:visited { color: #5e1420; }
-:where(body.hold-page) a:hover   { color: #1b1a18; }
+:where(body.hold-page) a         { color: #ff8fd6; }
+:where(body.hold-page) a:visited { color: #c9a3ff; }
+:where(body.hold-page) a:hover   { color: #7fe7ec; }
 
 .hold-page .backdrop { display: none; }
 
@@ -673,20 +680,23 @@ body.hold-page {
   padding: 12px;
   box-sizing: border-box;
   text-align: left;
-  background: #fffdf8;
-  border: 3px double #1b1a18;
-  box-shadow: 6px 6px 0 #d8cfc1;
+  background: #15101f;
+  border: 3px double #b98cff;
+  box-shadow: 6px 6px 0 #2e1d4d;
 }
 
-/* ---------- masthead: the panel's photo, under the name ---------- */
+/* ---------- masthead: the panel's photo, washed in dusk ---------- */
 
 .masthead {
   padding: 46px 14px 26px;
   text-align: center;
-  border: 1px solid #1b1a18;
+  border: 1px solid #4a3a68;
+  border-bottom: 3px solid #ff71ce;
+  border-image: none;
   background:
-    linear-gradient(rgba(20, 16, 12, 0.18), rgba(20, 16, 12, 0.62)),
-    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #1b1a18;
+    linear-gradient(rgba(255, 113, 206, 0.16), rgba(26, 10, 48, 0.78)),
+    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #0e0a18;
+  box-shadow: inset 0 -3px 0 #b98cff, inset 0 -6px 0 #5ce1e6;
 }
 
 .hold .artist {
@@ -695,8 +705,9 @@ body.hold-page {
   letter-spacing: 0.24em;
   text-indent: 0.24em;
   line-height: 1.05;
-  color: #fffdf8;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  color: #fff8fc;
+  /* the split-colour offset of a worn VHS tape */
+  text-shadow: -2px 0 0 rgba(92, 225, 230, 0.7), 2px 0 0 rgba(255, 113, 206, 0.7);
 }
 
 .hold .notice,
@@ -706,8 +717,8 @@ body.hold-page {
   letter-spacing: 0.04em;
   text-indent: 0;
   text-transform: none;
-  color: #f4ece0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: #efe2ff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .hold .notice-long { max-width: 56ch; text-align: center; }
@@ -719,25 +730,25 @@ body.hold-page {
   justify-content: center;
   margin-top: 12px;
   padding: 9px 0 8px;
-  border-top: 1px solid #1b1a18;
-  border-bottom: 1px solid #1b1a18;
+  border-top: 1px solid #5d4a82;
+  border-bottom: 1px solid #5d4a82;
 }
 
 .tabs a,
 .tabs a:visited {
-  padding: 0 26px;
+  padding: 0 28px;
   font: 10px Verdana, Tahoma, Arial, sans-serif;
   letter-spacing: 0.34em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #1b1a18;
-  border-left: 1px solid #cfc5b6;
+  color: #ece4f5;
+  border-left: 1px solid #3e3059;
 }
 
 .tabs a:first-child { border-left: 0; }
 
 .tabs a:hover,
-.tabs a:focus-visible { color: #7d1a2a; text-decoration: underline; outline: none; }
+.tabs a:focus-visible { color: #ff8fd6; text-decoration: underline; outline: none; }
 
 /* ---------- the ribbon (only when the panel gives it words) ---------- */
 
@@ -745,14 +756,14 @@ body.hold-page {
   margin-top: 10px;
   padding: 7px 0;
   text-align: center;
-  background: #1b1a18;
+  background: linear-gradient(90deg, #5ce1e6, #b98cff 45%, #ff71ce);
 }
 
 .tape span {
-  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  font: bold 10px Verdana, Tahoma, Arial, sans-serif;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #fffdf8;
+  color: #15101f;
 }
 
 /* ---------- the spread ---------- */
@@ -760,19 +771,20 @@ body.hold-page {
 @media (min-width: 860px) {
   .spread {
     display: grid;
-    grid-template-columns: 250px minmax(0, 1fr);
+    grid-template-columns: 230px minmax(0, 1fr);
     grid-template-areas:
       "side records"
       "side about";
     align-items: start;
-    gap: 22px 26px;
+    gap: 22px 28px;
     margin-top: 20px;
   }
 }
 
 .spread > .rule { display: none; }
 
-/* A section label in spaced capitals, running out into a hairline. */
+/* A section label in spaced capitals, running out into a hairline that
+   fades from lilac to pink. */
 .module-bar {
   display: flex;
   align-items: center;
@@ -781,13 +793,14 @@ body.hold-page {
   font: 10px Verdana, Tahoma, Arial, sans-serif;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #1b1a18;
+  color: #c9a3ff;
 }
 
 .module-bar::after {
   content: "";
   flex: 1;
-  border-top: 1px solid #1b1a18;
+  height: 1px;
+  background: linear-gradient(90deg, #b98cff, #ff71ce 70%, rgba(255, 113, 206, 0));
 }
 
 /* ---------- discography ---------- */
@@ -812,15 +825,17 @@ body.hold-page {
   text-align: center;
 }
 
-/* Covers mounted like prints: a white mat and a hairline. */
+/* Covers mounted like prints on a dark mat, with a lilac offset. */
 .hold .album-card .frame {
   display: block;
   margin: 0 0 12px;
   padding: 7px;
-  background: #ffffff;
-  border: 1px solid #cfc5b6;
-  box-shadow: 0 1px 0 #e4ddd1;
+  background: #0c0914;
+  border: 1px solid #4a3a68;
+  box-shadow: 4px 4px 0 #2e1d4d;
 }
+
+.hold .album-card .frame:hover { box-shadow: 4px 4px 0 #ff71ce; }
 
 .hold .album-card .frame img { border: 0; }
 
@@ -832,8 +847,8 @@ body.hold-page {
 }
 
 .spread .record a,
-.spread .record a:visited { color: #1b1a18; text-decoration: none; }
-.spread .record a:hover   { color: #7d1a2a; text-decoration: underline; }
+.spread .record a:visited { color: #fff8fc; text-decoration: none; }
+.spread .record a:hover   { color: #ff8fd6; text-decoration: underline; }
 
 .spread .kind {
   margin: 5px 0 0;
@@ -842,13 +857,13 @@ body.hold-page {
   letter-spacing: 0.3em;
   text-indent: 0.3em;
   text-transform: uppercase;
-  color: #7a7369;
+  color: #7fe7ec;
 }
 
 .spread .blurb {
   margin: 8px 0 0;
   font: italic 12px/1.55 Georgia, "Times New Roman", serif;
-  color: #4a4640;
+  color: #b9aed0;
 }
 
 /* ---------- the story ---------- */
@@ -865,7 +880,7 @@ body.hold-page {
   margin: 0 0 16px;
   font: italic 24px/1.25 Georgia, "Times New Roman", serif;
   text-align: left;
-  color: #1b1a18;
+  color: #fff8fc;
   text-shadow: none;
 }
 
@@ -875,15 +890,16 @@ body.hold-page {
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto;
-  color: #2c2925;
+  color: #ddd3ea;
 }
 
-/* The story opens with a drop cap in the accent. */
+/* The story opens with a pink drop cap, its shadow split in cyan. */
 .spread .presentation p:first-of-type::first-letter {
   float: left;
-  margin: 5px 8px 0 0;
+  margin: 5px 9px 0 0;
   font: 50px/0.8 Georgia, "Times New Roman", serif;
-  color: #7d1a2a;
+  color: #ff71ce;
+  text-shadow: 3px 3px 0 #2d6f86;
 }
 
 .spread .presentation .signal {
@@ -891,10 +907,10 @@ body.hold-page {
   font-weight: normal;
   letter-spacing: 0.1em;
   text-transform: lowercase;
-  color: #7d1a2a;
+  color: #ff8fd6;
 }
 
-/* ---------- sidebar ---------- */
+/* ---------- sidebar: the logo and the links ---------- */
 
 .spread > .side {
   grid-area: side;
@@ -908,11 +924,12 @@ body.hold-page {
 .links-box .logo-mark {
   margin: 0 0 12px;
   padding: 7px;
-  background: #ffffff;
-  border: 1px solid #cfc5b6;
+  background: #0c0914;
+  border: 1px solid #4a3a68;
+  box-shadow: 4px 4px 0 #2e1d4d;
 }
 
-.links-box .logo-mark img { width: 220px; max-width: 100%; border: 0; }
+.links-box .logo-mark img { width: 200px; max-width: 100%; border: 0; }
 
 .hold .links-box .elsewhere {
   margin: 0;
@@ -926,197 +943,19 @@ body.hold-page {
 .hold .links-box .elsewhere a,
 .hold .links-box .elsewhere a:visited {
   display: block;
-  padding: 9px 0 8px;
+  padding: 10px 0 9px;
   text-decoration: none;
   text-transform: uppercase;
-  color: #1b1a18;
-  border-bottom: 1px solid #cfc5b6;
+  color: #ece4f5;
+  border-bottom: 1px solid #3e3059;
 }
 
-.hold .links-box .elsewhere a:first-child { border-top: 1px solid #cfc5b6; }
+.hold .links-box .elsewhere a:first-child { border-top: 1px solid #3e3059; }
 
 .hold .links-box .elsewhere a:hover,
 .hold .links-box .elsewhere a:focus-visible {
-  color: #7d1a2a;
+  color: #ff8fd6;
   outline: none;
-}
-
-/* ---------- the listening room ----------
-
-   The player keeps its working parts but reads like a boutique's
-   listening station rather than a desktop program: a black title band,
-   a dark panel with the track in serif, thin gold bars that breathe, and
-   plain outlined controls. */
-
-.player {
-  display: block;
-  padding: 0 0 12px;
-  color: #1b1a18;
-  background: #fffdf8;
-  border: 1px solid #1b1a18;
-}
-
-.player-bar {
-  padding: 7px 10px 6px;
-  font: 10px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  text-align: center;
-  color: #fffdf8;
-  background: #1b1a18;
-}
-
-.player-knobs,
-.player-meta { display: none; }
-
-.player-screen {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
-  margin: 10px 10px 8px;
-  padding: 12px 12px 10px;
-  background: #1b1a18;
-  color: #f1e7d6;
-  text-align: center;
-}
-
-.player-time {
-  font: italic 26px/1 Georgia, "Times New Roman", serif;
-  letter-spacing: 0.04em;
-}
-
-.player-state {
-  margin-right: 8px;
-  font: 10px Verdana, sans-serif;
-  font-style: normal;
-  vertical-align: 5px;
-  color: #b89868;
-}
-
-.player-title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font: 9px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #cbb893;
-}
-
-.spectrum {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 3px;
-  height: 24px;
-  margin-top: 2px;
-}
-
-.spectrum i {
-  width: 3px;
-  height: 30%;
-  background: #b89868;
-  animation: breathe 1.8s ease-in-out infinite alternate;
-}
-
-.spectrum i:nth-child(3n)   { animation-duration: 1.4s; animation-delay: -0.4s; }
-.spectrum i:nth-child(3n+1) { animation-duration: 2.1s; animation-delay: -0.9s; }
-.spectrum i:nth-child(4n)   { animation-duration: 1.2s; animation-delay: -0.6s; }
-.spectrum i:nth-child(5n)   { animation-duration: 2.4s; animation-delay: -1.3s; }
-.spectrum i:nth-child(7n)   { animation-duration: 1.6s; animation-delay: -0.2s; }
-
-@keyframes breathe {
-  0%   { height: 20%; }
-  50%  { height: 75%; }
-  100% { height: 45%; }
-}
-
-.player-seek {
-  display: block;
-  height: 1px;
-  margin: 0 10px 10px;
-  background: #cfc5b6;
-}
-
-.player-seek span {
-  display: block;
-  width: 34%;
-  height: 100%;
-  background: #1b1a18;
-}
-
-.player-controls {
-  display: flex;
-  gap: 6px;
-  margin: 0 10px;
-}
-
-.player-controls button,
-.player-controls a,
-.player-controls a:visited {
-  flex: 1;
-  height: 26px;
-  padding: 0;
-  font: 11px/24px Verdana, Tahoma, Arial, sans-serif;
-  text-align: center;
-  text-decoration: none;
-  color: #1b1a18;
-  background: #fffdf8;
-  border: 1px solid #1b1a18;
-  cursor: pointer;
-}
-
-.player-controls .player-play,
-.player-controls .player-play:visited {
-  flex: 1.5;
-  color: #fffdf8;
-  background: #1b1a18;
-}
-
-.player-controls button:hover,
-.player-controls a:hover,
-.player-controls button:focus-visible,
-.player-controls a:focus-visible {
-  color: #fffdf8;
-  background: #7d1a2a;
-  border-color: #7d1a2a;
-  outline: none;
-}
-
-.playlist {
-  max-height: 176px;
-  overflow-y: auto;
-  margin: 10px 10px 0;
-  padding: 4px 0;
-  list-style: none;
-  background: #ffffff;
-  border: 1px solid #cfc5b6;
-  font: 12px/1.55 Georgia, "Times New Roman", serif;
-}
-
-.playlist-album {
-  padding: 6px 8px 2px;
-  font: 9px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: #7d1a2a;
-}
-
-.playlist a,
-.playlist a:visited {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 1px 8px;
-  text-decoration: none;
-  color: #1b1a18;
-}
-
-.playlist a:hover { background: #f1ebe1; }
-
-.playlist a[aria-current] {
-  color: #fffdf8;
-  background: #1b1a18;
 }
 
 /* ---------- colophon and the small buttons ---------- */
@@ -1125,7 +964,7 @@ body.hold-page {
   margin-top: 26px;
   padding: 14px 8px 4px;
   text-align: center;
-  border-top: 3px double #1b1a18;
+  border-top: 3px double #b98cff;
 }
 
 .hold .colophon .est {
@@ -1134,10 +973,10 @@ body.hold-page {
   font-variant: normal;
   letter-spacing: 0.14em;
   text-indent: 0;
-  color: #6f685e;
+  color: #a99bc2;
 }
 
-.hold .colophon .est a { color: #7d1a2a; }
+.hold .colophon .est a { color: #ff8fd6; }
 
 .badges {
   display: flex;
@@ -1147,7 +986,7 @@ body.hold-page {
   margin-top: 12px;
 }
 
-/* 88x31, as they were, but in the page's ink rather than in colours. */
+/* 88x31, as they were, dressed in the night palette. */
 .badge,
 .badge:visited {
   display: inline-flex;
@@ -1163,9 +1002,9 @@ body.hold-page {
   text-align: left;
   text-decoration: none;
   text-transform: uppercase;
-  color: #1b1a18;
-  background: #fffdf8;
-  border: 1px solid #1b1a18;
+  color: #ece4f5;
+  background: #120d1c;
+  border: 1px solid #6b5796;
 }
 
 .badge b {
@@ -1176,35 +1015,27 @@ body.hold-page {
   letter-spacing: 0;
   text-align: center;
   text-transform: none;
-  color: #fffdf8;
-  background: #1b1a18;
+  color: #15101f;
+  background: linear-gradient(135deg, #5ce1e6, #b98cff 50%, #ff71ce);
 }
 
-a.badge:hover { color: #fffdf8; background: #7d1a2a; border-color: #7d1a2a; }
-a.badge:hover b { color: #7d1a2a; background: #fffdf8; }
+a.badge:hover { color: #15101f; background: #ff8fd6; border-color: #ff8fd6; }
+a.badge:hover b { color: #fff8fc; background: #15101f; }
 
 .badge-xhtml b { width: 28px; font: 8px/21px Verdana, sans-serif; font-style: normal; letter-spacing: 0.05em; }
-.badge-res     { justify-content: center; font-size: 8px; }
-
-/* ---------- quiet motion for those who ask for it ---------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .spectrum i { animation: none; }
-  .spectrum i:nth-child(odd)  { height: 55%; }
-  .spectrum i:nth-child(even) { height: 30%; }
-}
+.badge-res     { justify-content: center; font-size: 8px; color: #7fe7ec; }
 
 /* ---------- the same skin on a phone ----------
 
-   One column, full width: masthead, navigation, records, the story, links,
-   then the listening room. The reading text is set a size larger. */
+   One column, full width: masthead, navigation, records, the story, then
+   the logo and links. The reading text is set a size larger. */
 
 @media (max-width: 859px) {
   body.hold-page { padding: 10px 8px 28px; font-size: 14px; }
 
   .hold {
     padding: 8px;
-    box-shadow: 3px 3px 0 #d8cfc1;
+    box-shadow: 3px 3px 0 #2e1d4d;
   }
 
   .masthead { padding: 34px 8px 20px; }
@@ -1220,7 +1051,7 @@ a.badge:hover b { color: #7d1a2a; background: #fffdf8; }
 
   .tabs {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     padding: 0;
   }
 
@@ -1231,8 +1062,6 @@ a.badge:hover b { color: #7d1a2a; background: #fffdf8; }
     letter-spacing: 0.24em;
   }
 
-  /* The sidebar dissolves so its two boxes can take their own places in
-     the column: the links after the story, and the player last. */
   .spread {
     display: flex;
     flex-direction: column;
@@ -1240,17 +1069,9 @@ a.badge:hover b { color: #7d1a2a; background: #fffdf8; }
     margin-top: 20px;
   }
 
-  .spread > .side { display: contents; }
-
   .spread > .records       { order: 1; }
   .spread > .presentation  { order: 2; }
-  .links-box               { order: 3; }
-  .player                  { order: 4; }
-
-  /* The tabs follow the same order as the boxes: Player moves to the end. */
-  .tabs a[href="#player"] { order: 1; }
-  .tabs a:first-child { border-left: 0; }
-  .tabs a[href="#about"] { border-left: 1px solid #cfc5b6; }
+  .spread > .side          { order: 3; }
 
   .spread > .records { gap: 0 12px; }
 
@@ -1264,27 +1085,7 @@ a.badge:hover b { color: #7d1a2a; background: #fffdf8; }
     text-align: left;
   }
 
-  .player-time  { font-size: 30px; }
-  .player-title { font-size: 10px; }
-  .spectrum     { height: 30px; }
-
-  .player-controls button,
-  .player-controls a,
-  .player-controls a:visited {
-    height: 42px;
-    font-size: 15px;
-    line-height: 40px;
-  }
-
-  .playlist {
-    max-height: 290px;
-    font-size: 15px;
-  }
-
-  .playlist a,
-  .playlist a:visited { padding: 6px 10px; }
-
-  .playlist-album { padding: 10px 10px 3px; }
+  .links-box .logo-mark img { width: 230px; }
 
   .hold .links-box .elsewhere { font-size: 12px; }
 

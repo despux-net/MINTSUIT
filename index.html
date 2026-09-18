@@ -17,7 +17,7 @@ layout: null
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0e0a18">
 <meta name="google-site-verification" content="BnBIf478BiV4xo74loHMY_x8kmQGPE7cRNkZ8mEJ8gU" />
 <title>{{ share.page_title | escape }}</title>
 <link rel="canonical" href="{{ home }}">
@@ -114,9 +114,10 @@ layout: null
 <body class="hold-page">
 
 {%- comment -%}
-  The page is dressed as an early-2000s fashion magazine online at every
-  size: an 800px ivory page with a photographic masthead, a listening room
-  and 88x31 buttons on a desktop, the same pieces in one column on a phone.
+  The page is dressed as an early-2000s fashion magazine online, seen at
+  night through a vaporwave filter: an 800px page with a photographic
+  masthead and 88x31 buttons on a desktop, the same pieces in one column
+  on a phone.
 {%- endcomment %}
 <div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}></div>
 
@@ -147,7 +148,6 @@ layout: null
 
   <nav class="tabs" aria-label="Sections">
     <a href="#records">Records</a>
-    <a href="#player">Player</a>
     <a href="#about">About</a>
   </nav>
 {% if top.construction and top.construction != "" %}
@@ -186,43 +186,6 @@ layout: null
   </section>
 
   <aside class="side">
-{%- comment -%}
-  The player is a skin over the Bandcamp track pages: it lists the tracks
-  kept in the Records entry of the panel, and play opens the chosen one.
-  Without script every row is simply a link.
-{%- endcomment -%}
-{%- assign first_track = nil -%}
-{%- for record in records -%}{%- if first_track == nil and record.tracks.size > 0 -%}{%- assign first_track = record.tracks.first -%}{%- endif -%}{%- endfor %}
-{%- if first_track %}
-  <section class="player" id="player" aria-label="Music player">
-    <div class="player-bar"><span>Listening Room</span><span class="player-knobs" aria-hidden="true"><i></i><i></i><i></i></span></div>
-    <div class="player-screen">
-      <div class="player-time" aria-hidden="true"><span class="player-state">&#9654;</span><span data-length>{{ first_track.length | escape }}</span></div>
-      <div class="player-meta" aria-hidden="true">128 kbps<br>44 khz<br>stereo</div>
-      <div class="player-title"><span data-title>1. {{ first_track.title | escape }} ({{ first_track.length | escape }})</span></div>
-      <div class="spectrum" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="player-seek" aria-hidden="true"><span></span></div>
-    <div class="player-controls">
-      <button type="button" data-prev aria-label="Previous track">&#9198;</button>
-      <a class="player-play" href="{{ first_track.url | escape }}" target="_blank" rel="noopener" data-play aria-label="Play on Bandcamp" title="Play on Bandcamp">&#9654;</a>
-      <button type="button" data-next aria-label="Next track">&#9197;</button>
-      <a class="player-eject" href="{{ records.first.url | escape }}" target="_blank" rel="noopener" data-album aria-label="Open the album on Bandcamp" title="Open the album on Bandcamp">&#9167;</a>
-    </div>
-    <ol class="playlist">
-      {%- assign n = 0 -%}
-      {%- for record in records -%}
-      {%- if record.tracks.size > 0 %}
-      <li class="playlist-album" aria-hidden="true">{{ record.title | escape }}</li>
-      {%- for track in record.tracks -%}
-      {%- assign n = n | plus: 1 %}
-      <li><a href="{{ track.url | escape }}" target="_blank" rel="noopener" data-track data-album-url="{{ record.url | escape }}" data-length="{{ track.length | escape }}" data-label="{{ n }}. {{ track.title | escape }} ({{ track.length | escape }})"{% if n == 1 %} aria-current="true"{% endif %}><span>{{ n }}. {{ track.title | escape }}</span><span>{{ track.length | escape }}</span></a></li>
-      {%- endfor -%}
-      {%- endif -%}
-      {%- endfor %}
-    </ol>
-  </section>
-{%- endif %}
 
   <div class="links-box" id="links">
     <div class="module-bar" aria-hidden="true">Links</div>
@@ -258,7 +221,6 @@ layout: null
 
 </main>
 
-<script src="/player.js" defer></script>
 {%- comment -%} Visit counts, without cookies: https://mintsuit.goatcounter.com {%- endcomment %}
 <script data-goatcounter="https://mintsuit.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
