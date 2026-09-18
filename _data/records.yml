@@ -3,9 +3,11 @@ records:
     kind: Album
     year: "2019"
     url: https://mintsuit.bandcamp.com/album/sublime
+    bandcamp_id: "2880869229"
     cover: /assets/sublime.jpg
   - title: Global Report
     kind: Album
     year: "2017"
     url: https://mintsuit.bandcamp.com/album/global-report
+    bandcamp_id: "2943541165"
     cover: /assets/global-report.jpg

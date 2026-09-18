@@ -70,6 +70,13 @@ content:
             label: Link
             type: string
             description: Where the cover and the title go, usually Bandcamp.
+          - name: bandcamp_id
+            label: Bandcamp album ID
+            type: string
+            description: >-
+              Puts Bandcamp's own player for this album in the Listen box. It is
+              the number after "album=" in the album's Share / Embed code on
+              Bandcamp. Leave it empty for no player.
           - name: cover
             label: Cover
             type: image

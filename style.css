@@ -957,6 +957,44 @@ body.hold-page {
   outline: none;
 }
 
+/* ---------- listen: Bandcamp's players, one per album ---------- */
+
+/* Bandcamp's tall layout (cover on top, controls under it) only draws
+   properly at its own size, 350 x 470. On a phone it gets exactly that; in
+   the 230px desktop sidebar the same player is scaled down to fit, so it
+   keeps its proportions instead of being cropped. */
+.listen-box .bandcamp {
+  width: 350px;
+  max-width: 100%;
+  height: 470px;
+  margin: 0 auto 14px;
+  overflow: hidden;
+  border: 1px solid #333333;
+  background: #111111;
+}
+
+.listen-box .bandcamp:last-child { margin-bottom: 0; }
+
+.listen-box .bandcamp iframe {
+  display: block;
+  width: 350px;
+  height: 470px;
+  border: 0;
+}
+
+@media (min-width: 860px) {
+  .listen-box .bandcamp {
+    box-sizing: border-box;
+    width: 230px;
+    height: 308px;   /* a 1px border round 470 x 228/350 */
+  }
+
+  .listen-box .bandcamp iframe {
+    transform: scale(0.6514);
+    transform-origin: 0 0;
+  }
+}
+
 /* ---------- colophon and the small buttons ---------- */
 
 .colophon {
