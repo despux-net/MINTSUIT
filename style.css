@@ -643,7 +643,7 @@ body.locked { overflow: hidden; }
    2002 — a framed page with a double rule, a photographic masthead,
    navigation in spaced capitals between rules, covers mounted like prints,
    Georgia for the story — and sees them through a vaporwave night: a black
-   ground, ivory type, and the genre's pink and cyan used sparingly, as hairlines, a drop cap and a split-colour shadow
+   ground, ivory type, and gold and silver used sparingly, as hairlines, a drop cap and a split-colour shadow
    on the name. Everything stays flat: no glass, no glow boxes. On a desktop
    the modules sit in two columns; on a phone they stack in one (see the
    end of the file). */
@@ -662,13 +662,13 @@ body.hold-page {
   font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
 }
 
-::selection { color: #0a0a0a; background: #ff71ce; }
+::selection { color: #0a0a0a; background: #c9a96e; }
 
 /* :where() keeps these at the weight of a bare 'a', so every component
    below can set its own link colour without a fight. */
-:where(body.hold-page) a         { color: #ff8fd6; }
+:where(body.hold-page) a         { color: #d4b77c; }
 :where(body.hold-page) a:visited { color: #bdbdbd; }
-:where(body.hold-page) a:hover   { color: #7fe7ec; }
+:where(body.hold-page) a:hover   { color: #c4c4c4; }
 
 .hold-page .backdrop { display: none; }
 
@@ -690,12 +690,12 @@ body.hold-page {
   padding: 46px 14px 26px;
   text-align: center;
   border: 1px solid #333333;
-  border-bottom: 3px solid #ff71ce;
+  border-bottom: 3px solid #c9a96e;
   border-image: none;
   background:
-    linear-gradient(rgba(255, 113, 206, 0.08), rgba(0, 0, 0, 0.74)),
+    linear-gradient(rgba(201, 169, 110, 0.06), rgba(0, 0, 0, 0.74)),
     var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #0a0a0a;
-  box-shadow: inset 0 -3px 0 #5ce1e6;
+  box-shadow: inset 0 -3px 0 #c0c0c0;
 }
 
 .hold .artist {
@@ -705,8 +705,8 @@ body.hold-page {
   text-indent: 0.24em;
   line-height: 1.05;
   color: #ffffff;
-  /* the split-colour offset of a worn VHS tape */
-  text-shadow: -2px 0 0 rgba(92, 225, 230, 0.7), 2px 0 0 rgba(255, 113, 206, 0.7);
+  /* a faint silver and gold edge, like foil on a cover */
+  text-shadow: -1px 0 0 rgba(192, 192, 192, 0.35), 1px 0 0 rgba(201, 169, 110, 0.45), 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .hold .notice,
@@ -747,7 +747,7 @@ body.hold-page {
 .tabs a:first-child { border-left: 0; }
 
 .tabs a:hover,
-.tabs a:focus-visible { color: #ff8fd6; text-decoration: underline; outline: none; }
+.tabs a:focus-visible { color: #d4b77c; text-decoration: underline; outline: none; }
 
 /* ---------- the ribbon (only when the panel gives it words) ---------- */
 
@@ -755,7 +755,7 @@ body.hold-page {
   margin-top: 10px;
   padding: 7px 0;
   text-align: center;
-  background: linear-gradient(90deg, #5ce1e6, #ff71ce);
+  background: linear-gradient(90deg, #c0c0c0, #c9a96e);
 }
 
 .tape span {
@@ -783,7 +783,7 @@ body.hold-page {
 .spread > .rule { display: none; }
 
 /* A section label in spaced capitals, running out into a hairline that
-   fades from cyan to pink. */
+   fades from silver to gold. */
 .module-bar {
   display: flex;
   align-items: center;
@@ -799,7 +799,7 @@ body.hold-page {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, #5ce1e6, #ff71ce 70%, rgba(255, 113, 206, 0));
+  background: linear-gradient(90deg, #c0c0c0, #c9a96e 70%, rgba(201, 169, 110, 0));
 }
 
 /* ---------- discography ---------- */
@@ -834,7 +834,7 @@ body.hold-page {
   box-shadow: 4px 4px 0 #262626;
 }
 
-.hold .album-card .frame:hover { box-shadow: 4px 4px 0 #ff71ce; }
+.hold .album-card .frame:hover { box-shadow: 4px 4px 0 #c9a96e; }
 
 .hold .album-card .frame img { border: 0; }
 
@@ -847,7 +847,7 @@ body.hold-page {
 
 .spread .record a,
 .spread .record a:visited { color: #ffffff; text-decoration: none; }
-.spread .record a:hover   { color: #ff8fd6; text-decoration: underline; }
+.spread .record a:hover   { color: #d4b77c; text-decoration: underline; }
 
 .spread .kind {
   margin: 5px 0 0;
@@ -856,7 +856,7 @@ body.hold-page {
   letter-spacing: 0.3em;
   text-indent: 0.3em;
   text-transform: uppercase;
-  color: #7fe7ec;
+  color: #c4c4c4;
 }
 
 .spread .blurb {
@@ -892,13 +892,13 @@ body.hold-page {
   color: #dadada;
 }
 
-/* The story opens with a pink drop cap, its shadow split in cyan. */
+/* The story opens with a gold drop cap. */
 .spread .presentation p:first-of-type::first-letter {
   float: left;
   margin: 5px 9px 0 0;
   font: 50px/0.8 Georgia, "Times New Roman", serif;
-  color: #ff71ce;
-  text-shadow: 3px 3px 0 #2d6f86;
+  color: #c9a96e;
+  text-shadow: 2px 2px 0 #2a2a2a;
 }
 
 .spread .presentation .signal {
@@ -906,7 +906,7 @@ body.hold-page {
   font-weight: normal;
   letter-spacing: 0.1em;
   text-transform: lowercase;
-  color: #ff8fd6;
+  color: #d4b77c;
 }
 
 /* ---------- sidebar: the logo and the links ---------- */
@@ -953,7 +953,7 @@ body.hold-page {
 
 .hold .links-box .elsewhere a:hover,
 .hold .links-box .elsewhere a:focus-visible {
-  color: #ff8fd6;
+  color: #d4b77c;
   outline: none;
 }
 
@@ -975,7 +975,7 @@ body.hold-page {
   color: #9a9a9a;
 }
 
-.hold .colophon .est a { color: #ff8fd6; }
+.hold .colophon .est a { color: #d4b77c; }
 
 .badges {
   display: flex;
@@ -1020,7 +1020,7 @@ body.hold-page {
   border: 1px solid #000;
 }
 
-a.badge:hover { outline: 1px solid #ff71ce; }
+a.badge:hover { outline: 1px solid #c9a96e; }
 
 a.badge[href*="bandcamp"]  { background: #1da0c3; color: #fff; }
 a.badge[href*="bandcamp"] b { background: #0b5b70; }
