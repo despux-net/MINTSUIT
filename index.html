@@ -108,16 +108,24 @@ layout: null
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&amp;display=swap&amp;text={{ top.wordmark | url_encode }}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&amp;display=swap" media="(min-width: 860px)">
 <link rel="stylesheet" href="/style.css">
 </head>
 
 <body class="hold-page">
 
-{%- comment -%} Left empty in the panel, the stylesheet's New York skyline shows. {%- endcomment %}
+{%- comment -%}
+  One document, two looks. On a phone this is the single column it has
+  always been. From 860px up the stylesheet turns it into an early-2000s
+  site: an 800px bevelled box on a tiled ground, with tabs, a player skin,
+  a construction strip and 88x31 buttons. The pieces that exist only for
+  that look (tabs, strip, player, window bars, buttons) are hidden on phones.
+{%- endcomment %}
 <div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}></div>
 
 <main class="hold">
 
+  <header class="masthead" id="top"{% if background != "" %} style="--photo: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}>
   <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
 {%- comment -%}
   One short line reads as a label in spaced small caps; anything longer, or
@@ -138,15 +146,21 @@ layout: null
     {%- endfor %}
   </div>
 {%- endif %}
+  </header>
 
-{%- comment -%}
-  The spread holds the body of the page. On a phone it is one column, in
-  this order; on a wide screen it becomes a magazine spread: records on the
-  left, the presentation in the middle, the logo and links on the right.
-{%- endcomment %}
+  <nav class="tabs" aria-label="Sections">
+    <a href="#records">Records</a>
+    <a href="#player">Player</a>
+    <a href="#about">About</a>
+    <a href="#links">Links</a>
+  </nav>
+{% if top.construction and top.construction != "" %}
+  <div class="tape" role="note"><span>{{ top.construction | escape }}</span></div>
+{% endif %}
   <div class="spread">
 
-  <div class="records">
+  <div class="records" id="records">
+    <div class="module-bar" aria-hidden="true">Discography</div>
 {% for record in records %}
     <section class="album-card">
       <a class="frame" href="{{ record.url | escape }}">
@@ -164,7 +178,8 @@ layout: null
 
   <div class="rule"><span>&#10022;</span></div>
 
-  <section class="presentation">
+  <section class="presentation" id="about">
+    <div class="module-bar" aria-hidden="true">About</div>
     {%- if text.title and text.title != "" %}
     <h2 class="presentation-title">{{ text.title | escape }}</h2>
     {%- endif %}
@@ -175,6 +190,46 @@ layout: null
   </section>
 
   <aside class="side">
+{%- comment -%}
+  The player is a skin over the Bandcamp track pages: it lists the tracks
+  kept in the Records entry of the panel, and play opens the chosen one.
+  Without script every row is simply a link.
+{%- endcomment -%}
+{%- assign first_track = nil -%}
+{%- for record in records -%}{%- if first_track == nil and record.tracks.size > 0 -%}{%- assign first_track = record.tracks.first -%}{%- endif -%}{%- endfor %}
+{%- if first_track %}
+  <section class="player" id="player" aria-label="Music player">
+    <div class="player-bar"><span>{{ top.wordmark | escape }} Amp</span><span class="player-knobs" aria-hidden="true"><i></i><i></i><i></i></span></div>
+    <div class="player-screen">
+      <div class="player-time" aria-hidden="true"><span class="player-state">&#9654;</span><span data-length>{{ first_track.length | escape }}</span></div>
+      <div class="player-meta" aria-hidden="true">128 kbps<br>44 khz<br>stereo</div>
+      <div class="player-title"><span data-title>1. {{ first_track.title | escape }} ({{ first_track.length | escape }})</span></div>
+      <div class="spectrum" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="player-seek" aria-hidden="true"><span></span></div>
+    <div class="player-controls">
+      <button type="button" data-prev aria-label="Previous track">&#9198;</button>
+      <a class="player-play" href="{{ first_track.url | escape }}" target="_blank" rel="noopener" data-play aria-label="Play on Bandcamp" title="Play on Bandcamp">&#9654;</a>
+      <button type="button" data-next aria-label="Next track">&#9197;</button>
+      <a class="player-eject" href="{{ records.first.url | escape }}" target="_blank" rel="noopener" data-album aria-label="Open the album on Bandcamp" title="Open the album on Bandcamp">&#9167;</a>
+    </div>
+    <ol class="playlist">
+      {%- assign n = 0 -%}
+      {%- for record in records -%}
+      {%- if record.tracks.size > 0 %}
+      <li class="playlist-album" aria-hidden="true">{{ record.title | escape }}</li>
+      {%- for track in record.tracks -%}
+      {%- assign n = n | plus: 1 %}
+      <li><a href="{{ track.url | escape }}" target="_blank" rel="noopener" data-track data-album-url="{{ record.url | escape }}" data-length="{{ track.length | escape }}" data-label="{{ n }}. {{ track.title | escape }} ({{ track.length | escape }})"{% if n == 1 %} aria-current="true"{% endif %}><span>{{ n }}. {{ track.title | escape }}</span><span>{{ track.length | escape }}</span></a></li>
+      {%- endfor -%}
+      {%- endif -%}
+      {%- endfor %}
+    </ol>
+  </section>
+{%- endif %}
+
+  <div class="links-box" id="links">
+    <div class="module-bar" aria-hidden="true">Links</div>
 {%- if bottom.logo and bottom.logo != "" %}
   <div class="logo-mark">
     <img src="{{ bottom.logo | relative_url | escape }}" width="360" height="271" alt="{{ bottom.logo_alt | escape }}">
@@ -185,15 +240,29 @@ layout: null
     <a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %}<span class="sep"> &nbsp;&middot;&nbsp;</span>{% endunless %}
     {%- endfor %}
   </p>
+  </div>
   </aside>
 
   </div>
 
+  <footer class="colophon">
   <p class="est">{{ bottom.established | escape | replace: " ", "&nbsp;" }} &nbsp;&middot; <span>{{ bottom.byline | escape }}</span>
     &nbsp;&middot; <span>{{ bottom.contact | escape }}
     <a href="mailto:{{ bottom.email | escape }}">{{ bottom.email | escape }}</a></span></p>
 
+  <div class="badges">
+    {%- for link in bottom.links %}
+    <a class="badge" href="{{ link.url | escape }}"><b aria-hidden="true">{{ link.label | slice: 0, 2 | escape }}</b><span>{{ link.label | escape }}</span></a>
+    {%- endfor %}
+    <span class="badge badge-ie" aria-hidden="true"><b>e</b><span>Best viewed in IE&nbsp;6.0</span></span>
+    <span class="badge badge-xhtml" aria-hidden="true"><b>W3C</b><span>XHTML 1.0</span></span>
+    <span class="badge badge-res" aria-hidden="true"><span>800&times;600</span></span>
+  </div>
+  </footer>
+
 </main>
+
+<script src="/player.js" defer></script>
 
 </body>
 </html>

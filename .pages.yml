@@ -24,6 +24,12 @@ content:
         description: >-
           One short line shows in spaced small caps. Several lines, or one long
           line, show as ordinary paragraphs. Leave it empty to hide it.
+      - name: construction
+        label: Construction strip
+        type: string
+        description: >-
+          The yellow and black strip under the tabs on the desktop page. Leave
+          it empty to hide it.
 
   - name: background
     label: Background
@@ -71,6 +77,25 @@ content:
           - name: blurb
             label: Short description
             type: text
+          - name: tracks
+            label: Tracks
+            type: object
+            list: true
+            description: >-
+              Listed in the player on the desktop page, in this order. Each
+              one links to its Bandcamp page.
+            fields:
+              - name: title
+                label: Title
+                type: string
+                required: true
+              - name: length
+                label: Length
+                type: string
+                description: For example 3:15.
+              - name: url
+                label: Bandcamp link
+                type: string
 
   - name: presentation
     label: Presentation
