@@ -237,8 +237,18 @@ layout: null
       {%- for album in codes.albums %}
       <ul class="redeem-list" style="--ink: {{ album.color | default: "#ffffff" | escape }}">
         <li class="redeem-title">{{ album.title | escape }}</li>
-        {%- for code in album.codes %}
+        {%- comment -%}
+          The codes arrive as one block of text. Every line is trimmed and
+          kept only if it is shaped like a Bandcamp code (nine characters
+          with a hyphen, no spaces), so the headers of a pasted CSV export
+          simply drop out.
+        {%- endcomment -%}
+        {%- assign lines = album.codes | newline_to_br | split: "<br />" -%}
+        {%- for line in lines -%}
+        {%- assign code = line | strip -%}
+        {%- if code.size == 9 and code contains "-" -%}{%- unless code contains " " %}
         <li><code>{{ code | escape }}</code></li>
+        {%- endunless -%}{%- endif -%}
         {%- endfor %}
       </ul>
       {%- endfor %}

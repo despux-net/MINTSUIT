@@ -1,82 +1,83 @@
 # Bandcamp download codes, shown under the links when "Redeem code" is
-# pressed. Bandcamp exports only unredeemed codes, so to take used ones off
-# the page, export again and replace the lists (or edit them in the panel).
+# pressed. Each album's codes are one block of text, one code per line, so a
+# column can be pasted in one go; a whole Bandcamp CSV export works too, as
+# only lines shaped like a code (abcd-efgh) are shown.
 redeem_url: https://mintsuit.bandcamp.com/yum
 message: Redeem your code at
 albums:
   - title: Sublime
     color: "#ffffff"
-    codes:
-      - "hnqe-3hjx"
-      - "pge4-yxxr"
-      - "l9rc-vged"
-      - "csyd-c83n"
-      - "hnwm-cw92"
-      - "jdj9-xwgh"
-      - "l42d-7sw9"
-      - "qplp-vldt"
-      - "d9f4-vyed"
-      - "j9es-yllr"
-      - "nx5c-w62c"
-      - "le6q-cgxx"
-      - "cnxv-ws92"
-      - "pede-vhdt"
-      - "jhnq-hbxj"
-      - "nbhd-vasj"
-      - "g3b4-bj5d"
-      - "dqgj-cyxx"
-      - "h2qe-3hqx"
-      - "dah4-6bcy"
-      - "jexj-jxwt"
+    codes: |
+      hnqe-3hjx
+      pge4-yxxr
+      l9rc-vged
+      csyd-c83n
+      hnwm-cw92
+      jdj9-xwgh
+      l42d-7sw9
+      qplp-vldt
+      d9f4-vyed
+      j9es-yllr
+      nx5c-w62c
+      le6q-cgxx
+      cnxv-ws92
+      pede-vhdt
+      jhnq-hbxj
+      nbhd-vasj
+      g3b4-bj5d
+      dqgj-cyxx
+      h2qe-3hqx
+      dah4-6bcy
+      jexj-jxwt
   - title: Global Report
     color: "#4fb8ff"
-    codes:
-      - "erbj-xtze"
-      - "rprb-hx8z"
-      - "lhz6-7sxf"
-      - "pmx4-kqfc"
-      - "k7j7-5ll8"
-      - "wsy8-7dxf"
-      - "pqut-5haa"
-      - "rbwy-7e3b"
-      - "v4em-3s9q"
-      - "m7wx-5ar6"
-      - "9msp-72ck"
-      - "dzm7-brep"
-      - "sy8v-wlf2"
-      - "jvxs-6m7c"
-      - "xd7b-b6up"
-      - "fdw7-erzu"
-      - "befr-hlgz"
-      - "8m4e-7bck"
-      - "vd4k-vfwx"
-      - "fje2-6ahp"
-      - "lb7d-k7p2"
-      - "qawc-6j7c"
-      - "wwbf-bkup"
-      - "sjvx-c9mn"
-      - "pfbj-x8ke"
-      - "rwdr-e2zu"
-      - "xkmr-3bpp"
-      - "j2zb-x5ph"
-      - "fxtm-e3b5"
-      - "lcz6-7slf"
-      - "qp2k-545a"
-      - "bfxt-7a2b"
-      - "rjj3-6ehp"
-      - "dfbw-kup2"
-      - "kbj7-54x8"
-      - "nyfe-eelx"
-      - "ltab-33pp"
-      - "rxzv-5rb5"
-      - "pput-5l5a"
-      - "j7be-hgze"
-      - "vsem-bw6q"
-      - "mbwx-5pb6"
-      - "yfqr-5lx8"
-      - "t6mc-x73c"
-      - "dtm7-brpp"
-      - "x7rx-kfe2"
-      - "j5xs-6mfc"
-      - "ll7b-b6np"
-      - "e77q-hyze"
+    codes: |
+      erbj-xtze
+      rprb-hx8z
+      lhz6-7sxf
+      pmx4-kqfc
+      k7j7-5ll8
+      wsy8-7dxf
+      pqut-5haa
+      rbwy-7e3b
+      v4em-3s9q
+      m7wx-5ar6
+      9msp-72ck
+      dzm7-brep
+      sy8v-wlf2
+      jvxs-6m7c
+      xd7b-b6up
+      fdw7-erzu
+      befr-hlgz
+      8m4e-7bck
+      vd4k-vfwx
+      fje2-6ahp
+      lb7d-k7p2
+      qawc-6j7c
+      wwbf-bkup
+      sjvx-c9mn
+      pfbj-x8ke
+      rwdr-e2zu
+      xkmr-3bpp
+      j2zb-x5ph
+      fxtm-e3b5
+      lcz6-7slf
+      qp2k-545a
+      bfxt-7a2b
+      rjj3-6ehp
+      dfbw-kup2
+      kbj7-54x8
+      nyfe-eelx
+      ltab-33pp
+      rxzv-5rb5
+      pput-5l5a
+      j7be-hgze
+      vsem-bw6q
+      mbwx-5pb6
+      yfqr-5lx8
+      t6mc-x73c
+      dtm7-brpp
+      x7rx-kfe2
+      j5xs-6mfc
+      ll7b-b6np
+      e77q-hyze

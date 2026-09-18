@@ -178,8 +178,10 @@ content:
             description: A CSS colour, e.g. #ffffff for white or #4fb8ff for blue.
           - name: codes
             label: Codes
-            type: string
-            list: true
+            type: text
+            description: >-
+              Paste the whole column here, one code per line. Pasting the entire
+              Bandcamp CSV export also works: only the codes are shown.
 
   - name: sharing
     label: Search and sharing
