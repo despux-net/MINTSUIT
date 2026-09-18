@@ -662,14 +662,6 @@ body.hold-page {
   font: 12px/1.55 Verdana, Tahoma, Arial, sans-serif;
 }
 
-/* A pixel cursor, only where there is a mouse to carry it. */
-@media (hover: hover) and (pointer: fine) {
-  body.hold-page { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='28' shape-rendering='crispEdges'%3E%3Cpath d='M1 1 L1 23 L7 17 L11 26 L15 24 L11 15 L19 15 Z' fill='%23ffffff' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E") 1 1, auto; }
-
-  body.hold-page a,
-  body.hold-page button { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='28' shape-rendering='crispEdges'%3E%3Cpath d='M1 1 L1 23 L7 17 L11 26 L15 24 L11 15 L19 15 Z' fill='%234fe3ff' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E") 1 1, pointer; }
-}
-
 /* :where() keeps these at the weight of a bare 'a', so every component
    below can set its own link colour without a fight. */
 :where(body.hold-page) a         { color: #4fe3ff; }
