@@ -28,8 +28,8 @@ content:
         label: Ribbon
         type: string
         description: >-
-          A black ribbon of spaced capitals under the navigation, for news
-          such as a release. Leave it empty to hide it.
+          A yellow and black strip under the tabs, for news such as a
+          release. Leave it empty to hide it.
 
   - name: background
     label: Background

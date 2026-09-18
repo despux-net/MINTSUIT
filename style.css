@@ -636,39 +636,38 @@ body.locked { overflow: hidden; }
 }
 
 /* ===========================================================
-   The skin — an early-2000s fashion magazine, after dark
+   The skin — an early-2000s site, 2000 to 2005
    ===========================================================
 
-   The page keeps the manners of a fashion title's website from around
-   2002 — a framed page with a double rule, a photographic masthead,
-   navigation in spaced capitals between rules, covers mounted like prints,
-   Georgia for the story — and sees them through a vaporwave night: a black
-   ground, ivory type, and gold and silver used sparingly, as hairlines, a drop cap and a split-colour shadow
-   on the name. Everything stays flat: no glass, no glow boxes. On a desktop
-   the modules sit in two columns; on a phone they stack in one (see the
-   end of the file). */
+   Everything below dresses the page as a site from the first years of the
+   2000s: a bevelled box, 800px wide on a desktop, on a tiled ground, with
+   tabs, window-like modules, Bandcamp's players framed in the discography
+   and 88x31 buttons. On a desktop
+   the modules sit in two columns; on a phone they stack in one, with the
+   type set larger (see the end of the file). */
+
+/* ---------- ground, box and type ---------- */
 
 body.hold-page {
   display: block;
   min-height: 0;
-  padding: 32px 0 48px;
-  background-color: #0a0a0a;
-  /* a faint pinstripe over a dusk that deepens down the page */
+  padding: 28px 0 44px;
+  background-color: #14171c;
+  /* 45° pinstripes over a faint 16px grid, all solid colour */
   background-image:
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
-    linear-gradient(#171717 0, #0a0a0a 520px);
-  background-repeat: repeat, no-repeat;
-  color: #ececec;
-  font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
+    repeating-linear-gradient(45deg, #1f242b 0 2px, transparent 2px 7px),
+    linear-gradient(#262b33 1px, transparent 1px),
+    linear-gradient(90deg, #262b33 1px, transparent 1px);
+  background-size: auto, 16px 16px, 16px 16px;
+  color: #e3e7ea;
+  font: 12px/1.55 Verdana, Tahoma, Arial, sans-serif;
 }
-
-::selection { color: #0a0a0a; background: #c9a96e; }
 
 /* :where() keeps these at the weight of a bare 'a', so every component
    below can set its own link colour without a fight. */
-:where(body.hold-page) a         { color: #d4b77c; }
-:where(body.hold-page) a:visited { color: #bdbdbd; }
-:where(body.hold-page) a:hover   { color: #c4c4c4; }
+:where(body.hold-page) a         { color: #4fe3ff; }
+:where(body.hold-page) a:visited { color: #b58cff; }
+:where(body.hold-page) a:hover   { color: #ffffff; }
 
 .hold-page .backdrop { display: none; }
 
@@ -676,131 +675,157 @@ body.hold-page {
   width: 800px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 12px;
+  padding: 6px;
   box-sizing: border-box;
   text-align: left;
-  background: #111111;
-  border: 3px double #8c8c8c;
-  box-shadow: 6px 6px 0 #262626;
+  background: #2b3038;
+  border: 3px ridge #b3b9c0;
+  box-shadow: 5px 5px 0 #000;
 }
 
-/* ---------- masthead: the panel's photo, washed in dusk ---------- */
+/* ---------- masthead: the panel's photo as a banner ---------- */
 
 .masthead {
-  padding: 46px 14px 26px;
+  padding: 30px 12px 22px;
   text-align: center;
-  border: 1px solid #333333;
-  border-bottom: 3px solid #c9a96e;
-  border-image: none;
+  border: 2px inset #8b9198;
   background:
-    linear-gradient(rgba(201, 169, 110, 0.06), rgba(0, 0, 0, 0.74)),
-    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #0a0a0a;
-  box-shadow: inset 0 -3px 0 #c0c0c0;
+    linear-gradient(rgba(6, 10, 16, 0.5), rgba(6, 10, 16, 0.82)),
+    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #000;
 }
 
 .hold .artist {
-  margin: 0 0 12px;
-  font-size: 56px;
-  letter-spacing: 0.24em;
-  text-indent: 0.24em;
-  line-height: 1.05;
-  color: #ffffff;
-  /* a faint silver and gold edge, like foil on a cover */
-  text-shadow: -1px 0 0 rgba(192, 192, 192, 0.35), 1px 0 0 rgba(201, 169, 110, 0.45), 0 1px 3px rgba(0, 0, 0, 0.6);
+  margin: 0 0 10px;
+  font-size: 50px;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  line-height: 1.1;
+  color: #eef2f5;
+  /* a chrome fill with a hard, offset shadow */
+  background: linear-gradient(#ffffff 0%, #d9e0e6 42%, #7c858f 52%, #f1f4f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(2px 2px 0 #000);
 }
 
 .hold .notice,
 .hold .notice:not(.notice-long) {
-  font: italic 14px/1.4 Georgia, "Times New Roman", serif;
+  font: bold 11px/1.4 Verdana, Tahoma, Arial, sans-serif;
   font-variant: normal;
-  letter-spacing: 0.04em;
-  text-indent: 0;
-  text-transform: none;
-  color: #f2f2f2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+  color: #bff4ff;
+  text-shadow: 2px 2px 0 #000;
 }
 
-.hold .notice-long { max-width: 56ch; text-align: center; }
+.hold .notice-long { max-width: 60ch; text-align: center; }
 
-/* ---------- navigation: spaced capitals between two rules ---------- */
+/* ---------- tabs ---------- */
 
 .tabs {
   display: flex;
-  justify-content: center;
-  margin-top: 12px;
-  padding: 9px 0 8px;
-  border-top: 1px solid #3d3d3d;
-  border-bottom: 1px solid #3d3d3d;
+  gap: 3px;
+  margin-top: 6px;
+  padding: 6px 6px 0;
+  background: #3a4049;
+  border-bottom: 3px solid #b3b9c0;
 }
 
 .tabs a,
 .tabs a:visited {
-  padding: 0 28px;
-  font: 10px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.34em;
+  padding: 6px 16px 5px;
+  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #ececec;
-  border-left: 1px solid #2a2a2a;
+  color: #16191d;
+  background: linear-gradient(#f2f4f6, #b9bfc6);
+  border: 2px outset #e8ebee;
+  border-bottom: 0;
 }
 
-.tabs a:first-child { border-left: 0; }
-
 .tabs a:hover,
-.tabs a:focus-visible { color: #d4b77c; text-decoration: underline; outline: none; }
+.tabs a:focus-visible {
+  color: #000;
+  background: linear-gradient(#ffffff, #cfe9ef);
+  box-shadow: 0 0 0 1px #4fe3ff, 0 0 8px #4fe3ff;
+  outline: none;
+}
 
-/* ---------- the ribbon (only when the panel gives it words) ---------- */
+.tabs a:active { border-style: inset; }
+
+/* ---------- the construction strip ---------- */
 
 .tape {
-  margin-top: 10px;
-  padding: 7px 0;
+  display: block;
+  margin-top: 6px;
+  padding: 5px 0;
   text-align: center;
-  background: linear-gradient(90deg, #c0c0c0, #c9a96e);
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: repeating-linear-gradient(-45deg, #ffd200 0 14px, #111 14px 28px);
+  background-size: 40px 40px;
+  animation: tape-crawl 1.2s steps(8) infinite;
 }
 
 .tape span {
-  font: bold 10px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.34em;
+  display: inline-block;
+  padding: 3px 12px;
+  font: bold 11px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #111111;
+  color: #111;
+  background: #ffd200;
+  border: 2px solid #111;
 }
 
-/* ---------- the spread ---------- */
+.tape span::before,
+.tape span::after { content: "\26A0\FE0E"; padding: 0 8px; }
+
+@keyframes tape-crawl { to { background-position: 40px 0; } }
+
+/* ---------- modules: window-like boxes ---------- */
 
 @media (min-width: 860px) {
   .spread {
     display: grid;
-    grid-template-columns: 230px minmax(0, 1fr);
+    grid-template-columns: 262px minmax(0, 1fr);
     grid-template-areas:
       "side records"
       "side about";
     align-items: start;
-    gap: 22px 28px;
-    margin-top: 20px;
+    gap: 6px;
+    margin-top: 6px;
   }
 }
 
 .spread > .rule { display: none; }
 
-/* A section label in spaced capitals, running out into a hairline that
-   fades from silver to gold. */
-.module-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 14px;
-  font: 10px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: #bdbdbd;
+.records,
+.presentation,
+.links-box,
+.colophon {
+  background: #1f2329;
+  border: 2px outset #9aa1a8;
 }
 
-.module-bar::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, #c0c0c0, #c9a96e 70%, rgba(201, 169, 110, 0));
+.module-bar {
+  display: block;
+  margin: 0 0 10px;
+  padding: 3px 8px 2px;
+  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
+  background: linear-gradient(#56606b, #2d333b);
+  border-bottom: 2px solid #0e1115;
 }
+
+.module-bar::before { content: "\25A0  "; color: #4fe3ff; }
 
 /* ---------- discography ---------- */
 
@@ -809,9 +834,9 @@ body.hold-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
-  gap: 0 22px;
+  gap: 0;
   margin: 0;
-  padding: 0;
+  padding: 0 0 12px;
 }
 
 .records .module-bar { grid-column: 1 / -1; }
@@ -820,161 +845,58 @@ body.hold-page {
   flex: none;
   width: auto;
   max-width: none;
-  padding: 0;
+  padding: 0 10px;
   text-align: center;
 }
 
-/* Covers mounted like prints on a black mat, with a grey offset. */
 .hold .album-card .frame {
   display: block;
-  margin: 0 0 12px;
-  padding: 7px;
-  background: #050505;
-  border: 1px solid #333333;
-  box-shadow: 4px 4px 0 #262626;
+  margin: 0 0 8px;
+  padding: 3px;
+  border: 4px ridge #a7aeb5;
 }
-
-.hold .album-card .frame:hover { box-shadow: 4px 4px 0 #c9a96e; }
-
-.hold .album-card .frame img { border: 0; }
 
 .spread .record {
   margin: 0;
-  font: italic 20px/1.2 Georgia, "Times New Roman", serif;
-  letter-spacing: 0.01em;
-  text-shadow: none;
+  font: bold 14px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 #000;
 }
 
 .spread .record a,
 .spread .record a:visited { color: #ffffff; text-decoration: none; }
-.spread .record a:hover   { color: #d4b77c; text-decoration: underline; }
+.spread .record a:hover   { color: #4fe3ff; text-decoration: underline; }
 
 .spread .kind {
-  margin: 5px 0 0;
-  font: 9px Verdana, Tahoma, Arial, sans-serif;
+  margin: 2px 0 0;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
   font-variant: normal;
-  letter-spacing: 0.3em;
-  text-indent: 0.3em;
+  letter-spacing: 0.12em;
+  text-indent: 0;
   text-transform: uppercase;
-  color: #c4c4c4;
+  color: #9fe8a0;
 }
 
 .spread .blurb {
-  margin: 8px 0 0;
-  font: italic 12px/1.55 Georgia, "Times New Roman", serif;
-  color: #b5b5b5;
+  margin: 6px 0 0;
+  font: 11px/1.5 Verdana, Tahoma, Arial, sans-serif;
+  font-style: normal;
+  color: #c9ced3;
 }
 
-/* ---------- the story ---------- */
-
-.spread > .presentation {
-  grid-area: about;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
-
-.spread .presentation-title {
-  margin: 0 0 16px;
-  font: italic 24px/1.25 Georgia, "Times New Roman", serif;
-  text-align: left;
-  color: #ffffff;
-  text-shadow: none;
-}
-
-.spread .presentation p {
-  margin: 0 0 12px;
-  font: 13px/1.75 Georgia, "Times New Roman", serif;
-  text-align: justify;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-  color: #dadada;
-}
-
-/* The story opens with a gold drop cap. */
-.spread .presentation p:first-of-type::first-letter {
-  float: left;
-  margin: 5px 9px 0 0;
-  font: 50px/0.8 Georgia, "Times New Roman", serif;
-  color: #c9a96e;
-  text-shadow: 2px 2px 0 #2a2a2a;
-}
-
-.spread .presentation .signal {
-  font-variant: small-caps;
-  font-weight: normal;
-  letter-spacing: 0.1em;
-  text-transform: lowercase;
-  color: #d4b77c;
-}
-
-/* ---------- sidebar: the logo and the links ---------- */
-
-.spread > .side {
-  grid-area: side;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.links-box { text-align: center; }
-
-.links-box .logo-mark {
-  margin: 0 0 12px;
-  padding: 7px;
-  background: #050505;
-  border: 1px solid #333333;
-  box-shadow: 4px 4px 0 #262626;
-}
-
-.links-box .logo-mark img { width: 200px; max-width: 100%; border: 0; }
-
-.hold .links-box .elsewhere {
-  margin: 0;
-  font-size: 10px;
-  font-variant: normal;
-  letter-spacing: 0.3em;
-}
-
-.links-box .sep { display: none; }
-
-.hold .links-box .elsewhere a,
-.hold .links-box .elsewhere a:visited {
-  display: block;
-  padding: 10px 0 9px;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #ececec;
-  border-bottom: 1px solid #2a2a2a;
-}
-
-.hold .links-box .elsewhere a:first-child { border-top: 1px solid #2a2a2a; }
-
-.hold .links-box .elsewhere a:hover,
-.hold .links-box .elsewhere a:focus-visible {
-  color: #d4b77c;
-  outline: none;
-}
-
-/* ---------- Bandcamp's players in place of the covers ----------
-
-   Bandcamp's tall player (cover on top, controls under it) only draws
-   properly at its own size, 350 x 470, so each one is kept at that size
-   and scaled to the width it is given: the 245px half-column on a desktop,
-   full size on most phones, a little smaller on narrow ones. The frame is
-   a 1px border round the scaled player. */
-
+/* Bandcamp's tall player (cover on top, controls under it) only draws
+   properly at its own size, 350 x 470, so it is kept at that size inside a
+   ridged frame and scaled to the room it has: the half-column on a desktop,
+   the width of the screen on a phone. */
 .album-card .bandcamp {
   box-sizing: border-box;
-  width: 352px;
+  width: 356px;
   max-width: 100%;
-  height: 472px;
-  margin: 0 auto 12px;
+  height: 476px;
+  margin: 0 auto 8px;
   overflow: hidden;
-  border: 1px solid #333333;
-  background: #111111;
-  box-shadow: 4px 4px 0 #262626;
+  background: #000;
+  border: 3px ridge #a7aeb5;
 }
 
 .album-card .bandcamp iframe {
@@ -986,56 +908,133 @@ body.hold-page {
 }
 
 @media (min-width: 860px) {
-  .album-card .bandcamp { width: 245px; height: 328px; }       /* 243/350 */
-  .album-card .bandcamp iframe { transform: scale(0.6943); }
+  .album-card .bandcamp { width: 231px; height: 308px; }        /* 225/350 */
+  .album-card .bandcamp iframe { transform: scale(0.6429); }
 }
 
-@media (max-width: 859px) {
-  /* one player per row on a phone: two side by side would be too small */
-  .spread > .records { grid-template-columns: 1fr; gap: 0; }
-  .spread .album-card + .album-card { margin-top: 26px; }
+@media (max-width: 407px) {
+  .album-card .bandcamp { width: 314px; height: 420px; }        /* 308/350 */
+  .album-card .bandcamp iframe { transform: scale(0.88); }
 }
 
-@media (max-width: 389px) {
-  .album-card .bandcamp { width: 317px; height: 425px; }       /* 315/350 */
-  .album-card .bandcamp iframe { transform: scale(0.9); }
-}
-
-@media (max-width: 352px) {
-  .album-card .bandcamp { width: 275px; height: 369px; }       /* 273/350 */
+@media (max-width: 365px) {
+  .album-card .bandcamp { width: 279px; height: 373px; }        /* 273/350 */
   .album-card .bandcamp iframe { transform: scale(0.78); }
 }
 
-/* ---------- colophon and the small buttons ---------- */
+@media (max-width: 330px) {
+  .album-card .bandcamp { width: 251px; height: 335px; }        /* 245/350 */
+  .album-card .bandcamp iframe { transform: scale(0.7); }
+}
+
+/* ---------- about ---------- */
+
+.spread > .presentation {
+  grid-area: about;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 6px;
+  text-align: left;
+}
+
+.spread .presentation-title {
+  margin: 0 12px 10px;
+  font: bold 15px/1.35 Verdana, Tahoma, Arial, sans-serif;
+  font-style: normal;
+  text-align: left;
+  color: #ffe066;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .presentation p {
+  margin: 0 12px 10px;
+  font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
+  color: #dde2e6;
+}
+
+.spread .presentation .signal {
+  font-variant: normal;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9fe8a0;
+}
+
+/* ---------- sidebar ---------- */
+
+.spread > .side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.links-box { padding: 0 0 10px; text-align: center; }
+
+.links-box .logo-mark {
+  margin: 0 0 8px;
+  padding: 3px;
+  border: 3px ridge #a7aeb5;
+}
+
+.links-box .logo-mark img { width: 200px; }
+
+.hold .links-box .elsewhere {
+  margin: 0 10px;
+  font-size: 11px;
+  font-variant: normal;
+  letter-spacing: 0.06em;
+}
+
+.links-box .sep { display: none; }
+
+.hold .links-box .elsewhere a {
+  display: block;
+  margin: 0 0 5px;
+  padding: 5px 0 4px;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #e3e7ea;
+  background: linear-gradient(#48505a, #262b32);
+  border: 2px outset #939aa1;
+}
+
+.hold .links-box .elsewhere a:hover,
+.hold .links-box .elsewhere a:focus-visible {
+  color: #4fe3ff;
+  text-shadow: 0 0 6px #4fe3ff;
+  border-color: #4fe3ff;
+  outline: none;
+}
+
+.hold .links-box .elsewhere a:active { border-style: inset; }
+
+/* ---------- footer: colophon and 88x31 buttons ---------- */
 
 .colophon {
-  margin-top: 26px;
-  padding: 14px 8px 4px;
+  margin-top: 6px;
+  padding: 10px 8px 12px;
   text-align: center;
-  border-top: 3px double #8c8c8c;
 }
 
 .hold .colophon .est {
   margin: 0;
-  font: 10px/1.7 Verdana, Tahoma, Arial, sans-serif;
+  font: 10px/1.6 Verdana, Tahoma, Arial, sans-serif;
   font-variant: normal;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.04em;
   text-indent: 0;
-  color: #9a9a9a;
+  color: #aab1b8;
 }
-
-.hold .colophon .est a { color: #d4b77c; }
 
 .badges {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
-/* The 88x31 buttons keep their original Y2K dress — silver bevels, pixel
-   type and each site's own colours — as a period piece on the dark page. */
 .badge,
 .badge:visited {
   display: inline-flex;
@@ -1069,7 +1068,7 @@ body.hold-page {
   border: 1px solid #000;
 }
 
-a.badge:hover { outline: 1px solid #c9a96e; }
+a.badge:hover { outline: 1px solid #4fe3ff; box-shadow: 0 0 8px #4fe3ff; }
 
 a.badge[href*="bandcamp"]  { background: #1da0c3; color: #fff; }
 a.badge[href*="bandcamp"] b { background: #0b5b70; }
@@ -1083,82 +1082,109 @@ a.badge[href*="instagram"] b { background: #2b1455; }
 .badge-xhtml b { width: 30px; font-size: 9px; background: #0c4a9e; }
 .badge-res     { justify-content: center; font-size: 10px; color: #7cff4f; background: #000; }
 
+/* ---------- quiet motion for those who ask for it ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tape,
+}
+
 /* ---------- the same skin on a phone ----------
 
-   One column, full width: masthead, navigation, records, the story, then
-   the logo and links. The reading text is set a size larger. */
+   One column, full width, in the order a visitor wants it: banner, tabs,
+   records, the story, then the logo and links. The period type sizes (11-12px) do
+   not survive a phone screen, so the text is set larger here; everything
+   else — tiles, bevels, window bars, the player, the buttons — carries
+   over as it is. */
 
 @media (max-width: 859px) {
   body.hold-page { padding: 10px 8px 28px; font-size: 14px; }
 
   .hold {
-    padding: 8px;
-    box-shadow: 3px 3px 0 #262626;
+    padding: 5px;
+    box-shadow: 3px 3px 0 #000;
   }
 
-  .masthead { padding: 34px 8px 20px; }
+  .masthead { padding: 26px 8px 18px; }
 
   .hold .artist {
-    font-size: 38px;
+    font-size: 36px;
+    letter-spacing: 0.14em;
+    text-indent: 0.14em;
+  }
+
+  .hold .notice,
+  .hold .notice:not(.notice-long) {
+    font-size: 11px;
     letter-spacing: 0.16em;
     text-indent: 0.16em;
   }
 
-  .hold .notice,
-  .hold .notice:not(.notice-long) { font-size: 14px; }
-
   .tabs {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 0;
+    gap: 3px;
+    padding: 5px 5px 0;
   }
 
   .tabs a,
   .tabs a:visited {
-    padding: 13px 0 12px;
+    padding: 11px 0 10px;
     text-align: center;
-    letter-spacing: 0.24em;
+    font-size: 11px;
+    letter-spacing: 0.04em;
   }
 
+  .tape span { font-size: 10px; }
+
+  /* The sidebar follows the story. */
   .spread {
     display: flex;
     flex-direction: column;
-    gap: 26px;
-    margin-top: 20px;
+    gap: 5px;
+    margin-top: 5px;
   }
+
+  .spread > .side { display: contents; }
 
   .spread > .records       { order: 1; }
   .spread > .presentation  { order: 2; }
-  .spread > .side          { order: 3; }
+  .links-box               { order: 3; }
 
-  .spread > .records { gap: 0 12px; }
+  /* One Bandcamp player per row: two side by side would be too small. */
+  .spread > .records { grid-template-columns: 1fr; }
+  .spread .album-card + .album-card { margin-top: 16px; }
 
-  .spread .record { font-size: 18px; }
+  .module-bar { padding: 5px 8px 4px; font-size: 11px; }
 
-  .spread .presentation-title { font-size: 21px; }
+  .spread .record { font-size: 15px; }
+  .spread .kind   { font-size: 11px; }
+
+  .spread .presentation-title { font-size: 17px; }
 
   .spread .presentation p {
-    font-size: 15px;
-    line-height: 1.7;
-    text-align: left;
+    font-size: 14px;
+    line-height: 1.65;
   }
 
-  .links-box .logo-mark img { width: 230px; }
 
-  .hold .links-box .elsewhere { font-size: 12px; }
+  .links-box .logo-mark img { width: 230px; max-width: 100%; }
 
-  .hold .links-box .elsewhere a,
-  .hold .links-box .elsewhere a:visited { padding: 14px 0 13px; }
+  .hold .links-box .elsewhere { font-size: 13px; }
 
-  .hold .colophon .est { font-size: 11px; }
+  .hold .links-box .elsewhere a {
+    margin-bottom: 6px;
+    padding: 12px 0 11px;
+  }
+
+  .hold .colophon .est { font-size: 12px; }
 }
 
 /* A very narrow phone: one cover per row, and a smaller name. */
 @media (max-width: 360px) {
   .spread > .records { grid-template-columns: 1fr; }
 
-  .hold .artist { font-size: 30px; }
+  .hold .artist { font-size: 29px; }
 
   .tabs a,
-  .tabs a:visited { letter-spacing: 0.14em; }
+  .tabs a:visited { font-size: 10px; letter-spacing: 0; }
 }
