@@ -957,42 +957,53 @@ body.hold-page {
   outline: none;
 }
 
-/* ---------- listen: Bandcamp's players, one per album ---------- */
+/* ---------- Bandcamp's players in place of the covers ----------
 
-/* Bandcamp's tall layout (cover on top, controls under it) only draws
-   properly at its own size, 350 x 470. On a phone it gets exactly that; in
-   the 230px desktop sidebar the same player is scaled down to fit, so it
-   keeps its proportions instead of being cropped. */
-.listen-box .bandcamp {
-  width: 350px;
+   Bandcamp's tall player (cover on top, controls under it) only draws
+   properly at its own size, 350 x 470, so each one is kept at that size
+   and scaled to the width it is given: the 245px half-column on a desktop,
+   full size on most phones, a little smaller on narrow ones. The frame is
+   a 1px border round the scaled player. */
+
+.album-card .bandcamp {
+  box-sizing: border-box;
+  width: 352px;
   max-width: 100%;
-  height: 470px;
-  margin: 0 auto 14px;
+  height: 472px;
+  margin: 0 auto 12px;
   overflow: hidden;
   border: 1px solid #333333;
   background: #111111;
+  box-shadow: 4px 4px 0 #262626;
 }
 
-.listen-box .bandcamp:last-child { margin-bottom: 0; }
-
-.listen-box .bandcamp iframe {
+.album-card .bandcamp iframe {
   display: block;
   width: 350px;
   height: 470px;
   border: 0;
+  transform-origin: 0 0;
 }
 
 @media (min-width: 860px) {
-  .listen-box .bandcamp {
-    box-sizing: border-box;
-    width: 230px;
-    height: 308px;   /* a 1px border round 470 x 228/350 */
-  }
+  .album-card .bandcamp { width: 245px; height: 328px; }       /* 243/350 */
+  .album-card .bandcamp iframe { transform: scale(0.6943); }
+}
 
-  .listen-box .bandcamp iframe {
-    transform: scale(0.6514);
-    transform-origin: 0 0;
-  }
+@media (max-width: 859px) {
+  /* one player per row on a phone: two side by side would be too small */
+  .spread > .records { grid-template-columns: 1fr; gap: 0; }
+  .spread .album-card + .album-card { margin-top: 26px; }
+}
+
+@media (max-width: 389px) {
+  .album-card .bandcamp { width: 317px; height: 425px; }       /* 315/350 */
+  .album-card .bandcamp iframe { transform: scale(0.9); }
+}
+
+@media (max-width: 352px) {
+  .album-card .bandcamp { width: 275px; height: 369px; }       /* 273/350 */
+  .album-card .bandcamp iframe { transform: scale(0.78); }
 }
 
 /* ---------- colophon and the small buttons ---------- */

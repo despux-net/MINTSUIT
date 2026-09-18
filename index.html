@@ -160,10 +160,19 @@ layout: null
     <div class="module-bar" aria-hidden="true">Discography</div>
 {% for record in records %}
     <section class="album-card">
+{%- comment -%}
+  With an album ID in the panel the card shows Bandcamp's own player, which
+  carries the cover; without one it falls back to the cover as a link.
+{%- endcomment -%}
+{%- if record.bandcamp_id and record.bandcamp_id != "" %}
+      <div class="bandcamp"><iframe title="{{ record.title | escape }} on Bandcamp" loading="lazy" width="350" height="470"
+              src="https://bandcamp.com/EmbeddedPlayer/album={{ record.bandcamp_id | escape }}/size=large/bgcol=111111/linkcol=c9a96e/tracklist=false/transparent=true/"></iframe></div>
+{%- else %}
       <a class="frame" href="{{ record.url | escape }}">
         <img src="{{ record.cover | relative_url | escape }}" width="1000" height="1000"
              alt="{{ top.wordmark | escape }} &mdash; {{ record.title | escape }}, album cover">
       </a>
+{%- endif %}
       <h2 class="record"><a href="{{ record.url | escape }}">{{ record.title | escape }}</a></h2>
       <p class="kind">{{ record.kind | escape }}{% if record.year and record.year != "" %} &middot; {{ record.year | escape }}{% endif %}</p>
       {%- if record.blurb and record.blurb != "" %}
@@ -201,24 +210,6 @@ layout: null
     {%- endfor %}
   </p>
   </div>
-{%- comment -%}
-  Bandcamp's own embedded player for every record that has its album ID
-  in the panel. The iframes load only when they come into view.
-{%- endcomment -%}
-{%- assign players = 0 -%}
-{%- for record in records -%}{%- if record.bandcamp_id and record.bandcamp_id != "" -%}{%- assign players = players | plus: 1 -%}{%- endif -%}{%- endfor -%}
-{%- if players > 0 %}
-
-  <div class="listen-box" id="listen">
-    <div class="module-bar" aria-hidden="true">Listen</div>
-    {%- for record in records -%}
-    {%- if record.bandcamp_id and record.bandcamp_id != "" %}
-    <div class="bandcamp"><iframe title="{{ record.title | escape }} on Bandcamp" loading="lazy" width="350" height="470"
-            src="https://bandcamp.com/EmbeddedPlayer/album={{ record.bandcamp_id | escape }}/size=large/bgcol=111111/linkcol=c9a96e/tracklist=false/transparent=true/"></iframe></div>
-    {%- endif -%}
-    {%- endfor %}
-  </div>
-{%- endif %}
   </aside>
 
   </div>

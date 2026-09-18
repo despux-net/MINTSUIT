@@ -74,9 +74,9 @@ content:
             label: Bandcamp album ID
             type: string
             description: >-
-              Puts Bandcamp's own player for this album in the Listen box. It is
-              the number after "album=" in the album's Share / Embed code on
-              Bandcamp. Leave it empty for no player.
+              Shows Bandcamp's own player for this album in place of the cover.
+              It is the number after "album=" in the album's Share / Embed code
+              on Bandcamp. Leave it empty to show the cover instead.
           - name: cover
             label: Cover
             type: image
