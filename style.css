@@ -1258,7 +1258,7 @@ a.badge[href*="instagram"] b { background: #2b1455; }
 /* ---------- the same skin on a phone ----------
 
    One column, full width, in the order a visitor wants it: banner, tabs,
-   player, records, the story, links. The period type sizes (11-12px) do
+   records, the story, links, then the player. The period type sizes (11-12px) do
    not survive a phone screen, so the text is set larger here; everything
    else — tiles, bevels, window bars, the player, the buttons — carries
    over as it is. */
@@ -1304,7 +1304,7 @@ a.badge[href*="instagram"] b { background: #2b1455; }
   .tape span { font-size: 10px; }
 
   /* The sidebar dissolves so its two boxes can take their own places in
-     the column: the player near the top, the links near the end. */
+     the column: the links after the story, and the player last. */
   .spread {
     display: flex;
     flex-direction: column;
@@ -1314,10 +1314,13 @@ a.badge[href*="instagram"] b { background: #2b1455; }
 
   .spread > .side { display: contents; }
 
-  .player                  { order: 1; }
-  .spread > .records       { order: 2; }
-  .spread > .presentation  { order: 3; }
-  .links-box               { order: 4; }
+  .spread > .records       { order: 1; }
+  .spread > .presentation  { order: 2; }
+  .links-box               { order: 3; }
+  .player                  { order: 4; }
+
+  /* The tabs follow the same order as the boxes: Player moves to the end. */
+  .tabs a[href="#player"] { order: 1; }
 
   .module-bar { padding: 5px 8px 4px; font-size: 11px; }
 
