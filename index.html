@@ -108,18 +108,16 @@ layout: null
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&amp;display=swap&amp;text={{ top.wordmark | url_encode }}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&amp;display=swap" media="(min-width: 860px)">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&amp;display=swap">
 <link rel="stylesheet" href="/style.css">
 </head>
 
 <body class="hold-page">
 
 {%- comment -%}
-  One document, two looks. On a phone this is the single column it has
-  always been. From 860px up the stylesheet turns it into an early-2000s
-  site: an 800px bevelled box on a tiled ground, with tabs, a player skin,
-  a construction strip and 88x31 buttons. The pieces that exist only for
-  that look (tabs, strip, player, window bars, buttons) are hidden on phones.
+  The page is dressed as an early-2000s site at every size: an 800px
+  bevelled box with tabs, a player skin and 88x31 buttons on a desktop,
+  and the same pieces stacked in one column on a phone.
 {%- endcomment %}
 <div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}></div>
 
