@@ -139,6 +139,13 @@ layout: null
   </div>
 {%- endif %}
 
+{%- comment -%}
+  The spread holds the body of the page. On a phone it is one column, in
+  this order; on a wide screen it becomes a magazine spread: records on the
+  left, the presentation in the middle, the logo and links on the right.
+{%- endcomment %}
+  <div class="spread">
+
   <div class="records">
 {% for record in records %}
     <section class="album-card">
@@ -166,16 +173,21 @@ layout: null
     <p>{% if paragraph.lead and paragraph.lead != "" %}<span class="signal">{{ paragraph.lead | escape }}</span> {% endif %}{{ paragraph.text | escape }}</p>
     {%- endfor %}
   </section>
-{% if bottom.logo and bottom.logo != "" %}
+
+  <aside class="side">
+{%- if bottom.logo and bottom.logo != "" %}
   <div class="logo-mark">
     <img src="{{ bottom.logo | relative_url | escape }}" width="360" height="271" alt="{{ bottom.logo_alt | escape }}">
   </div>
-{% endif %}
+{%- endif %}
   <p class="elsewhere">
     {%- for link in bottom.links %}
-    <a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %} &nbsp;&middot;&nbsp;{% endunless %}
+    <a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %}<span class="sep"> &nbsp;&middot;&nbsp;</span>{% endunless %}
     {%- endfor %}
   </p>
+  </aside>
+
+  </div>
 
   <p class="est">{{ bottom.established | escape | replace: " ", "&nbsp;" }} &nbsp;&middot; <span>{{ bottom.byline | escape }}</span>
     &nbsp;&middot; <span>{{ bottom.contact | escape }}

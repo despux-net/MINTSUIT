@@ -508,6 +508,110 @@ body.hold-page {
   .hold { max-width: 880px; }
 }
 
+/* ---------- the magazine spread: wide screens only ----------
+
+   Below this width the page is the single column it has always been. Above
+   it the body opens into three columns, like a spread in an online
+   magazine: the records down the left, the presentation set as the main
+   story in the middle, and the logo and links in a sidebar on the right
+   that stays in view while the story scrolls. The masthead above and the
+   colophon below run the full width. */
+
+@media (min-width: 1100px) {
+  .hold { max-width: 1280px; }
+
+  .spread {
+    display: grid;
+    grid-template-columns: minmax(240px, 290px) minmax(0, 1fr) minmax(180px, 220px);
+    align-items: start;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(238, 241, 243, 0.2);
+  }
+
+  .spread > .records {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 44px;
+    margin: 0;
+    padding-right: 44px;
+  }
+
+  .spread .album-card {
+    flex: none;
+    max-width: none;
+  }
+
+  .spread .record { font-size: 26px; }
+
+  /* The column rules do the ornament's job here. */
+  .spread > .rule { display: none; }
+
+  .spread > .presentation {
+    max-width: none;
+    margin: 0;
+    padding: 0 52px;
+    border-left: 1px solid rgba(238, 241, 243, 0.14);
+    border-right: 1px solid rgba(238, 241, 243, 0.14);
+  }
+
+  .spread .presentation-title {
+    margin-bottom: 28px;
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .spread .presentation p {
+    font-size: 16px;
+    line-height: 1.8;
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  /* A drop cap opens the story, in the system Times so it needs no font. */
+  .spread .presentation p:first-of-type::first-letter {
+    float: left;
+    margin: 6px 10px 0 0;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 64px;
+    line-height: 0.8;
+    color: #f4f6f7;
+  }
+
+  .spread > .side {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 40px;
+    padding-left: 40px;
+  }
+
+  .side .logo-mark { margin: 0; }
+  .side .logo-mark img { width: 100%; }
+
+  .side .elsewhere {
+    margin-top: 26px;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .side .elsewhere a {
+    display: block;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(238, 241, 243, 0.14);
+  }
+
+  .side .elsewhere a:first-child { border-top: 1px solid rgba(238, 241, 243, 0.14); }
+
+  .side .sep { display: none; }
+
+  .spread + .est {
+    margin-top: 44px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(238, 241, 243, 0.2);
+  }
+}
+
 /* ===========================================================
    The gold portal — video pop-up for the tracks that have one
    =========================================================== */
