@@ -4,6 +4,19 @@
 
 url: https://mintsuit.com
 
+# Jekyll leaves out any file whose name starts with an underscore. Images
+# uploaded from the panel can be named that way ("_.jpeg"), so they are
+# let back in by extension; _data and _config.yml stay private.
+include:
+  - "_*.jpg"
+  - "_*.jpeg"
+  - "_*.png"
+  - "_*.gif"
+  - "_*.webp"
+  - "_*.JPG"
+  - "_*.JPEG"
+  - "_*.PNG"
+
 exclude:
   - README.md
 
