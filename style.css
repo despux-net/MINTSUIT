@@ -985,44 +985,54 @@ body.hold-page {
   margin-top: 12px;
 }
 
-/* 88x31, as they were, dressed in the night palette. */
+/* The 88x31 buttons keep their original Y2K dress — silver bevels, pixel
+   type and each site's own colours — as a period piece on the dark page. */
 .badge,
 .badge:visited {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   width: 88px;
   height: 31px;
   box-sizing: border-box;
-  padding: 0 5px 0 4px;
+  padding: 0 4px 0 3px;
   overflow: hidden;
-  font: 7px/1.15 Verdana, Tahoma, sans-serif;
-  letter-spacing: 0.12em;
+  font: 8px/1.05 Silkscreen, Verdana, sans-serif;
   text-align: left;
   text-decoration: none;
   text-transform: uppercase;
-  color: #ececec;
-  background: #0d0d0d;
-  border: 1px solid #4a4a4a;
+  color: #111;
+  background: linear-gradient(#f4f5f6, #c3c8cd);
+  border: 1px solid #000;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #6d737a;
 }
 
 .badge b {
   flex: none;
-  width: 21px;
+  min-width: 21px;
   height: 21px;
-  font: italic 13px/21px Georgia, "Times New Roman", serif;
-  letter-spacing: 0;
+  padding: 0 2px;
+  box-sizing: border-box;
+  font: bold 11px/21px Verdana, Tahoma, sans-serif;
   text-align: center;
-  text-transform: none;
-  color: #111111;
-  background: linear-gradient(135deg, #5ce1e6, #ff71ce);
+  color: #fff;
+  background: #3a4049;
+  border: 1px solid #000;
 }
 
-a.badge:hover { color: #111111; background: #ff8fd6; border-color: #ff8fd6; }
-a.badge:hover b { color: #ffffff; background: #111111; }
+a.badge:hover { outline: 1px solid #ff71ce; }
 
-.badge-xhtml b { width: 28px; font: 8px/21px Verdana, sans-serif; font-style: normal; letter-spacing: 0.05em; }
-.badge-res     { justify-content: center; font-size: 8px; color: #7fe7ec; }
+a.badge[href*="bandcamp"]  { background: #1da0c3; color: #fff; }
+a.badge[href*="bandcamp"] b { background: #0b5b70; }
+a.badge[href*="youtube"]   { background: #ffffff; }
+a.badge[href*="youtube"] b { background: #e01b1b; }
+a.badge[href*="instagram"] { background: linear-gradient(90deg, #6a3fbf, #d5307a 60%, #f39a2d); color: #fff; }
+a.badge[href*="instagram"] b { background: #2b1455; }
+
+.badge-ie b    { font: italic bold 17px/19px "Times New Roman", serif; color: #1f63d9; background: #fff; }
+.badge-xhtml   { background: #fff; }
+.badge-xhtml b { width: 30px; font-size: 9px; background: #0c4a9e; }
+.badge-res     { justify-content: center; font-size: 10px; color: #7cff4f; background: #000; }
 
 /* ---------- the same skin on a phone ----------
 
