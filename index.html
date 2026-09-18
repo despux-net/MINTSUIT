@@ -224,6 +224,27 @@ layout: null
     <a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %}<span class="sep"> &nbsp;&middot;&nbsp;</span>{% endunless %}
     {%- endfor %}
   </p>
+{%- comment -%}
+  Bandcamp download codes (_data/codes.yml, "Download codes" in the panel).
+  A details element does the opening and closing, so no script is needed.
+{%- endcomment -%}
+{%- assign codes = site.data.codes -%}
+{%- if codes.albums and codes.albums.size > 0 %}
+  <details class="redeem">
+    <summary>Redeem code</summary>
+    <p class="redeem-note">{{ codes.message | escape }} <a href="{{ codes.redeem_url | escape }}" target="_blank" rel="noopener">{{ codes.redeem_url | remove: "https://" | remove: "http://" | escape }}</a></p>
+    <div class="redeem-box">
+      {%- for album in codes.albums %}
+      <ul class="redeem-list" style="--ink: {{ album.color | default: "#ffffff" | escape }}">
+        <li class="redeem-title">{{ album.title | escape }}</li>
+        {%- for code in album.codes %}
+        <li><code>{{ code | escape }}</code></li>
+        {%- endfor %}
+      </ul>
+      {%- endfor %}
+    </div>
+  </details>
+{%- endif %}
   </div>
   </aside>
 

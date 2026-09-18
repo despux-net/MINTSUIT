@@ -148,6 +148,39 @@ content:
         label: Email
         type: string
 
+  - name: codes
+    label: Download codes
+    path: _data/codes.yml
+    type: file
+    fields:
+      - name: redeem_url
+        label: Redeem page
+        type: string
+        description: Where fans type their code, e.g. https://mintsuit.bandcamp.com/yum
+      - name: message
+        label: Message before the link
+        type: string
+      - name: albums
+        label: Albums
+        type: object
+        list: true
+        description: >-
+          One column per album under the Redeem code button. Bandcamp only
+          exports unredeemed codes, so paste a fresh export to drop used ones.
+        fields:
+          - name: title
+            label: Album
+            type: string
+            required: true
+          - name: color
+            label: Text colour
+            type: string
+            description: A CSS colour, e.g. #ffffff for white or #4fb8ff for blue.
+          - name: codes
+            label: Codes
+            type: string
+            list: true
+
   - name: sharing
     label: Search and sharing
     path: _data/sharing.yml
