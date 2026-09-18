@@ -642,9 +642,8 @@ body.locked { overflow: hidden; }
    The page keeps the manners of a fashion title's website from around
    2002 — a framed page with a double rule, a photographic masthead,
    navigation in spaced capitals between rules, covers mounted like prints,
-   Georgia for the story — and sees them through a vaporwave night: a deep
-   violet ground, ivory type, and the genre's three colours (pink, lilac,
-   cyan) used sparingly, as hairlines, a drop cap and a split-colour shadow
+   Georgia for the story — and sees them through a vaporwave night: a black
+   ground, ivory type, and the genre's pink and cyan used sparingly, as hairlines, a drop cap and a split-colour shadow
    on the name. Everything stays flat: no glass, no glow boxes. On a desktop
    the modules sit in two columns; on a phone they stack in one (see the
    end of the file). */
@@ -653,22 +652,22 @@ body.hold-page {
   display: block;
   min-height: 0;
   padding: 32px 0 48px;
-  background-color: #0e0a18;
+  background-color: #0a0a0a;
   /* a faint pinstripe over a dusk that deepens down the page */
   background-image:
-    repeating-linear-gradient(45deg, rgba(185, 140, 255, 0.07) 0 1px, transparent 1px 7px),
-    linear-gradient(#22123a 0, #0e0a18 520px);
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
+    linear-gradient(#171717 0, #0a0a0a 520px);
   background-repeat: repeat, no-repeat;
-  color: #ece4f5;
+  color: #ececec;
   font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
 }
 
-::selection { color: #0e0a18; background: #ff71ce; }
+::selection { color: #0a0a0a; background: #ff71ce; }
 
 /* :where() keeps these at the weight of a bare 'a', so every component
    below can set its own link colour without a fight. */
 :where(body.hold-page) a         { color: #ff8fd6; }
-:where(body.hold-page) a:visited { color: #c9a3ff; }
+:where(body.hold-page) a:visited { color: #bdbdbd; }
 :where(body.hold-page) a:hover   { color: #7fe7ec; }
 
 .hold-page .backdrop { display: none; }
@@ -680,9 +679,9 @@ body.hold-page {
   padding: 12px;
   box-sizing: border-box;
   text-align: left;
-  background: #15101f;
-  border: 3px double #b98cff;
-  box-shadow: 6px 6px 0 #2e1d4d;
+  background: #111111;
+  border: 3px double #8c8c8c;
+  box-shadow: 6px 6px 0 #262626;
 }
 
 /* ---------- masthead: the panel's photo, washed in dusk ---------- */
@@ -690,13 +689,13 @@ body.hold-page {
 .masthead {
   padding: 46px 14px 26px;
   text-align: center;
-  border: 1px solid #4a3a68;
+  border: 1px solid #333333;
   border-bottom: 3px solid #ff71ce;
   border-image: none;
   background:
-    linear-gradient(rgba(255, 113, 206, 0.16), rgba(26, 10, 48, 0.78)),
-    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #0e0a18;
-  box-shadow: inset 0 -3px 0 #b98cff, inset 0 -6px 0 #5ce1e6;
+    linear-gradient(rgba(255, 113, 206, 0.08), rgba(0, 0, 0, 0.74)),
+    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #0a0a0a;
+  box-shadow: inset 0 -3px 0 #5ce1e6;
 }
 
 .hold .artist {
@@ -705,7 +704,7 @@ body.hold-page {
   letter-spacing: 0.24em;
   text-indent: 0.24em;
   line-height: 1.05;
-  color: #fff8fc;
+  color: #ffffff;
   /* the split-colour offset of a worn VHS tape */
   text-shadow: -2px 0 0 rgba(92, 225, 230, 0.7), 2px 0 0 rgba(255, 113, 206, 0.7);
 }
@@ -717,7 +716,7 @@ body.hold-page {
   letter-spacing: 0.04em;
   text-indent: 0;
   text-transform: none;
-  color: #efe2ff;
+  color: #f2f2f2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
@@ -730,8 +729,8 @@ body.hold-page {
   justify-content: center;
   margin-top: 12px;
   padding: 9px 0 8px;
-  border-top: 1px solid #5d4a82;
-  border-bottom: 1px solid #5d4a82;
+  border-top: 1px solid #3d3d3d;
+  border-bottom: 1px solid #3d3d3d;
 }
 
 .tabs a,
@@ -741,8 +740,8 @@ body.hold-page {
   letter-spacing: 0.34em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #ece4f5;
-  border-left: 1px solid #3e3059;
+  color: #ececec;
+  border-left: 1px solid #2a2a2a;
 }
 
 .tabs a:first-child { border-left: 0; }
@@ -756,14 +755,14 @@ body.hold-page {
   margin-top: 10px;
   padding: 7px 0;
   text-align: center;
-  background: linear-gradient(90deg, #5ce1e6, #b98cff 45%, #ff71ce);
+  background: linear-gradient(90deg, #5ce1e6, #ff71ce);
 }
 
 .tape span {
   font: bold 10px Verdana, Tahoma, Arial, sans-serif;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #15101f;
+  color: #111111;
 }
 
 /* ---------- the spread ---------- */
@@ -784,7 +783,7 @@ body.hold-page {
 .spread > .rule { display: none; }
 
 /* A section label in spaced capitals, running out into a hairline that
-   fades from lilac to pink. */
+   fades from cyan to pink. */
 .module-bar {
   display: flex;
   align-items: center;
@@ -793,14 +792,14 @@ body.hold-page {
   font: 10px Verdana, Tahoma, Arial, sans-serif;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #c9a3ff;
+  color: #bdbdbd;
 }
 
 .module-bar::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, #b98cff, #ff71ce 70%, rgba(255, 113, 206, 0));
+  background: linear-gradient(90deg, #5ce1e6, #ff71ce 70%, rgba(255, 113, 206, 0));
 }
 
 /* ---------- discography ---------- */
@@ -825,14 +824,14 @@ body.hold-page {
   text-align: center;
 }
 
-/* Covers mounted like prints on a dark mat, with a lilac offset. */
+/* Covers mounted like prints on a black mat, with a grey offset. */
 .hold .album-card .frame {
   display: block;
   margin: 0 0 12px;
   padding: 7px;
-  background: #0c0914;
-  border: 1px solid #4a3a68;
-  box-shadow: 4px 4px 0 #2e1d4d;
+  background: #050505;
+  border: 1px solid #333333;
+  box-shadow: 4px 4px 0 #262626;
 }
 
 .hold .album-card .frame:hover { box-shadow: 4px 4px 0 #ff71ce; }
@@ -847,7 +846,7 @@ body.hold-page {
 }
 
 .spread .record a,
-.spread .record a:visited { color: #fff8fc; text-decoration: none; }
+.spread .record a:visited { color: #ffffff; text-decoration: none; }
 .spread .record a:hover   { color: #ff8fd6; text-decoration: underline; }
 
 .spread .kind {
@@ -863,7 +862,7 @@ body.hold-page {
 .spread .blurb {
   margin: 8px 0 0;
   font: italic 12px/1.55 Georgia, "Times New Roman", serif;
-  color: #b9aed0;
+  color: #b5b5b5;
 }
 
 /* ---------- the story ---------- */
@@ -880,7 +879,7 @@ body.hold-page {
   margin: 0 0 16px;
   font: italic 24px/1.25 Georgia, "Times New Roman", serif;
   text-align: left;
-  color: #fff8fc;
+  color: #ffffff;
   text-shadow: none;
 }
 
@@ -890,7 +889,7 @@ body.hold-page {
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto;
-  color: #ddd3ea;
+  color: #dadada;
 }
 
 /* The story opens with a pink drop cap, its shadow split in cyan. */
@@ -924,9 +923,9 @@ body.hold-page {
 .links-box .logo-mark {
   margin: 0 0 12px;
   padding: 7px;
-  background: #0c0914;
-  border: 1px solid #4a3a68;
-  box-shadow: 4px 4px 0 #2e1d4d;
+  background: #050505;
+  border: 1px solid #333333;
+  box-shadow: 4px 4px 0 #262626;
 }
 
 .links-box .logo-mark img { width: 200px; max-width: 100%; border: 0; }
@@ -946,11 +945,11 @@ body.hold-page {
   padding: 10px 0 9px;
   text-decoration: none;
   text-transform: uppercase;
-  color: #ece4f5;
-  border-bottom: 1px solid #3e3059;
+  color: #ececec;
+  border-bottom: 1px solid #2a2a2a;
 }
 
-.hold .links-box .elsewhere a:first-child { border-top: 1px solid #3e3059; }
+.hold .links-box .elsewhere a:first-child { border-top: 1px solid #2a2a2a; }
 
 .hold .links-box .elsewhere a:hover,
 .hold .links-box .elsewhere a:focus-visible {
@@ -964,7 +963,7 @@ body.hold-page {
   margin-top: 26px;
   padding: 14px 8px 4px;
   text-align: center;
-  border-top: 3px double #b98cff;
+  border-top: 3px double #8c8c8c;
 }
 
 .hold .colophon .est {
@@ -973,7 +972,7 @@ body.hold-page {
   font-variant: normal;
   letter-spacing: 0.14em;
   text-indent: 0;
-  color: #a99bc2;
+  color: #9a9a9a;
 }
 
 .hold .colophon .est a { color: #ff8fd6; }
@@ -1002,9 +1001,9 @@ body.hold-page {
   text-align: left;
   text-decoration: none;
   text-transform: uppercase;
-  color: #ece4f5;
-  background: #120d1c;
-  border: 1px solid #6b5796;
+  color: #ececec;
+  background: #0d0d0d;
+  border: 1px solid #4a4a4a;
 }
 
 .badge b {
@@ -1015,12 +1014,12 @@ body.hold-page {
   letter-spacing: 0;
   text-align: center;
   text-transform: none;
-  color: #15101f;
-  background: linear-gradient(135deg, #5ce1e6, #b98cff 50%, #ff71ce);
+  color: #111111;
+  background: linear-gradient(135deg, #5ce1e6, #ff71ce);
 }
 
-a.badge:hover { color: #15101f; background: #ff8fd6; border-color: #ff8fd6; }
-a.badge:hover b { color: #fff8fc; background: #15101f; }
+a.badge:hover { color: #111111; background: #ff8fd6; border-color: #ff8fd6; }
+a.badge:hover b { color: #ffffff; background: #111111; }
 
 .badge-xhtml b { width: 28px; font: 8px/21px Verdana, sans-serif; font-style: normal; letter-spacing: 0.05em; }
 .badge-res     { justify-content: center; font-size: 8px; color: #7fe7ec; }
@@ -1035,7 +1034,7 @@ a.badge:hover b { color: #fff8fc; background: #15101f; }
 
   .hold {
     padding: 8px;
-    box-shadow: 3px 3px 0 #2e1d4d;
+    box-shadow: 3px 3px 0 #262626;
   }
 
   .masthead { padding: 34px 8px 20px; }
