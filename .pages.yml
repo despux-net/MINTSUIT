@@ -25,11 +25,11 @@ content:
           One short line shows in spaced small caps. Several lines, or one long
           line, show as ordinary paragraphs. Leave it empty to hide it.
       - name: construction
-        label: Construction strip
+        label: Ribbon
         type: string
         description: >-
-          The yellow and black strip under the tabs on the desktop page. Leave
-          it empty to hide it.
+          A black ribbon of spaced capitals under the navigation, for news
+          such as a release. Leave it empty to hide it.
 
   - name: background
     label: Background

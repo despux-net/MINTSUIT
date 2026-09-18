@@ -108,16 +108,15 @@ layout: null
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&amp;display=swap&amp;text={{ top.wordmark | url_encode }}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&amp;display=swap">
 <link rel="stylesheet" href="/style.css">
 </head>
 
 <body class="hold-page">
 
 {%- comment -%}
-  The page is dressed as an early-2000s site at every size: an 800px
-  bevelled box with tabs, a player skin and 88x31 buttons on a desktop,
-  and the same pieces stacked in one column on a phone.
+  The page is dressed as an early-2000s fashion magazine online at every
+  size: an 800px ivory page with a photographic masthead, a listening room
+  and 88x31 buttons on a desktop, the same pieces in one column on a phone.
 {%- endcomment %}
 <div class="backdrop"{% if background != "" %} style="background-image: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}></div>
 
@@ -196,7 +195,7 @@ layout: null
 {%- for record in records -%}{%- if first_track == nil and record.tracks.size > 0 -%}{%- assign first_track = record.tracks.first -%}{%- endif -%}{%- endfor %}
 {%- if first_track %}
   <section class="player" id="player" aria-label="Music player">
-    <div class="player-bar"><span>{{ top.wordmark | escape }} Amp</span><span class="player-knobs" aria-hidden="true"><i></i><i></i><i></i></span></div>
+    <div class="player-bar"><span>Listening Room</span><span class="player-knobs" aria-hidden="true"><i></i><i></i><i></i></span></div>
     <div class="player-screen">
       <div class="player-time" aria-hidden="true"><span class="player-state">&#9654;</span><span data-length>{{ first_track.length | escape }}</span></div>
       <div class="player-meta" aria-hidden="true">128 kbps<br>44 khz<br>stereo</div>

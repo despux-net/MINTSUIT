@@ -636,37 +636,33 @@ body.locked { overflow: hidden; }
 }
 
 /* ===========================================================
-   The skin — an early-2000s site, 2000 to 2005
+   The skin — an early-2000s fashion magazine online
    ===========================================================
 
-   Everything below dresses the page as a site from the first years of the
-   2000s: a bevelled box, 800px wide on a desktop, on a tiled ground, with
-   tabs, window-like modules, a player skin and 88x31 buttons. On a desktop
-   the modules sit in two columns; on a phone they stack in one, with the
-   type set larger (see the end of the file). */
-
-/* ---------- ground, box and type ---------- */
+   The page is dressed like a fashion title's website from around 2002:
+   an 800px ivory page with a double rule, set on a faint pinstripe, a
+   photographic masthead, a spaced-capitals section bar, Georgia for the
+   reading text and Verdana for the small labels, and one accent, a deep
+   bordeaux. Everything is flat and printed-looking: hairlines instead of
+   bevels, no glow, no pixel type. On a desktop the modules sit in two
+   columns; on a phone they stack in one (see the end of the file). */
 
 body.hold-page {
   display: block;
   min-height: 0;
-  padding: 28px 0 44px;
-  background-color: #14171c;
-  /* 45° pinstripes over a faint 16px grid, all solid colour */
-  background-image:
-    repeating-linear-gradient(45deg, #1f242b 0 2px, transparent 2px 7px),
-    linear-gradient(#262b33 1px, transparent 1px),
-    linear-gradient(90deg, #262b33 1px, transparent 1px);
-  background-size: auto, 16px 16px, 16px 16px;
-  color: #e3e7ea;
-  font: 12px/1.55 Verdana, Tahoma, Arial, sans-serif;
+  padding: 32px 0 48px;
+  background-color: #efe9df;
+  /* a faint pinstripe, like the paper of a lookbook */
+  background-image: repeating-linear-gradient(45deg, #e7dfd2 0 1px, transparent 1px 7px);
+  color: #1b1a18;
+  font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
 }
 
 /* :where() keeps these at the weight of a bare 'a', so every component
    below can set its own link colour without a fight. */
-:where(body.hold-page) a         { color: #4fe3ff; }
-:where(body.hold-page) a:visited { color: #b58cff; }
-:where(body.hold-page) a:hover   { color: #ffffff; }
+:where(body.hold-page) a         { color: #7d1a2a; }
+:where(body.hold-page) a:visited { color: #5e1420; }
+:where(body.hold-page) a:hover   { color: #1b1a18; }
 
 .hold-page .backdrop { display: none; }
 
@@ -674,157 +670,125 @@ body.hold-page {
   width: 800px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 6px;
+  padding: 12px;
   box-sizing: border-box;
   text-align: left;
-  background: #2b3038;
-  border: 3px ridge #b3b9c0;
-  box-shadow: 5px 5px 0 #000;
+  background: #fffdf8;
+  border: 3px double #1b1a18;
+  box-shadow: 6px 6px 0 #d8cfc1;
 }
 
-/* ---------- masthead: the panel's photo as a banner ---------- */
+/* ---------- masthead: the panel's photo, under the name ---------- */
 
 .masthead {
-  padding: 30px 12px 22px;
+  padding: 46px 14px 26px;
   text-align: center;
-  border: 2px inset #8b9198;
+  border: 1px solid #1b1a18;
   background:
-    linear-gradient(rgba(6, 10, 16, 0.5), rgba(6, 10, 16, 0.82)),
-    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #000;
+    linear-gradient(rgba(20, 16, 12, 0.18), rgba(20, 16, 12, 0.62)),
+    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #1b1a18;
 }
 
 .hold .artist {
-  margin: 0 0 10px;
-  font-size: 50px;
-  letter-spacing: 0.22em;
-  text-indent: 0.22em;
-  line-height: 1.1;
-  color: #eef2f5;
-  /* a chrome fill with a hard, offset shadow */
-  background: linear-gradient(#ffffff 0%, #d9e0e6 42%, #7c858f 52%, #f1f4f6 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: none;
-  filter: drop-shadow(2px 2px 0 #000);
+  margin: 0 0 12px;
+  font-size: 56px;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  line-height: 1.05;
+  color: #fffdf8;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 .hold .notice,
 .hold .notice:not(.notice-long) {
-  font: bold 11px/1.4 Verdana, Tahoma, Arial, sans-serif;
+  font: italic 14px/1.4 Georgia, "Times New Roman", serif;
   font-variant: normal;
-  letter-spacing: 0.24em;
-  text-indent: 0.24em;
-  text-transform: uppercase;
-  color: #bff4ff;
-  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.04em;
+  text-indent: 0;
+  text-transform: none;
+  color: #f4ece0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.hold .notice-long { max-width: 60ch; text-align: center; }
+.hold .notice-long { max-width: 56ch; text-align: center; }
 
-/* ---------- tabs ---------- */
+/* ---------- navigation: spaced capitals between two rules ---------- */
 
 .tabs {
   display: flex;
-  gap: 3px;
-  margin-top: 6px;
-  padding: 6px 6px 0;
-  background: #3a4049;
-  border-bottom: 3px solid #b3b9c0;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 9px 0 8px;
+  border-top: 1px solid #1b1a18;
+  border-bottom: 1px solid #1b1a18;
 }
 
 .tabs a,
 .tabs a:visited {
-  padding: 6px 16px 5px;
-  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.08em;
+  padding: 0 26px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #16191d;
-  background: linear-gradient(#f2f4f6, #b9bfc6);
-  border: 2px outset #e8ebee;
-  border-bottom: 0;
+  color: #1b1a18;
+  border-left: 1px solid #cfc5b6;
 }
+
+.tabs a:first-child { border-left: 0; }
 
 .tabs a:hover,
-.tabs a:focus-visible {
-  color: #000;
-  background: linear-gradient(#ffffff, #cfe9ef);
-  box-shadow: 0 0 0 1px #4fe3ff, 0 0 8px #4fe3ff;
-  outline: none;
-}
+.tabs a:focus-visible { color: #7d1a2a; text-decoration: underline; outline: none; }
 
-.tabs a:active { border-style: inset; }
-
-/* ---------- the construction strip ---------- */
+/* ---------- the ribbon (only when the panel gives it words) ---------- */
 
 .tape {
-  display: block;
-  margin-top: 6px;
-  padding: 5px 0;
+  margin-top: 10px;
+  padding: 7px 0;
   text-align: center;
-  border-top: 2px solid #000;
-  border-bottom: 2px solid #000;
-  background: repeating-linear-gradient(-45deg, #ffd200 0 14px, #111 14px 28px);
-  background-size: 40px 40px;
-  animation: tape-crawl 1.2s steps(8) infinite;
+  background: #1b1a18;
 }
 
 .tape span {
-  display: inline-block;
-  padding: 3px 12px;
-  font: bold 11px Silkscreen, Verdana, Tahoma, sans-serif;
-  letter-spacing: 0.08em;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #111;
-  background: #ffd200;
-  border: 2px solid #111;
+  color: #fffdf8;
 }
 
-.tape span::before,
-.tape span::after { content: "\26A0\FE0E"; padding: 0 8px; }
-
-@keyframes tape-crawl { to { background-position: 40px 0; } }
-
-/* ---------- modules: window-like boxes ---------- */
+/* ---------- the spread ---------- */
 
 @media (min-width: 860px) {
   .spread {
     display: grid;
-    grid-template-columns: 262px minmax(0, 1fr);
+    grid-template-columns: 250px minmax(0, 1fr);
     grid-template-areas:
       "side records"
       "side about";
     align-items: start;
-    gap: 6px;
-    margin-top: 6px;
+    gap: 22px 26px;
+    margin-top: 20px;
   }
 }
 
 .spread > .rule { display: none; }
 
-.records,
-.presentation,
-.links-box,
-.colophon {
-  background: #1f2329;
-  border: 2px outset #9aa1a8;
-}
-
+/* A section label in spaced capitals, running out into a hairline. */
 .module-bar {
-  display: block;
-  margin: 0 0 10px;
-  padding: 3px 8px 2px;
-  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
-  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #ffffff;
-  text-shadow: 1px 1px 0 #000;
-  background: linear-gradient(#56606b, #2d333b);
-  border-bottom: 2px solid #0e1115;
+  color: #1b1a18;
 }
 
-.module-bar::before { content: "\25A0  "; color: #4fe3ff; }
+.module-bar::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid #1b1a18;
+}
 
 /* ---------- discography ---------- */
 
@@ -833,9 +797,9 @@ body.hold-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
-  gap: 0;
+  gap: 0 22px;
   margin: 0;
-  padding: 0 0 12px;
+  padding: 0;
 }
 
 .records .module-bar { grid-column: 1 / -1; }
@@ -844,76 +808,90 @@ body.hold-page {
   flex: none;
   width: auto;
   max-width: none;
-  padding: 0 10px;
+  padding: 0;
   text-align: center;
 }
 
+/* Covers mounted like prints: a white mat and a hairline. */
 .hold .album-card .frame {
   display: block;
-  margin: 0 0 8px;
-  padding: 3px;
-  border: 4px ridge #a7aeb5;
+  margin: 0 0 12px;
+  padding: 7px;
+  background: #ffffff;
+  border: 1px solid #cfc5b6;
+  box-shadow: 0 1px 0 #e4ddd1;
 }
+
+.hold .album-card .frame img { border: 0; }
 
 .spread .record {
   margin: 0;
-  font: bold 14px Verdana, Tahoma, Arial, sans-serif;
-  letter-spacing: 0.02em;
-  text-shadow: 2px 2px 0 #000;
+  font: italic 20px/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+  text-shadow: none;
 }
 
 .spread .record a,
-.spread .record a:visited { color: #ffffff; text-decoration: none; }
-.spread .record a:hover   { color: #4fe3ff; text-decoration: underline; }
+.spread .record a:visited { color: #1b1a18; text-decoration: none; }
+.spread .record a:hover   { color: #7d1a2a; text-decoration: underline; }
 
 .spread .kind {
-  margin: 2px 0 0;
-  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  margin: 5px 0 0;
+  font: 9px Verdana, Tahoma, Arial, sans-serif;
   font-variant: normal;
-  letter-spacing: 0.12em;
-  text-indent: 0;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
   text-transform: uppercase;
-  color: #9fe8a0;
+  color: #7a7369;
 }
 
 .spread .blurb {
-  margin: 6px 0 0;
-  font: 11px/1.5 Verdana, Tahoma, Arial, sans-serif;
-  font-style: normal;
-  color: #c9ced3;
+  margin: 8px 0 0;
+  font: italic 12px/1.55 Georgia, "Times New Roman", serif;
+  color: #4a4640;
 }
 
-/* ---------- about ---------- */
+/* ---------- the story ---------- */
 
 .spread > .presentation {
   grid-area: about;
   max-width: none;
   margin: 0;
-  padding: 0 0 6px;
+  padding: 0;
   text-align: left;
 }
 
 .spread .presentation-title {
-  margin: 0 12px 10px;
-  font: bold 15px/1.35 Verdana, Tahoma, Arial, sans-serif;
-  font-style: normal;
+  margin: 0 0 16px;
+  font: italic 24px/1.25 Georgia, "Times New Roman", serif;
   text-align: left;
-  color: #ffe066;
-  text-shadow: 2px 2px 0 #000;
+  color: #1b1a18;
+  text-shadow: none;
 }
 
 .spread .presentation p {
-  margin: 0 12px 10px;
-  font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
-  color: #dde2e6;
+  margin: 0 0 12px;
+  font: 13px/1.75 Georgia, "Times New Roman", serif;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  color: #2c2925;
+}
+
+/* The story opens with a drop cap in the accent. */
+.spread .presentation p:first-of-type::first-letter {
+  float: left;
+  margin: 5px 8px 0 0;
+  font: 50px/0.8 Georgia, "Times New Roman", serif;
+  color: #7d1a2a;
 }
 
 .spread .presentation .signal {
-  font-variant: normal;
-  font-weight: bold;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #9fe8a0;
+  font-variant: small-caps;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #7d1a2a;
 }
 
 /* ---------- sidebar ---------- */
@@ -922,386 +900,344 @@ body.hold-page {
   grid-area: side;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 22px;
 }
 
-.links-box { padding: 0 0 10px; text-align: center; }
+.links-box { text-align: center; }
 
 .links-box .logo-mark {
-  margin: 0 0 8px;
-  padding: 3px;
-  border: 3px ridge #a7aeb5;
+  margin: 0 0 12px;
+  padding: 7px;
+  background: #ffffff;
+  border: 1px solid #cfc5b6;
 }
 
-.links-box .logo-mark img { width: 200px; }
+.links-box .logo-mark img { width: 220px; max-width: 100%; border: 0; }
 
 .hold .links-box .elsewhere {
-  margin: 0 10px;
-  font-size: 11px;
+  margin: 0;
+  font-size: 10px;
   font-variant: normal;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.3em;
 }
 
 .links-box .sep { display: none; }
 
-.hold .links-box .elsewhere a {
+.hold .links-box .elsewhere a,
+.hold .links-box .elsewhere a:visited {
   display: block;
-  margin: 0 0 5px;
-  padding: 5px 0 4px;
-  font-weight: bold;
+  padding: 9px 0 8px;
   text-decoration: none;
   text-transform: uppercase;
-  color: #e3e7ea;
-  background: linear-gradient(#48505a, #262b32);
-  border: 2px outset #939aa1;
+  color: #1b1a18;
+  border-bottom: 1px solid #cfc5b6;
 }
+
+.hold .links-box .elsewhere a:first-child { border-top: 1px solid #cfc5b6; }
 
 .hold .links-box .elsewhere a:hover,
 .hold .links-box .elsewhere a:focus-visible {
-  color: #4fe3ff;
-  text-shadow: 0 0 6px #4fe3ff;
-  border-color: #4fe3ff;
+  color: #7d1a2a;
   outline: none;
 }
 
-.hold .links-box .elsewhere a:active { border-style: inset; }
+/* ---------- the listening room ----------
 
-/* ---------- the player skin ---------- */
+   The player keeps its working parts but reads like a boutique's
+   listening station rather than a desktop program: a black title band,
+   a dark panel with the track in serif, thin gold bars that breathe, and
+   plain outlined controls. */
 
 .player {
   display: block;
-  padding: 0 0 7px;
-  color: #111;
-  background: linear-gradient(#d5dadf, #a1a8b0 55%, #8c939b);
-  border: 2px outset #eceff1;
+  padding: 0 0 12px;
+  color: #1b1a18;
+  background: #fffdf8;
+  border: 1px solid #1b1a18;
 }
 
 .player-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 3px 5px 3px 8px;
-  font: bold 9px Silkscreen, Verdana, Tahoma, sans-serif;
-  letter-spacing: 0.1em;
+  padding: 7px 10px 6px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #fff;
-  text-shadow: 1px 1px 0 #000;
-  background: repeating-linear-gradient(#26324a 0 2px, #1a2336 2px 4px);
-  border-bottom: 2px solid #0b0f17;
+  text-align: center;
+  color: #fffdf8;
+  background: #1b1a18;
 }
 
-.player-knobs { display: flex; gap: 3px; }
-
-.player-knobs i {
-  width: 9px;
-  height: 9px;
-  background: linear-gradient(#f0f2f4, #a9b0b7);
-  border: 1px outset #fff;
-}
+.player-knobs,
+.player-meta { display: none; }
 
 .player-screen {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 3px 8px;
-  margin: 7px 7px 6px;
-  padding: 6px 7px 7px;
-  background: #000;
-  border: 2px inset #6b7178;
-  font-family: Silkscreen, "Courier New", monospace;
-  color: #7cff4f;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin: 10px 10px 8px;
+  padding: 12px 12px 10px;
+  background: #1b1a18;
+  color: #f1e7d6;
+  text-align: center;
 }
 
 .player-time {
-  font-size: 24px;
-  line-height: 1;
+  font: italic 26px/1 Georgia, "Times New Roman", serif;
   letter-spacing: 0.04em;
-  text-shadow: 0 0 4px #2f9e1f;
 }
 
-.player-state { margin-right: 6px; font-size: 12px; vertical-align: 5px; }
-
-.player-meta {
-  font-size: 8px;
-  line-height: 1.25;
-  text-align: right;
-  text-transform: uppercase;
-  color: #4fe3ff;
+.player-state {
+  margin-right: 8px;
+  font: 10px Verdana, sans-serif;
+  font-style: normal;
+  vertical-align: 5px;
+  color: #b89868;
 }
 
 .player-title {
-  grid-column: 1 / -1;
   overflow: hidden;
   white-space: nowrap;
-  font-size: 10px;
+  text-overflow: ellipsis;
+  font: 9px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  border-top: 1px solid #1c3a1c;
-  padding-top: 3px;
+  color: #cbb893;
 }
-
-.player-title span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: marquee 11s linear infinite;
-}
-
-@keyframes marquee { to { transform: translateX(-100%); } }
 
 .spectrum {
-  grid-column: 1 / -1;
   display: flex;
   align-items: flex-end;
-  gap: 2px;
-  height: 30px;
+  justify-content: center;
+  gap: 3px;
+  height: 24px;
+  margin-top: 2px;
 }
 
 .spectrum i {
-  flex: 1;
-  height: 20%;
-  background:
-    repeating-linear-gradient(#000 0 1px, transparent 1px 3px),
-    linear-gradient(to top, #1fd14a 0%, #c8f52b 60%, #ff4a2b 100%);
-  background-size: 100% 30px;
-  background-position: bottom;
-  animation: eq 0.9s steps(5) infinite alternate;
+  width: 3px;
+  height: 30%;
+  background: #b89868;
+  animation: breathe 1.8s ease-in-out infinite alternate;
 }
 
-.spectrum i:nth-child(3n)   { animation-duration: 0.7s;  animation-delay: -0.2s; }
-.spectrum i:nth-child(3n+1) { animation-duration: 1.1s;  animation-delay: -0.5s; }
-.spectrum i:nth-child(4n)   { animation-duration: 0.6s;  animation-delay: -0.3s; }
-.spectrum i:nth-child(5n)   { animation-duration: 1.3s;  animation-delay: -0.8s; }
-.spectrum i:nth-child(7n)   { animation-duration: 0.8s;  animation-delay: -0.1s; }
+.spectrum i:nth-child(3n)   { animation-duration: 1.4s; animation-delay: -0.4s; }
+.spectrum i:nth-child(3n+1) { animation-duration: 2.1s; animation-delay: -0.9s; }
+.spectrum i:nth-child(4n)   { animation-duration: 1.2s; animation-delay: -0.6s; }
+.spectrum i:nth-child(5n)   { animation-duration: 2.4s; animation-delay: -1.3s; }
+.spectrum i:nth-child(7n)   { animation-duration: 1.6s; animation-delay: -0.2s; }
 
-@keyframes eq {
-  0%   { height: 15%; }
-  40%  { height: 85%; }
-  70%  { height: 45%; }
-  100% { height: 100%; }
+@keyframes breathe {
+  0%   { height: 20%; }
+  50%  { height: 75%; }
+  100% { height: 45%; }
 }
 
 .player-seek {
   display: block;
-  height: 6px;
-  margin: 0 7px 7px;
-  background: #3b4046;
-  border: 2px inset #7a8087;
+  height: 1px;
+  margin: 0 10px 10px;
+  background: #cfc5b6;
 }
 
 .player-seek span {
   display: block;
   width: 34%;
   height: 100%;
-  background: linear-gradient(#f4f6f7, #9aa1a8);
+  background: #1b1a18;
 }
 
 .player-controls {
   display: flex;
-  gap: 3px;
-  margin: 0 7px;
+  gap: 6px;
+  margin: 0 10px;
 }
 
 .player-controls button,
 .player-controls a,
 .player-controls a:visited {
   flex: 1;
-  height: 22px;
+  height: 26px;
   padding: 0;
-  font: 11px/18px Verdana, Tahoma, Arial, sans-serif;
+  font: 11px/24px Verdana, Tahoma, Arial, sans-serif;
   text-align: center;
   text-decoration: none;
-  color: #1d2126;
-  background: linear-gradient(#fbfcfc, #b9bfc6);
-  border: 2px outset #eef1f3;
+  color: #1b1a18;
+  background: #fffdf8;
+  border: 1px solid #1b1a18;
+  cursor: pointer;
 }
 
-.player-controls .player-play { flex: 1.5; color: #0a6b1a; }
+.player-controls .player-play,
+.player-controls .player-play:visited {
+  flex: 1.5;
+  color: #fffdf8;
+  background: #1b1a18;
+}
 
 .player-controls button:hover,
 .player-controls a:hover,
 .player-controls button:focus-visible,
 .player-controls a:focus-visible {
-  color: #000;
-  background: linear-gradient(#ffffff, #cfe9ef);
-  box-shadow: 0 0 6px #4fe3ff;
+  color: #fffdf8;
+  background: #7d1a2a;
+  border-color: #7d1a2a;
   outline: none;
 }
 
-.player-controls button:active,
-.player-controls a:active { border-style: inset; }
-
 .playlist {
-  max-height: 168px;
+  max-height: 176px;
   overflow-y: auto;
-  margin: 7px 7px 0;
-  padding: 3px 0;
+  margin: 10px 10px 0;
+  padding: 4px 0;
   list-style: none;
-  background: #000;
-  border: 2px inset #6b7178;
-  font: 10px/1.5 Verdana, Tahoma, Arial, sans-serif;
+  background: #ffffff;
+  border: 1px solid #cfc5b6;
+  font: 12px/1.55 Georgia, "Times New Roman", serif;
 }
 
 .playlist-album {
-  padding: 4px 6px 1px;
-  font: 8px Silkscreen, Verdana, sans-serif;
-  letter-spacing: 0.1em;
+  padding: 6px 8px 2px;
+  font: 9px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #4fe3ff;
+  color: #7d1a2a;
 }
 
 .playlist a,
 .playlist a:visited {
   display: flex;
   justify-content: space-between;
-  gap: 6px;
-  padding: 0 6px;
+  gap: 8px;
+  padding: 1px 8px;
   text-decoration: none;
-  color: #7cff4f;
+  color: #1b1a18;
 }
 
-.playlist a:hover { color: #ffffff; background: #1b2a1b; }
+.playlist a:hover { background: #f1ebe1; }
 
 .playlist a[aria-current] {
-  color: #ffffff;
-  background: #1d3f99;
+  color: #fffdf8;
+  background: #1b1a18;
 }
 
-/* ---------- footer: colophon and 88x31 buttons ---------- */
+/* ---------- colophon and the small buttons ---------- */
 
 .colophon {
-  margin-top: 6px;
-  padding: 10px 8px 12px;
+  margin-top: 26px;
+  padding: 14px 8px 4px;
   text-align: center;
+  border-top: 3px double #1b1a18;
 }
 
 .hold .colophon .est {
   margin: 0;
-  font: 10px/1.6 Verdana, Tahoma, Arial, sans-serif;
+  font: 10px/1.7 Verdana, Tahoma, Arial, sans-serif;
   font-variant: normal;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
   text-indent: 0;
-  color: #aab1b8;
+  color: #6f685e;
 }
+
+.hold .colophon .est a { color: #7d1a2a; }
 
 .badges {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
+/* 88x31, as they were, but in the page's ink rather than in colours. */
 .badge,
 .badge:visited {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   width: 88px;
   height: 31px;
   box-sizing: border-box;
-  padding: 0 4px 0 3px;
+  padding: 0 5px 0 4px;
   overflow: hidden;
-  font: 8px/1.05 Silkscreen, Verdana, sans-serif;
+  font: 7px/1.15 Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.12em;
   text-align: left;
   text-decoration: none;
   text-transform: uppercase;
-  color: #111;
-  background: linear-gradient(#f4f5f6, #c3c8cd);
-  border: 1px solid #000;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #6d737a;
+  color: #1b1a18;
+  background: #fffdf8;
+  border: 1px solid #1b1a18;
 }
 
 .badge b {
   flex: none;
-  min-width: 21px;
+  width: 21px;
   height: 21px;
-  padding: 0 2px;
-  box-sizing: border-box;
-  font: bold 11px/21px Verdana, Tahoma, sans-serif;
+  font: italic 13px/21px Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
   text-align: center;
-  color: #fff;
-  background: #3a4049;
-  border: 1px solid #000;
+  text-transform: none;
+  color: #fffdf8;
+  background: #1b1a18;
 }
 
-a.badge:hover { outline: 1px solid #4fe3ff; box-shadow: 0 0 8px #4fe3ff; }
+a.badge:hover { color: #fffdf8; background: #7d1a2a; border-color: #7d1a2a; }
+a.badge:hover b { color: #7d1a2a; background: #fffdf8; }
 
-a.badge[href*="bandcamp"]  { background: #1da0c3; color: #fff; }
-a.badge[href*="bandcamp"] b { background: #0b5b70; }
-a.badge[href*="youtube"]   { background: #ffffff; }
-a.badge[href*="youtube"] b { background: #e01b1b; }
-a.badge[href*="instagram"] { background: linear-gradient(90deg, #6a3fbf, #d5307a 60%, #f39a2d); color: #fff; }
-a.badge[href*="instagram"] b { background: #2b1455; }
-
-.badge-ie b    { font: italic bold 17px/19px "Times New Roman", serif; color: #1f63d9; background: #fff; }
-.badge-xhtml   { background: #fff; }
-.badge-xhtml b { width: 30px; font-size: 9px; background: #0c4a9e; }
-.badge-res     { justify-content: center; font-size: 10px; color: #7cff4f; background: #000; }
+.badge-xhtml b { width: 28px; font: 8px/21px Verdana, sans-serif; font-style: normal; letter-spacing: 0.05em; }
+.badge-res     { justify-content: center; font-size: 8px; }
 
 /* ---------- quiet motion for those who ask for it ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .tape,
-  .spectrum i,
-  .player-title span { animation: none; }
-  .player-title span { padding-left: 0; }
+  .spectrum i { animation: none; }
   .spectrum i:nth-child(odd)  { height: 55%; }
   .spectrum i:nth-child(even) { height: 30%; }
 }
 
 /* ---------- the same skin on a phone ----------
 
-   One column, full width, in the order a visitor wants it: banner, tabs,
-   records, the story, links, then the player. The period type sizes (11-12px) do
-   not survive a phone screen, so the text is set larger here; everything
-   else — tiles, bevels, window bars, the player, the buttons — carries
-   over as it is. */
+   One column, full width: masthead, navigation, records, the story, links,
+   then the listening room. The reading text is set a size larger. */
 
 @media (max-width: 859px) {
   body.hold-page { padding: 10px 8px 28px; font-size: 14px; }
 
   .hold {
-    padding: 5px;
-    box-shadow: 3px 3px 0 #000;
+    padding: 8px;
+    box-shadow: 3px 3px 0 #d8cfc1;
   }
 
-  .masthead { padding: 26px 8px 18px; }
+  .masthead { padding: 34px 8px 20px; }
 
   .hold .artist {
-    font-size: 36px;
-    letter-spacing: 0.14em;
-    text-indent: 0.14em;
-  }
-
-  .hold .notice,
-  .hold .notice:not(.notice-long) {
-    font-size: 11px;
+    font-size: 38px;
     letter-spacing: 0.16em;
     text-indent: 0.16em;
   }
 
+  .hold .notice,
+  .hold .notice:not(.notice-long) { font-size: 14px; }
+
   .tabs {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    padding: 5px 5px 0;
+    padding: 0;
   }
 
   .tabs a,
   .tabs a:visited {
-    padding: 11px 0 10px;
+    padding: 13px 0 12px;
     text-align: center;
-    font-size: 11px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.24em;
   }
-
-  .tape span { font-size: 10px; }
 
   /* The sidebar dissolves so its two boxes can take their own places in
      the column: the links after the story, and the player last. */
   .spread {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-top: 5px;
+    gap: 26px;
+    margin-top: 20px;
   }
 
   .spread > .side { display: contents; }
@@ -1313,68 +1249,57 @@ a.badge[href*="instagram"] b { background: #2b1455; }
 
   /* The tabs follow the same order as the boxes: Player moves to the end. */
   .tabs a[href="#player"] { order: 1; }
+  .tabs a:first-child { border-left: 0; }
+  .tabs a[href="#about"] { border-left: 1px solid #cfc5b6; }
 
-  .module-bar { padding: 5px 8px 4px; font-size: 11px; }
+  .spread > .records { gap: 0 12px; }
 
-  .spread .record { font-size: 15px; }
-  .spread .kind   { font-size: 11px; }
+  .spread .record { font-size: 18px; }
 
-  .spread .presentation-title { font-size: 17px; }
+  .spread .presentation-title { font-size: 21px; }
 
   .spread .presentation p {
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: left;
   }
 
-  /* The player, sized for a thumb. */
   .player-time  { font-size: 30px; }
-  .player-state { font-size: 14px; vertical-align: 6px; }
-  .player-meta  { font-size: 9px; }
-  .player-title { font-size: 12px; }
-  .spectrum     { height: 42px; }
-  .player-seek  { height: 8px; }
-
-  .player-controls { gap: 5px; }
+  .player-title { font-size: 10px; }
+  .spectrum     { height: 30px; }
 
   .player-controls button,
   .player-controls a,
   .player-controls a:visited {
     height: 42px;
-    font-size: 17px;
-    line-height: 38px;
+    font-size: 15px;
+    line-height: 40px;
   }
 
   .playlist {
-    max-height: 280px;
-    font-size: 13px;
+    max-height: 290px;
+    font-size: 15px;
   }
 
   .playlist a,
-  .playlist a:visited { padding: 6px 8px; }
+  .playlist a:visited { padding: 6px 10px; }
 
-  .playlist-album {
-    padding: 9px 8px 3px;
-    font-size: 9px;
-  }
+  .playlist-album { padding: 10px 10px 3px; }
 
-  .links-box .logo-mark img { width: 230px; max-width: 100%; }
+  .hold .links-box .elsewhere { font-size: 12px; }
 
-  .hold .links-box .elsewhere { font-size: 13px; }
+  .hold .links-box .elsewhere a,
+  .hold .links-box .elsewhere a:visited { padding: 14px 0 13px; }
 
-  .hold .links-box .elsewhere a {
-    margin-bottom: 6px;
-    padding: 12px 0 11px;
-  }
-
-  .hold .colophon .est { font-size: 12px; }
+  .hold .colophon .est { font-size: 11px; }
 }
 
 /* A very narrow phone: one cover per row, and a smaller name. */
 @media (max-width: 360px) {
   .spread > .records { grid-template-columns: 1fr; }
 
-  .hold .artist { font-size: 29px; }
+  .hold .artist { font-size: 30px; }
 
   .tabs a,
-  .tabs a:visited { font-size: 10px; letter-spacing: 0; }
+  .tabs a:visited { letter-spacing: 0.14em; }
 }
