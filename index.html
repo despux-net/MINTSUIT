@@ -181,7 +181,7 @@ layout: null
 {%- endcomment -%}
 {%- if record.bandcamp_id and record.bandcamp_id != "" %}
       <div class="bandcamp"><iframe title="{{ record.title | escape }} on Bandcamp" loading="lazy" width="350" height="470"
-              src="https://bandcamp.com/EmbeddedPlayer/album={{ record.bandcamp_id | escape }}/size=large/bgcol=111111/linkcol=4fb8ff/tracklist=false/transparent=true/"></iframe></div>
+              src="https://bandcamp.com/EmbeddedPlayer/album={{ record.bandcamp_id | escape }}/size=large/bgcol=111111/linkcol=4fe3ff/tracklist=false/transparent=true/"></iframe></div>
 {%- else %}
       <a class="frame" href="{{ record.url | escape }}">
         <img src="{{ record.cover | relative_url | escape }}" width="1000" height="1000"
