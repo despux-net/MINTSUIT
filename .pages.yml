@@ -122,6 +122,13 @@ content:
         label: Logo description
         type: string
         description: Read aloud by screen readers.
+      - name: video
+        label: Loop video
+        type: file
+        description: >-
+          A short MP4 that plays on its own, silent and looping, under the
+          Redeem code button. Upload a new one to replace it; keep it small
+          (a few MB). Leave it empty to hide it.
       - name: links
         label: Links
         type: object

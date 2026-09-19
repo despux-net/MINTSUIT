@@ -1092,6 +1092,21 @@ body.hold-page {
   user-select: all;
 }
 
+/* ---------- the loop: a silent video under the codes ---------- */
+
+.links-box .loop {
+  margin: 10px 10px 0;
+  line-height: 0;
+  background: #000;
+  border: 3px ridge #a7aeb5;
+}
+
+.links-box .loop video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* ---------- footer: colophon and 88x31 buttons ---------- */
 
 .colophon {
