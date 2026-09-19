@@ -991,6 +991,8 @@ body.hold-page {
   gap: 6px;
 }
 
+.links-box .link-badges .badge { width: 119px; }   /* 88px + 35% */
+
 /* ---------- redeem: the green button and the codes it opens ---------- */
 
 .redeem {
