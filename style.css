@@ -1189,6 +1189,129 @@ a.badge[href*="instagram"] b { background: #2b1455; }
   .tape,
 }
 
+/* ---------- the magazine layer ----------
+
+   The Y2K skin keeps its frame — the ridged box, the pinstripe ground, the
+   chrome name, bevelled tabs and frames, the green button, the 88x31s —
+   and this layer gives it a fashion magazine's typesetting: Georgia for
+   what is read, italics for titles, a drop cap, small-capital leads, and
+   section labels in spaced capitals running out into a hairline instead
+   of pixel type on a heavy bar. Cyan stays as the one accent. The phone
+   sizes at the end of the file still apply on top of this. */
+
+.hold .notice,
+.hold .notice:not(.notice-long) {
+  font: italic 16px/1.4 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.03em;
+  text-indent: 0;
+  text-transform: none;
+  color: #e8f7fb;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.tabs a,
+.tabs a:visited {
+  padding: 7px 22px 6px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.3em;
+}
+
+/* Section labels: a slim bevelled strip, spaced capitals, a hairline. */
+.module-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 7px 10px 6px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #e3e7ea;
+  text-shadow: none;
+  background: linear-gradient(#3a414a, #262b32);
+  border-bottom: 1px solid #0e1115;
+}
+
+.module-bar::before {
+  content: "\25A0";
+  font-size: 7px;
+  letter-spacing: 0;
+  color: #4fe3ff;
+}
+
+.module-bar::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #8c939b, rgba(140, 147, 155, 0));
+}
+
+/* Records: titles set like captions. */
+.spread .record {
+  font: italic 19px/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.spread .kind {
+  margin: 5px 0 0;
+  font: 9px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #aeb4bb;
+}
+
+/* The story, set as a feature. */
+.spread > .presentation { padding-bottom: 10px; }
+
+.spread .presentation-title {
+  margin: 4px 16px 14px;
+  font: italic 23px/1.25 Georgia, "Times New Roman", serif;
+  color: #f4f6f7;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .presentation p {
+  margin: 0 16px 12px;
+  font: 13px/1.75 Georgia, "Times New Roman", serif;
+  color: #dde2e6;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.spread .presentation p:first-of-type::first-letter {
+  float: left;
+  margin: 5px 8px 0 0;
+  font: 48px/0.8 Georgia, "Times New Roman", serif;
+  color: #4fe3ff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .presentation .signal {
+  font-variant: small-caps;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #4fe3ff;
+}
+
+/* Sidebar: the bevelled link buttons, lettered like the tabs. */
+.hold .links-box .elsewhere a,
+.hold .links-box .elsewhere a:visited {
+  font-weight: normal;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+}
+
+.redeem-note { font: italic 13px/1.45 Georgia, "Times New Roman", serif; }
+
+/* Colophon: a line of small italic, like a masthead's imprint. */
+.hold .colophon .est {
+  font: italic 12px/1.7 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.02em;
+}
+
 /* ---------- the same skin on a phone ----------
 
    One column, full width, in the order a visitor wants it: banner, tabs,
