@@ -983,15 +983,30 @@ body.hold-page {
 
 .links-box .logo-mark img { width: 200px; }
 
-/* The links are the footer's old 88x31 buttons, stacked under the logo. */
+/* The links are the footer's old 88x31 buttons, stacked under the logo and
+   stretched to the width of the Redeem code button, lettering scaled up. */
 .links-box .link-badges {
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   margin: 0 10px 12px;
   gap: 6px;
 }
 
-.links-box .link-badges .badge { width: 119px; }   /* 88px + 35% */
+.links-box .link-badges .badge {
+  width: auto;
+  height: 38px;
+  gap: 10px;
+  padding: 0 8px 0 5px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.links-box .link-badges .badge b {
+  min-width: 28px;
+  height: 28px;
+  font-size: 14px;
+  line-height: 26px;
+}
 
 /* ---------- redeem: the green button and the codes it opens ---------- */
 
