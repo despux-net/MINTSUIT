@@ -110,14 +110,14 @@ content:
             required: true
 
   - name: vaporwave
-    label: Vaporwave tab
+    label: About tab (vaporwave history)
     path: _data/vaporwave.yml
     type: file
     fields:
       - name: tab
         label: Tab name
         type: string
-        description: The label of the tab next to Records and About.
+        description: The label of the tab next to Records.
       - name: title
         label: Title
         type: string
