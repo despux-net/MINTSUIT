@@ -381,6 +381,29 @@ layout: null
 
 </main>
 
+{%- comment -%}
+  Tabs that switch without scrolling: a click on a tab (or the window's x)
+  swaps what is shown and updates the address, but leaves the page where it
+  is, so the visitor scrolls when they want to.
+{%- endcomment %}
+<script>
+(function () {
+  var root = document.documentElement;
+  function show(hash) {
+    root.setAttribute('data-tab', hash === '#vaporwave' ? 'vaporwave' : 'records');
+  }
+  show(location.hash);
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('.tabs a, .window-close');
+    if (!link) return;
+    var hash = link.getAttribute('href');
+    e.preventDefault();
+    show(hash);
+    history.replaceState(null, '', hash === '#vaporwave' ? '#vaporwave' : location.pathname + location.search);
+  });
+  window.addEventListener('hashchange', function () { show(location.hash); });
+})();
+</script>
 {%- comment -%} Visit counts, without cookies: https://mintsuit.goatcounter.com {%- endcomment %}
 <script data-goatcounter="https://mintsuit.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 

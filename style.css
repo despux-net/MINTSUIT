@@ -1311,11 +1311,17 @@ a.badge[href*="instagram"] b { background: #2b1455; }
   border: 2px outset #9aa1a8;
 }
 
-.window:target { display: block; }
+/* Without the script, :target does the switching (and the page jumps to
+   the window, as any anchor does). With it, data-tab on <html> does, and
+   the page stays where it is. */
+html:not([data-tab]) .window:target,
+html[data-tab="vaporwave"] .window { display: block; }
 
-.hold:has(.window:target) .spread { display: none; }
+html:not([data-tab]) .hold:has(.window:target) .spread,
+html[data-tab="vaporwave"] .spread { display: none; }
 
-.hold:has(.window:target) .tabs a[href="#vaporwave"] {
+html:not([data-tab]) .hold:has(.window:target) .tabs a[href="#vaporwave"],
+html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
   color: #000;
   background: linear-gradient(#ffffff, #cfe9ef);
   box-shadow: 0 0 0 1px #4fe3ff, 0 0 8px #4fe3ff;
