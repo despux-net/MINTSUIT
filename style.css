@@ -793,6 +793,10 @@ body.hold-page {
   .spread {
     display: grid;
     grid-template-columns: 262px minmax(0, 1fr);
+    /* The sidebar spans both rows; when it grows (the codes opened) the
+       spare height goes to the last row, under the story, never between
+       the records and the story. */
+    grid-template-rows: auto 1fr;
     grid-template-areas:
       "side records"
       "side about";
