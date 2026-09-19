@@ -983,8 +983,10 @@ body.hold-page {
 
 .links-box .logo-mark img { width: 200px; }
 
-/* The links are the footer's old 88x31 buttons, centred under the logo. */
+/* The links are the footer's old 88x31 buttons, stacked under the logo. */
 .links-box .link-badges {
+  flex-direction: column;
+  align-items: center;
   margin: 0 10px 12px;
   gap: 6px;
 }
