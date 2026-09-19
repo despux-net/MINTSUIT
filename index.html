@@ -259,9 +259,10 @@ layout: null
   A silent looping video under the codes ("Loop video" in the panel). It
   must be muted and inline for phones to let it play on its own.
 {%- endcomment -%}
-{%- if bottom.video and bottom.video != "" %}
+{%- assign loop = site.data.loop -%}
+{%- if loop.video and loop.video != "" %}
   <div class="loop">
-    <video src="{{ bottom.video | relative_url | escape }}" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+    <video src="{{ loop.video | relative_url | escape }}" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
   </div>
 {%- endif %}
   </div>

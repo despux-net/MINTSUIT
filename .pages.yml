@@ -122,13 +122,6 @@ content:
         label: Logo description
         type: string
         description: Read aloud by screen readers.
-      - name: video
-        label: Loop video
-        type: file
-        description: >-
-          A short MP4 that plays on its own, silent and looping, under the
-          Redeem code button. Upload a new one to replace it; keep it small
-          (a few MB). Leave it empty to hide it.
       - name: links
         label: Links
         type: object
@@ -154,6 +147,20 @@ content:
       - name: email
         label: Email
         type: string
+
+  - name: loop
+    label: Loop video
+    path: _data/loop.yml
+    type: file
+    fields:
+      - name: video
+        label: Video
+        type: file
+        description: >-
+          Plays on its own, silent and looping, under the Redeem code button.
+          To change it, remove the current file here, upload the new one and
+          save; the file can have any name. Keep it short and small (a few
+          MB, MP4 works everywhere). Leave it empty to hide the video.
 
   - name: codes
     label: Download codes
