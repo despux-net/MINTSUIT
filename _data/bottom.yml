@@ -1,5 +1,6 @@
 logo: /assets/logo-perfil.jpg
 logo_alt: MINT SUIT logo
+video: /assets/loop1.mp4
 links:
   - label: Bandcamp
     url: https://mintsuit.bandcamp.com
@@ -8,6 +9,5 @@ links:
   - label: Instagram
     url: https://instagram.com/despujos
 established: Est 2019
-byline: MINT SUIT By Marcos D
+byline: MINT SUIT By Marcos Despujos
 email: mintsuitmusic@gmail.com
-video: /assets/loop1.mp4
