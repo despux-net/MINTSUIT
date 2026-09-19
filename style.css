@@ -1362,6 +1362,21 @@ html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
 
 .window-body { padding: 14px 26px 24px; }
 
+/* The picture at the top right, the text running round it. */
+.window-figure {
+  float: right;
+  width: 250px;
+  margin: 6px 0 14px 22px;
+  padding: 3px;
+  background: #000;
+  border: 3px ridge #a7aeb5;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.window-figure img { display: block; width: 100%; height: auto; }
+
+.listen { clear: both; }
+
 .window-title {
   margin: 4px 0 10px;
   font: italic 26px/1.2 Georgia, "Times New Roman", serif;
@@ -1557,6 +1572,7 @@ a.badge[href*="iheart"] b   { background: #c6002b; }
   .window { margin-top: 5px; }
   .window-body { padding: 8px 14px 18px; }
   .window-title { font-size: 21px; }
+  .window-figure { width: 42%; margin: 4px 0 10px 12px; }
   .window section p { font-size: 14px; line-height: 1.65; }
   .window h3 { font-size: 11px; letter-spacing: 0.24em; }
   .listen { padding: 16px 10px 14px; }

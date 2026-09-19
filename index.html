@@ -188,6 +188,11 @@ layout: null
   <article class="window" id="vaporwave" aria-labelledby="vaporwave-title">
     <div class="window-bar"><span>{{ vapor.tab | default: "Vaporwave" | escape }}.txt</span><a class="window-close" href="#records" aria-label="Close">&times;</a></div>
     <div class="window-body">
+    {%- if vapor.image and vapor.image != "" %}
+    <figure class="window-figure">
+      <img src="{{ vapor.image | relative_url | escape }}" alt="{{ vapor.image_alt | escape }}" loading="lazy">
+    </figure>
+    {%- endif %}
     <h2 class="window-title" id="vaporwave-title">{{ vapor.title | escape }}</h2>
     {%- if vapor.intro and vapor.intro != "" %}
     <p class="window-intro">{{ vapor.intro | escape }}</p>

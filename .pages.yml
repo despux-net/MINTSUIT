@@ -121,6 +121,16 @@ content:
       - name: title
         label: Title
         type: string
+      - name: image
+        label: Picture
+        type: image
+        description: >-
+          Shown in a frame at the top right of the text. Leave it empty to
+          hide it.
+      - name: image_alt
+        label: Picture description
+        type: string
+        description: Read aloud by screen readers, and read by Google.
       - name: intro
         label: Introduction
         type: text
