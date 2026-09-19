@@ -109,6 +109,79 @@ content:
             type: text
             required: true
 
+  - name: vaporwave
+    label: Vaporwave tab
+    path: _data/vaporwave.yml
+    type: file
+    fields:
+      - name: tab
+        label: Tab name
+        type: string
+        description: The label of the tab next to Records and About.
+      - name: title
+        label: Title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+        description: Set in italics under the title.
+      - name: sections
+        label: Sections
+        type: object
+        list: true
+        description: >-
+          The article, one block per heading. Delete every section to hide the
+          tab altogether.
+        fields:
+          - name: heading
+            label: Heading
+            type: string
+          - name: text
+            label: Text
+            type: text
+            required: true
+            description: Each line is its own paragraph.
+      - name: listen
+        label: Listen everywhere (under the text)
+        type: object
+        fields:
+          - name: title
+            label: Name read by screen readers
+            type: string
+          - name: note
+            label: Line under the logo
+            type: text
+          - name: singles
+            label: Singles
+            type: object
+            list: true
+            description: One button each, usually the DistroKid HyperFollow link.
+            fields:
+              - name: title
+                label: Title
+                type: string
+                required: true
+              - name: url
+                label: Link
+                type: string
+                required: true
+          - name: profiles
+            label: Artist profiles
+            type: object
+            list: true
+            description: >-
+              Spotify, Apple Music and the rest. Shown as buttons, and told to
+              Google as the same artist as this site.
+            fields:
+              - name: label
+                label: Platform
+                type: string
+                required: true
+              - name: url
+                label: Artist page address
+                type: string
+                required: true
+
   - name: bottom
     label: Logo, links and footer
     path: _data/bottom.yml

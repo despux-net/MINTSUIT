@@ -1298,6 +1298,173 @@ a.badge[href*="instagram"] b { background: #2b1455; }
   letter-spacing: 0.02em;
 }
 
+/* ---------- the Vaporwave tab: a window in place of the page ----------
+
+   Hidden until its tab is clicked (#vaporwave in the address); then it
+   takes the place of the records and the story, the way a browser tab
+   swaps one page for another. Any other tab, or the x, brings them back. */
+
+.window {
+  display: none;
+  margin-top: 6px;
+  background: #1f2329;
+  border: 2px outset #9aa1a8;
+}
+
+.window:target { display: block; }
+
+.hold:has(.window:target) .spread { display: none; }
+
+.hold:has(.window:target) .tabs a[href="#vaporwave"] {
+  color: #000;
+  background: linear-gradient(#ffffff, #cfe9ef);
+  box-shadow: 0 0 0 1px #4fe3ff, 0 0 8px #4fe3ff;
+}
+
+.window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 10px;
+  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
+  background: linear-gradient(90deg, #0f5566, #2d333b 70%);
+  border-bottom: 2px solid #0e1115;
+}
+
+.window-bar span::before { content: "\25A0  "; color: #4fe3ff; }
+
+.hold .window-close,
+.hold .window-close:visited {
+  display: inline-block;
+  width: 20px;
+  height: 18px;
+  font: bold 14px/16px Verdana, Tahoma, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  color: #16191d;
+  background: linear-gradient(#f2f4f6, #b9bfc6);
+  border: 2px outset #e8ebee;
+}
+
+.hold .window-close:hover { color: #000; box-shadow: 0 0 6px #4fe3ff; }
+.hold .window-close:active { border-style: inset; }
+
+.window-body { padding: 14px 26px 24px; }
+
+.window-title {
+  margin: 4px 0 10px;
+  font: italic 26px/1.2 Georgia, "Times New Roman", serif;
+  color: #f4f6f7;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.window-intro {
+  margin: 0 0 18px;
+  font: italic 15px/1.6 Georgia, "Times New Roman", serif;
+  color: #bff4ff;
+}
+
+.window h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 10px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #4fe3ff;
+}
+
+.window h3::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #8c939b, rgba(140, 147, 155, 0));
+}
+
+.window section p {
+  margin: 0 0 12px;
+  font: 13px/1.75 Georgia, "Times New Roman", serif;
+  color: #dde2e6;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Listen everywhere: the mark, the singles, the store profiles. */
+.listen {
+  margin: 26px auto 0;
+  max-width: 520px;
+  padding: 18px 16px 16px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, #2b3a44, #15181d 70%);
+  border: 3px ridge #a7aeb5;
+}
+
+.listen-mark {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 6px;
+}
+
+.listen-note {
+  margin: 0 0 14px;
+  font: italic 13px/1.5 Georgia, "Times New Roman", serif;
+  color: #c9ced3;
+}
+
+.listen-singles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.hold .listen-singles a,
+.hold .listen-singles a:visited {
+  display: block;
+  padding: 8px 6px 7px;
+  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #e3e7ea;
+  background: linear-gradient(#48505a, #262b32);
+  border: 2px outset #939aa1;
+}
+
+.hold .listen-singles a:hover,
+.hold .listen-singles a:focus-visible {
+  color: #4fe3ff;
+  text-shadow: 0 0 6px #4fe3ff;
+  border-color: #4fe3ff;
+  outline: none;
+}
+
+.hold .listen-singles a:active { border-style: inset; }
+
+.listen-play { color: #4fe3ff; font-size: 9px; }
+
+.listen-profiles { margin-top: 0; }
+
+a.badge[href*="spotify"]    { background: #1db954; color: #fff; }
+a.badge[href*="spotify"] b  { background: #0b4f24; }
+a.badge[href*="apple"]      { background: linear-gradient(90deg, #fb5c74, #fa233b); color: #fff; }
+a.badge[href*="apple"] b    { background: #6d0c1a; }
+a.badge[href*="deezer"]     { background: #a238ff; color: #fff; }
+a.badge[href*="deezer"] b   { background: #3d1266; }
+a.badge[href*="iheart"]     { background: #ffffff; }
+a.badge[href*="iheart"] b   { background: #c6002b; }
+
 /* ---------- the same skin on a phone ----------
 
    One column, full width, in the order a visitor wants it: banner, tabs,
@@ -1331,7 +1498,7 @@ a.badge[href*="instagram"] b { background: #2b1455; }
 
   .tabs {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 3px;
     padding: 5px 5px 0;
   }
@@ -1380,6 +1547,15 @@ a.badge[href*="instagram"] b { background: #2b1455; }
   .links-box .logo-mark img { width: 230px; max-width: 100%; }
 
   .hold .colophon .est { font-size: 12px; }
+
+  .window { margin-top: 5px; }
+  .window-body { padding: 8px 14px 18px; }
+  .window-title { font-size: 21px; }
+  .window section p { font-size: 14px; line-height: 1.65; }
+  .window h3 { font-size: 11px; letter-spacing: 0.24em; }
+  .listen { padding: 16px 10px 14px; }
+  .listen-singles { grid-template-columns: 1fr; }
+  .hold .listen-singles a { padding: 12px 6px 11px; font-size: 12px; }
 }
 
 /* A very narrow phone: one cover per row, and a smaller name. */
