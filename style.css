@@ -983,36 +983,11 @@ body.hold-page {
 
 .links-box .logo-mark img { width: 200px; }
 
-.hold .links-box .elsewhere {
-  margin: 0 10px;
-  font-size: 11px;
-  font-variant: normal;
-  letter-spacing: 0.06em;
+/* The links are the footer's old 88x31 buttons, centred under the logo. */
+.links-box .link-badges {
+  margin: 0 10px 12px;
+  gap: 6px;
 }
-
-.links-box .sep { display: none; }
-
-.hold .links-box .elsewhere a {
-  display: block;
-  margin: 0 0 5px;
-  padding: 5px 0 4px;
-  font-weight: bold;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #e3e7ea;
-  background: linear-gradient(#48505a, #262b32);
-  border: 2px outset #939aa1;
-}
-
-.hold .links-box .elsewhere a:hover,
-.hold .links-box .elsewhere a:focus-visible {
-  color: #4fe3ff;
-  text-shadow: 0 0 6px #4fe3ff;
-  border-color: #4fe3ff;
-  outline: none;
-}
-
-.hold .links-box .elsewhere a:active { border-style: inset; }
 
 /* ---------- redeem: the green button and the codes it opens ---------- */
 
@@ -1296,14 +1271,6 @@ a.badge[href*="instagram"] b { background: #2b1455; }
   color: #4fe3ff;
 }
 
-/* Sidebar: the bevelled link buttons, lettered like the tabs. */
-.hold .links-box .elsewhere a,
-.hold .links-box .elsewhere a:visited {
-  font-weight: normal;
-  font-size: 10px;
-  letter-spacing: 0.28em;
-}
-
 .redeem-note { font: italic 13px/1.45 Georgia, "Times New Roman", serif; }
 
 /* Colophon: a line of small italic, like a masthead's imprint. */
@@ -1392,13 +1359,6 @@ a.badge[href*="instagram"] b { background: #2b1455; }
 
 
   .links-box .logo-mark img { width: 230px; max-width: 100%; }
-
-  .hold .links-box .elsewhere { font-size: 13px; }
-
-  .hold .links-box .elsewhere a {
-    margin-bottom: 6px;
-    padding: 12px 0 11px;
-  }
 
   .hold .colophon .est { font-size: 12px; }
 }

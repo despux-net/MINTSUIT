@@ -219,11 +219,11 @@ layout: null
     <img src="{{ bottom.logo | relative_url | escape }}" width="360" height="271" alt="{{ bottom.logo_alt | escape }}">
   </div>
 {%- endif %}
-  <p class="elsewhere">
+  <div class="badges link-badges">
     {%- for link in bottom.links %}
-    <a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %}<span class="sep"> &nbsp;&middot;&nbsp;</span>{% endunless %}
+    <a class="badge" href="{{ link.url | escape }}"><b aria-hidden="true">{{ link.label | slice: 0, 2 | escape }}</b><span>{{ link.label | escape }}</span></a>
     {%- endfor %}
-  </p>
+  </div>
 {%- comment -%}
   Bandcamp download codes (_data/codes.yml, "Download codes" in the panel).
   A details element does the opening and closing, so no script is needed.
@@ -275,9 +275,6 @@ layout: null
     <a href="mailto:{{ bottom.email | escape }}">{{ bottom.email | escape }}</a></span></p>
 
   <div class="badges">
-    {%- for link in bottom.links %}
-    <a class="badge" href="{{ link.url | escape }}"><b aria-hidden="true">{{ link.label | slice: 0, 2 | escape }}</b><span>{{ link.label | escape }}</span></a>
-    {%- endfor %}
     <span class="badge badge-ie" aria-hidden="true"><b>e</b><span>Best viewed in IE&nbsp;6.0</span></span>
     <span class="badge badge-xhtml" aria-hidden="true"><b>W3C</b><span>XHTML 1.0</span></span>
     <span class="badge badge-res" aria-hidden="true"><span>800&times;600</span></span>
