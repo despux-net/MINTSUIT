@@ -472,7 +472,14 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
   object-fit: cover;
 }
 
-.merch-slides img:first-child { animation: merch-turn 10s ease-in-out infinite; }
+/* The one that fades has to be the one on top. Both are positioned and
+   neither asks for a layer, so without this the second would paint over the
+   first by document order and the fading picture would do it out of sight,
+   under a photograph that never moves. */
+.merch-slides img:first-child {
+  z-index: 1;
+  animation: merch-turn 10s ease-in-out infinite;
+}
 
 @keyframes merch-turn {
   0%, 45% { opacity: 1; }
