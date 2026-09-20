@@ -262,15 +262,16 @@ html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
 
 .bandcamp { margin: 0 0 8px; }
 
-/* Bandcamp's large player is its cover art plus about seventy-five pixels
-   of tracklist and buttons, so the frame is set a quarter taller than it is
-   wide and left to scale with the column. The player is transparent on
-   white, so any slack at the bottom cannot be seen. */
+/* Bandcamp's large player is its cover art plus a title row, a byline and
+   the track row with the seek bar. Anything shorter than the 350 x 470 its
+   own embed code asks for cuts the seek bar off the bottom, so the frame
+   keeps that ratio and scales with the column. The player is transparent
+   on white, so slack at the bottom cannot be seen. */
 .bandcamp iframe {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1.25;
+  aspect-ratio: 350 / 470;
   border: 1px solid var(--line);
   background: #ffffff;
 }
