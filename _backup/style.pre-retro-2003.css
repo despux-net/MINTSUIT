@@ -1,0 +1,1591 @@
+/* ===========================================================
+   MINT SUIT — Sublime
+   One page. Black, Times New Roman, and the year 2000.
+   =========================================================== */
+
+html {
+  background: #000;
+}
+
+body {
+  margin: 0;
+  padding: 34px 16px 60px;
+  color: #d3d7da;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.72;
+  text-align: center;
+}
+
+.page {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* ---------- plaques (header / footer) ---------- */
+
+.plaque {
+  background: #070707;
+  border: 4px ridge #2f3134;
+  padding: 16px 20px;
+  text-align: center;
+  color: #e9ecee;
+}
+
+.plaque p { margin: 0; }
+
+/* The wordmark keeps the Roman capital, cut thin: Cormorant SC at its lightest,
+   a classical face whose hairlines carry the same inscriptional essence as the
+   heavier Trajan cut without the weight. It is the one web font on the site,
+   and the request asks only for the letters the name uses, so it stays a few
+   kilobytes. Without it the stack falls back to upright Times capitals.
+
+   Thin strokes need a little more size and a little less tracking than the
+   heavy cut did, or the line falls apart into separate letters. */
+.artist {
+  margin: 0;
+  font-family: "Cormorant SC", "Cinzel", "Trajan Pro", "Times New Roman", Times, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 39px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #f4f6f7;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 22px rgba(0, 0, 0, 0.7);
+}
+
+.plaque.bottom {
+  margin-top: 0;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  font-variant: small-caps;
+  color: #979b9f;
+}
+
+.plaque .elsewhere {
+  margin-bottom: 8px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.plaque a         { color: #dfe4e8; text-decoration: underline; }
+.plaque a:visited { color: #b2b8be; }
+.plaque a:hover   { color: #ffffff; }
+
+.plaque.bottom .tiny {
+  margin-top: 4px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #7b8085;
+}
+
+/* ---------- the slab ---------- */
+
+.slab {
+  background: #0d0d0d;
+  border-left: 4px ridge #26282a;
+  border-right: 4px ridge #26282a;
+  padding: 40px 44px 44px;
+  text-align: center;
+}
+
+.slab p { margin: 0 0 15px; text-align: justify; }
+
+/* ---------- cover ---------- */
+
+.frame {
+  display: inline-block;
+  border: 9px ridge #7a7f85;
+  background: #000;
+  padding: 5px;
+  margin-bottom: 30px;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border: 1px solid #2c2e30;
+}
+
+/* ---------- type ---------- */
+
+.album {
+  margin: 0 0 6px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 52px;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.05;
+  color: #f4f6f7;
+  text-align: center;
+}
+
+.sub {
+  margin: 0 0 4px !important;
+  text-align: center !important;
+  font-size: 12px;
+  font-variant: small-caps;
+  letter-spacing: 0.24em;
+  color: #898e93;
+}
+
+.lead {
+  text-align: center !important;
+  font-size: 19px;
+  font-style: italic;
+  color: #c9ced3;
+}
+
+.section {
+  margin: 0 0 20px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-variant: small-caps;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: #9a8f70;
+  text-align: center;
+}
+
+/* ---------- ornamental rule ---------- */
+
+.rule {
+  margin: 28px 0 26px;
+  text-align: center;
+  line-height: 1;
+}
+
+.rule::before,
+.rule::after {
+  content: "";
+  display: inline-block;
+  width: 33%;
+  border-top: 1px solid #2c2e30;
+  vertical-align: middle;
+}
+
+.rule span {
+  display: inline-block;
+  padding: 0 14px;
+  color: #b9bec4;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* ---------- tracklist ---------- */
+
+.tracks {
+  width: 100%;
+  margin: 0 auto 22px;
+  border-collapse: collapse;
+  border: 2px groove #2a2823;
+  font-size: 15px;
+}
+
+.tracks td {
+  padding: 7px 12px;
+  border-bottom: 1px solid #201e1a;
+}
+
+.tracks tr:last-child td { border-bottom: 0; }
+
+.tracks .n {
+  width: 34px;
+  color: #98835f;
+  font-style: italic;
+  text-align: right;
+}
+
+.tracks .t {
+  width: 56px;
+  text-align: right;
+  color: #898e93;
+  font-size: 13px;
+}
+
+.tracks a {
+  color: #e2ddce;
+  text-decoration: underline;
+}
+
+.tracks a:visited { color: #a99cc0; }
+
+.tracks a:hover {
+  color: #ffd98a;
+  background: #17150f;
+}
+
+.slab .sub + .rule { margin-top: 22px; }
+
+.tags {
+  text-align: center !important;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.2em;
+  color: #837c6e;
+  margin-bottom: 30px !important;
+}
+
+/* ---------- the button ---------- */
+
+.go { text-align: center !important; margin: 0 !important; }
+
+a.button {
+  display: inline-block;
+  padding: 11px 30px;
+  background: #121110;
+  border: 4px outset #6f7479;
+  color: #eef1f3;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-variant: small-caps;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+}
+
+a.button:visited { color: #eef1f3; }
+a.button:hover   { color: #ffffff; }
+a.button:active  { border-style: inset; }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 620px) {
+  body { padding: 18px 10px 34px; font-size: 15px; }
+  .slab { padding: 26px 20px 30px; }
+  .artist { font-size: 28px; letter-spacing: 0.24em; text-indent: 0.24em; }
+  .album { font-size: 38px; }
+  .lead { font-size: 17px; }
+  .slab p { text-align: left; }
+  .tracks { font-size: 14px; }
+}
+
+/* ===========================================================
+   Holding page — New York out of focus, the record in front of it
+   =========================================================== */
+
+body.hold-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 44px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bled 30px past every edge: a blur samples beyond the element it is on, and
+   without the overscan the four sides wash out into a pale frame. The photo
+   chosen in the panel arrives as an inline style on the element; this one is
+   the default when that field is empty. */
+.backdrop {
+  position: fixed;
+  top: -30px;
+  right: -30px;
+  bottom: -30px;
+  left: -30px;
+  z-index: -1;
+  background: #000 url("assets/nyc.jpg") center center / cover no-repeat;
+  filter: blur(3px) brightness(0.4) saturate(1.15);
+}
+
+.hold {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.hold .frame { margin-bottom: 32px; }
+
+.hold .frame img { max-width: 340px; }
+
+.hold .artist { margin-bottom: 16px; }
+
+.notice {
+  margin: 0;
+  font-size: 15px;
+  font-variant: small-caps;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #c9ced3;
+}
+
+/* A long notice is prose, not a label: the small caps and the wide tracking
+   that make three words look deliberate make three paragraphs unreadable. The
+   script swaps this class in once the text passes a sentence or so. */
+.notice-long {
+  font-variant: normal;
+  letter-spacing: normal;
+  text-indent: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: left;
+  max-width: 46ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notice-long p { margin: 0 0 0.9em; }
+.notice-long p:last-child { margin-bottom: 0; }
+
+/* ---------- the records: two equal columns, stacked on a phone ---------- */
+
+.records {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+  margin-top: 34px;
+}
+
+.album-card {
+  width: 100%;
+  max-width: 360px;
+}
+
+.hold .album-card .frame { margin-bottom: 18px; }
+.hold .album-card .frame img { max-width: 100%; }
+
+.record {
+  margin: 0 0 4px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.1;
+  color: #f4f6f7;
+}
+
+.record a         { color: #f4f6f7; text-decoration: underline; }
+.record a:hover   { color: #ffffff; }
+
+.kind {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: #898e93;
+}
+
+.blurb {
+  margin: 0;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #c9ced3;
+}
+
+@media (min-width: 760px) {
+  .records {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 56px;
+  }
+
+  .album-card { flex: 1 1 0; }
+}
+
+/* ---------- the presentation: prose under the records ---------- */
+
+.hold .rule { margin: 44px 0 30px; }
+
+.presentation {
+  max-width: 62ch;
+  margin: 0 auto 38px;
+  text-align: left;
+}
+
+.presentation-title {
+  margin: 0 0 22px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.25;
+  text-align: center;
+  color: #f4f6f7;
+}
+
+.presentation p {
+  margin: 0 0 1em;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #c9ced3;
+}
+
+.presentation p:last-child { margin-bottom: 0; }
+
+/* The record's name opens its paragraph like a dateline. */
+.presentation .signal {
+  font-variant: small-caps;
+  letter-spacing: 0.14em;
+  color: #f4f6f7;
+}
+
+@media (max-width: 620px) {
+  .presentation-title { font-size: 20px; }
+}
+
+/* The logo closes the page: a small print in the same bevelled frame as the
+   covers, only thinner, so it reads as a signature rather than a third record. */
+.logo-mark {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 3px;
+  border: 5px ridge #7a7f85;
+  background: #000;
+  line-height: 0;
+}
+
+.logo-mark img {
+  display: block;
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #2c2e30;
+}
+
+.est span { white-space: nowrap; }
+
+.est a         { color: #b2b8be; text-decoration: underline; }
+.est a:hover   { color: #ffffff; }
+
+.est {
+  margin: 26px 0 0;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: #7b8085;
+}
+
+.reach {
+  margin: 0;
+  font-size: 15px;
+  font-style: italic;
+  color: #d3d7da;
+}
+
+.reach a         { color: #dfe4e8; text-decoration: underline; }
+.reach a:visited { color: #bcc2c8; }
+.reach a:hover   { color: #ffffff; }
+
+.hold .elsewhere {
+  margin: 18px 0 0;
+  font-size: 12px;
+  font-variant: small-caps;
+  letter-spacing: 0.2em;
+}
+
+.hold .elsewhere a         { color: #dfe4e8; text-decoration: underline; }
+.hold .elsewhere a:visited { color: #b2b8be; }
+.hold .elsewhere a:hover   { color: #ffffff; }
+
+@media (max-width: 620px) {
+  body.hold-page { padding: 28px 14px; }
+  .hold .frame { margin-bottom: 24px; }
+  /* Only the short label gets the tighter tracking here. Without the :not,
+     this rule sits later in the sheet than .notice-long and puts the wide
+     letter-spacing back on a paragraph that must be read. */
+  .notice:not(.notice-long) {
+    font-size: 13px;
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+  }
+}
+
+/* Wide enough for a spread: the cover moves off centre to the left and the
+   type sits beside it, the pair centred as one block. Below this the page
+   stays stacked — two columns at 700px would leave the text in a gutter.
+   The indents go to zero because they exist to re-centre a letter-spaced
+   line, and a line set flush left does not want them. */
+@media (min-width: 760px) {
+  .hold { max-width: 880px; }
+}
+
+/* ===========================================================
+   The gold portal — video pop-up for the tracks that have one
+   =========================================================== */
+
+.tracks a.portal::after {
+  content: " \25B8";          /* a small play arrow marks the ones with video */
+  color: #b9bec4;
+  text-decoration: none;
+}
+
+body.locked { overflow: hidden; }
+
+.portal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 99;
+  overflow-y: auto;
+  padding: 26px 14px;
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
+  text-align: center;
+}
+
+.portal-overlay.open { display: block; }
+
+.portal-box {
+  max-width: 740px;
+  margin: 0 auto;
+  text-align: left;
+  background: #0d0d0d;
+  border: 10px ridge #c8a54c;
+  box-shadow: 0 0 0 2px #6d5622, 0 0 34px rgba(200, 165, 76, 0.45);
+}
+
+/* ---------- brass title bar ---------- */
+
+.portal-bar {
+  position: relative;
+  padding: 9px 44px;
+  background: #c3a04a;
+  background: linear-gradient(#f2e3b4, #cdaa55 52%, #a9883a);
+  border-bottom: 3px ridge #7d6224;
+  color: #33270c;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-variant: small-caps;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-shadow: 0 1px 0 #f2e5bb;
+}
+
+.portal-bar .orn {
+  padding: 0 10px;
+  color: #7d6224;
+  font-size: 12px;
+}
+
+.portal-close {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  padding: 0 8px 2px;
+  background: #dcc47e;
+  border: 2px outset #efe0b0;
+  color: #3a2c0d;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17px;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.portal-close:active { border-style: inset; }
+
+/* ---------- the screen (16:9 without leaving 2001) ---------- */
+
+/* The bevel lives on the wrapper so that .portal-screen's 56.25% padding
+   resolves against exactly the width the video occupies — a percentage
+   padding is measured against the containing block, not the element. */
+.portal-stage {
+  margin: 10px;
+  background: #000;
+  border: 3px inset #8c6c26;
+}
+
+.portal-screen {
+  position: relative;
+  height: 0;
+  padding-top: 56.25%;
+}
+
+.portal-screen iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- footer strip ---------- */
+
+.portal-foot {
+  margin: 0;
+  padding: 9px;
+  border-top: 2px groove #8c6c26;
+  text-align: center;
+  font-size: 11px;
+  font-variant: small-caps;
+  letter-spacing: 0.22em;
+}
+
+.portal-foot a          { color: #dfe4e8; text-decoration: underline; }
+.portal-foot a:visited  { color: #bcc2c8; }
+.portal-foot a:hover    { color: #ffffff; }
+
+@media (max-width: 620px) {
+  .portal-overlay { padding: 14px 8px; }
+
+  /* One frame only. At this width the outer ridge and the inner bevel end up
+     17px apart and read as a duplicated border rather than as a mount. */
+  .portal-box { border-width: 6px; }
+  .portal-stage { margin: 0; border: 0; }
+
+  .portal-bar { font-size: 14px; letter-spacing: 0.14em; padding: 8px 38px; }
+  .portal-bar .orn { padding: 0 5px; }
+}
+
+/* ===========================================================
+   The skin — an early-2000s site, 2000 to 2005
+   ===========================================================
+
+   Everything below dresses the page as a site from the first years of the
+   2000s: a bevelled box, 800px wide on a desktop, on a tiled ground, with
+   tabs, window-like modules, Bandcamp's players framed in the discography
+   and 88x31 buttons. On a desktop
+   the modules sit in two columns; on a phone they stack in one, with the
+   type set larger (see the end of the file). */
+
+/* ---------- ground, box and type ---------- */
+
+body.hold-page {
+  display: block;
+  min-height: 0;
+  padding: 28px 0 44px;
+  background-color: #14171c;
+  /* 45° pinstripes over a faint 16px grid, all solid colour */
+  background-image:
+    repeating-linear-gradient(45deg, #1f242b 0 2px, transparent 2px 7px),
+    linear-gradient(#262b33 1px, transparent 1px),
+    linear-gradient(90deg, #262b33 1px, transparent 1px);
+  background-size: auto, 16px 16px, 16px 16px;
+  color: #e3e7ea;
+  font: 12px/1.55 Verdana, Tahoma, Arial, sans-serif;
+}
+
+/* :where() keeps these at the weight of a bare 'a', so every component
+   below can set its own link colour without a fight. */
+:where(body.hold-page) a         { color: #4fe3ff; }
+:where(body.hold-page) a:visited { color: #b58cff; }
+:where(body.hold-page) a:hover   { color: #ffffff; }
+
+.hold-page .backdrop { display: none; }
+
+.hold {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 6px;
+  box-sizing: border-box;
+  text-align: left;
+  background: #2b3038;
+  border: 3px ridge #b3b9c0;
+  box-shadow: 5px 5px 0 #000;
+}
+
+/* ---------- masthead: the panel's photo as a banner ---------- */
+
+.masthead {
+  padding: 30px 12px 22px;
+  text-align: center;
+  border: 2px inset #8b9198;
+  background:
+    linear-gradient(rgba(6, 10, 16, 0.5), rgba(6, 10, 16, 0.82)),
+    var(--photo, url("assets/nyc.jpg")) center center / cover no-repeat #000;
+}
+
+.hold .artist {
+  margin: 0 0 10px;
+  font-size: 50px;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  line-height: 1.1;
+  color: #eef2f5;
+  /* a chrome fill with a hard, offset shadow */
+  background: linear-gradient(#ffffff 0%, #d9e0e6 42%, #7c858f 52%, #f1f4f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(2px 2px 0 #000);
+}
+
+.hold .notice,
+.hold .notice:not(.notice-long) {
+  font: bold 11px/1.4 Verdana, Tahoma, Arial, sans-serif;
+  font-variant: normal;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+  color: #bff4ff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.hold .notice-long { max-width: 60ch; text-align: center; }
+
+/* ---------- tabs ---------- */
+
+.tabs {
+  display: flex;
+  gap: 3px;
+  margin-top: 6px;
+  padding: 6px 6px 0;
+  background: #3a4049;
+  border-bottom: 3px solid #b3b9c0;
+}
+
+.tabs a,
+.tabs a:visited {
+  padding: 6px 16px 5px;
+  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #16191d;
+  background: linear-gradient(#f2f4f6, #b9bfc6);
+  border: 2px outset #e8ebee;
+  border-bottom: 0;
+}
+
+.tabs a:hover,
+.tabs a:focus-visible {
+  color: #000;
+  background: linear-gradient(#ffffff, #cfe9ef);
+  box-shadow: 0 0 0 1px #4fe3ff, 0 0 8px #4fe3ff;
+  outline: none;
+}
+
+.tabs a:active { border-style: inset; }
+
+/* ---------- the construction strip ---------- */
+
+.tape {
+  display: block;
+  margin-top: 6px;
+  padding: 5px 0;
+  text-align: center;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: repeating-linear-gradient(-45deg, #ffd200 0 14px, #111 14px 28px);
+  background-size: 40px 40px;
+  animation: tape-crawl 1.2s steps(8) infinite;
+}
+
+.tape span {
+  display: inline-block;
+  padding: 3px 12px;
+  font: bold 11px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111;
+  background: #ffd200;
+  border: 2px solid #111;
+}
+
+.tape span::before,
+.tape span::after { content: "\26A0\FE0E"; padding: 0 8px; }
+
+@keyframes tape-crawl { to { background-position: 40px 0; } }
+
+/* ---------- modules: window-like boxes ---------- */
+
+@media (min-width: 860px) {
+  .spread {
+    display: grid;
+    grid-template-columns: 262px minmax(0, 1fr);
+    /* The sidebar spans both rows; when it grows (the codes opened) the
+       spare height goes to the last row, under the story, never between
+       the records and the story. */
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "side records"
+      "side about";
+    align-items: start;
+    gap: 6px;
+    margin-top: 6px;
+  }
+}
+
+.spread > .rule { display: none; }
+
+.records,
+.presentation,
+.links-box,
+.colophon {
+  background: #1f2329;
+  border: 2px outset #9aa1a8;
+}
+
+.module-bar {
+  display: block;
+  margin: 0 0 10px;
+  padding: 3px 8px 2px;
+  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
+  background: linear-gradient(#56606b, #2d333b);
+  border-bottom: 2px solid #0e1115;
+}
+
+.module-bar::before { content: "\25A0  "; color: #4fe3ff; }
+
+/* ---------- discography ---------- */
+
+.spread > .records {
+  grid-area: records;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 0;
+  margin: 0;
+  padding: 0 0 12px;
+}
+
+.records .module-bar { grid-column: 1 / -1; }
+
+.spread .album-card {
+  flex: none;
+  width: auto;
+  max-width: none;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.hold .album-card .frame {
+  display: block;
+  margin: 0 0 8px;
+  padding: 3px;
+  border: 4px ridge #a7aeb5;
+}
+
+.spread .record {
+  margin: 0;
+  font: bold 14px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .record a,
+.spread .record a:visited { color: #ffffff; text-decoration: none; }
+.spread .record a:hover   { color: #4fe3ff; text-decoration: underline; }
+
+.spread .kind {
+  margin: 2px 0 0;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  font-variant: normal;
+  letter-spacing: 0.12em;
+  text-indent: 0;
+  text-transform: uppercase;
+  color: #9fe8a0;
+}
+
+.spread .blurb {
+  margin: 6px 0 0;
+  font: 11px/1.5 Verdana, Tahoma, Arial, sans-serif;
+  font-style: normal;
+  color: #c9ced3;
+}
+
+/* Bandcamp's tall player (cover on top, controls under it) only draws
+   properly at its own size, 350 x 470, so it is kept at that size inside a
+   ridged frame and scaled to the room it has: the half-column on a desktop,
+   the width of the screen on a phone. */
+.album-card .bandcamp {
+  box-sizing: border-box;
+  width: 356px;
+  max-width: 100%;
+  height: 476px;
+  margin: 0 auto 8px;
+  overflow: hidden;
+  background: #000;
+  border: 3px ridge #a7aeb5;
+}
+
+.album-card .bandcamp iframe {
+  display: block;
+  width: 350px;
+  height: 470px;
+  border: 0;
+  transform-origin: 0 0;
+}
+
+@media (min-width: 860px) {
+  .album-card .bandcamp { width: 231px; height: 308px; }        /* 225/350 */
+  .album-card .bandcamp iframe { transform: scale(0.6429); }
+}
+
+@media (max-width: 407px) {
+  .album-card .bandcamp { width: 314px; height: 420px; }        /* 308/350 */
+  .album-card .bandcamp iframe { transform: scale(0.88); }
+}
+
+@media (max-width: 365px) {
+  .album-card .bandcamp { width: 279px; height: 373px; }        /* 273/350 */
+  .album-card .bandcamp iframe { transform: scale(0.78); }
+}
+
+@media (max-width: 330px) {
+  .album-card .bandcamp { width: 251px; height: 335px; }        /* 245/350 */
+  .album-card .bandcamp iframe { transform: scale(0.7); }
+}
+
+/* ---------- about ---------- */
+
+.spread > .presentation {
+  grid-area: about;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 6px;
+  text-align: left;
+}
+
+.spread .presentation-title {
+  margin: 0 12px 10px;
+  font: bold 15px/1.35 Verdana, Tahoma, Arial, sans-serif;
+  font-style: normal;
+  text-align: left;
+  color: #ffe066;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .presentation p {
+  margin: 0 12px 10px;
+  font: 12px/1.6 Verdana, Tahoma, Arial, sans-serif;
+  color: #dde2e6;
+}
+
+.spread .presentation .signal {
+  font-variant: normal;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9fe8a0;
+}
+
+/* ---------- sidebar ---------- */
+
+.spread > .side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.links-box { padding: 0 0 10px; text-align: center; }
+
+.links-box .logo-mark {
+  margin: 0 0 8px;
+  padding: 3px;
+  border: 3px ridge #a7aeb5;
+}
+
+.links-box .logo-mark img { width: 200px; }
+
+/* The links are the footer's old 88x31 buttons, stacked under the logo and
+   stretched to the width of the Redeem code button, lettering scaled up. */
+.links-box .link-badges {
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 10px 12px;
+  gap: 6px;
+}
+
+.links-box .link-badges .badge {
+  width: auto;
+  height: 38px;
+  gap: 10px;
+  padding: 0 8px 0 5px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.links-box .link-badges .badge b {
+  min-width: 28px;
+  height: 28px;
+  font-size: 14px;
+  line-height: 26px;
+}
+
+/* ---------- redeem: the green button and the codes it opens ---------- */
+
+.redeem {
+  margin: 10px 10px 0;
+  text-align: left;
+}
+
+.redeem summary {
+  display: block;
+  padding: 7px 0 6px;
+  list-style: none;
+  cursor: pointer;
+  text-align: center;
+  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0b240b;
+  text-shadow: 0 1px 0 #c8ffb4;
+  background: linear-gradient(#c4f7a8, #5fd146 55%, #2f9423);
+  border: 2px outset #a9ee93;
+}
+
+.redeem summary::-webkit-details-marker { display: none; }
+.redeem summary::marker { content: ""; }
+
+.redeem summary::before { content: "\25B6\00A0\00A0"; font-size: 8px; vertical-align: 1px; }
+.redeem[open] summary::before { content: "\25BC\00A0\00A0"; }
+
+.redeem summary:hover,
+.redeem summary:focus-visible {
+  color: #000;
+  box-shadow: 0 0 8px #7cff4f;
+  outline: none;
+}
+
+.redeem[open] summary { border-style: inset; }
+
+.redeem-note {
+  margin: 8px 0 6px;
+  font: 11px/1.45 Verdana, Tahoma, Arial, sans-serif;
+  text-align: center;
+  color: #dfe4e8;
+}
+
+.redeem-note a,
+.redeem-note a:visited { color: #7cff4f; }
+.redeem-note a:hover   { color: #ffffff; }
+
+/* One column per album, each in its own ink, on black. */
+.redeem-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 10px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 8px 10px;
+  background: #000;
+  border: 2px inset #6b7178;
+}
+
+.redeem-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink, #ffffff);
+}
+
+.redeem-title {
+  margin: 0 0 6px;
+  padding: 0 0 4px;
+  border-bottom: 1px solid currentColor;
+  font: bold 9px Silkscreen, Verdana, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.redeem-list code {
+  font: 12px/1.75 "Courier New", Courier, monospace;
+  letter-spacing: 0.03em;
+  user-select: all;
+}
+
+/* ---------- the loop: a silent video under the codes ---------- */
+
+.links-box .loop {
+  margin: 10px 10px 0;
+  line-height: 0;
+  background: #000;
+  border: 3px ridge #a7aeb5;
+}
+
+.links-box .loop video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- footer: colophon and 88x31 buttons ---------- */
+
+.colophon {
+  margin-top: 6px;
+  padding: 10px 8px 12px;
+  text-align: center;
+}
+
+.hold .colophon .est {
+  margin: 0;
+  font: 10px/1.6 Verdana, Tahoma, Arial, sans-serif;
+  font-variant: normal;
+  letter-spacing: 0.04em;
+  text-indent: 0;
+  color: #aab1b8;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.badge,
+.badge:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 88px;
+  height: 31px;
+  box-sizing: border-box;
+  padding: 0 4px 0 3px;
+  overflow: hidden;
+  font: 8px/1.05 Silkscreen, Verdana, sans-serif;
+  text-align: left;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #111;
+  background: linear-gradient(#f4f5f6, #c3c8cd);
+  border: 1px solid #000;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #6d737a;
+}
+
+.badge b {
+  flex: none;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 2px;
+  box-sizing: border-box;
+  font: bold 11px/21px Verdana, Tahoma, sans-serif;
+  text-align: center;
+  color: #fff;
+  background: #3a4049;
+  border: 1px solid #000;
+}
+
+a.badge:hover { outline: 1px solid #4fe3ff; box-shadow: 0 0 8px #4fe3ff; }
+
+a.badge[href*="bandcamp"]  { background: #1da0c3; color: #fff; }
+a.badge[href*="bandcamp"] b { background: #0b5b70; }
+a.badge[href*="youtube"]   { background: #ffffff; }
+a.badge[href*="youtube"] b { background: #e01b1b; }
+a.badge[href*="instagram"] { background: linear-gradient(90deg, #6a3fbf, #d5307a 60%, #f39a2d); color: #fff; }
+a.badge[href*="instagram"] b { background: #2b1455; }
+
+.badge-ie b    { font: italic bold 17px/19px "Times New Roman", serif; color: #1f63d9; background: #fff; }
+.badge-xhtml   { background: #fff; }
+.badge-xhtml b { width: 30px; font-size: 9px; background: #0c4a9e; }
+.badge-res     { justify-content: center; font-size: 10px; color: #7cff4f; background: #000; }
+
+/* ---------- quiet motion for those who ask for it ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tape,
+}
+
+/* ---------- the magazine layer ----------
+
+   The Y2K skin keeps its frame — the ridged box, the pinstripe ground, the
+   chrome name, bevelled tabs and frames, the green button, the 88x31s —
+   and this layer gives it a fashion magazine's typesetting: Georgia for
+   what is read, italics for titles, a drop cap, small-capital leads, and
+   section labels in spaced capitals running out into a hairline instead
+   of pixel type on a heavy bar. Cyan stays as the one accent. The phone
+   sizes at the end of the file still apply on top of this. */
+
+.hold .notice,
+.hold .notice:not(.notice-long) {
+  font: italic 16px/1.4 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.03em;
+  text-indent: 0;
+  text-transform: none;
+  color: #e8f7fb;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.tabs a,
+.tabs a:visited {
+  padding: 7px 22px 6px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.3em;
+}
+
+/* Section labels: a slim bevelled strip, spaced capitals, a hairline. */
+.module-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 7px 10px 6px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #e3e7ea;
+  text-shadow: none;
+  background: linear-gradient(#3a414a, #262b32);
+  border-bottom: 1px solid #0e1115;
+}
+
+.module-bar::before {
+  content: "\25A0";
+  font-size: 7px;
+  letter-spacing: 0;
+  color: #4fe3ff;
+}
+
+.module-bar::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #8c939b, rgba(140, 147, 155, 0));
+}
+
+/* Records: titles set like captions. */
+.spread .record {
+  font: italic 19px/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.spread .kind {
+  margin: 5px 0 0;
+  font: 9px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #aeb4bb;
+}
+
+/* The story, set as a feature. */
+.spread > .presentation { padding-bottom: 10px; }
+
+.spread .presentation-title {
+  margin: 4px 16px 14px;
+  font: italic 23px/1.25 Georgia, "Times New Roman", serif;
+  color: #f4f6f7;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .presentation p {
+  margin: 0 16px 12px;
+  font: 13px/1.75 Georgia, "Times New Roman", serif;
+  color: #dde2e6;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.spread .presentation p:first-of-type::first-letter {
+  float: left;
+  margin: 5px 8px 0 0;
+  font: 48px/0.8 Georgia, "Times New Roman", serif;
+  color: #4fe3ff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.spread .presentation .signal {
+  font-variant: small-caps;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #4fe3ff;
+}
+
+.redeem-note { font: italic 13px/1.45 Georgia, "Times New Roman", serif; }
+
+/* Colophon: a line of small italic, like a masthead's imprint. */
+.hold .colophon .est {
+  font: italic 12px/1.7 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- the Vaporwave tab: a window in place of the page ----------
+
+   Hidden until its tab is clicked (#vaporwave in the address); then it
+   takes the place of the records and the story, the way a browser tab
+   swaps one page for another. Any other tab, or the x, brings them back. */
+
+.window {
+  display: none;
+  margin-top: 6px;
+  background: #1f2329;
+  border: 2px outset #9aa1a8;
+}
+
+/* Without the script, :target does the switching (and the page jumps to
+   the window, as any anchor does). With it, data-tab on <html> does, and
+   the page stays where it is. */
+html:not([data-tab]) .window:target,
+html[data-tab="vaporwave"] .window { display: block; }
+
+html:not([data-tab]) .hold:has(.window:target) .spread,
+html[data-tab="vaporwave"] .spread { display: none; }
+
+html:not([data-tab]) .hold:has(.window:target) .tabs a[href="#vaporwave"],
+html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
+  color: #000;
+  background: linear-gradient(#ffffff, #cfe9ef);
+  box-shadow: 0 0 0 1px #4fe3ff, 0 0 8px #4fe3ff;
+}
+
+.window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 10px;
+  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
+  background: linear-gradient(90deg, #0f5566, #2d333b 70%);
+  border-bottom: 2px solid #0e1115;
+}
+
+.window-bar span::before { content: "\25A0  "; color: #4fe3ff; }
+
+.hold .window-close,
+.hold .window-close:visited {
+  display: inline-block;
+  width: 20px;
+  height: 18px;
+  font: bold 14px/16px Verdana, Tahoma, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  color: #16191d;
+  background: linear-gradient(#f2f4f6, #b9bfc6);
+  border: 2px outset #e8ebee;
+}
+
+.hold .window-close:hover { color: #000; box-shadow: 0 0 6px #4fe3ff; }
+.hold .window-close:active { border-style: inset; }
+
+.window-body { padding: 14px 26px 24px; }
+
+/* The picture at the top right, the text running round it. */
+.window-figure {
+  float: right;
+  width: 250px;
+  margin: 6px 0 14px 22px;
+  padding: 3px;
+  background: #000;
+  border: 3px ridge #a7aeb5;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.window-figure img { display: block; width: 100%; height: auto; }
+
+.listen { clear: both; }
+
+.window-title {
+  margin: 4px 0 10px;
+  font: italic 26px/1.2 Georgia, "Times New Roman", serif;
+  color: #f4f6f7;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.window-intro {
+  margin: 0 0 18px;
+  font: italic 15px/1.6 Georgia, "Times New Roman", serif;
+  color: #bff4ff;
+}
+
+.window h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 10px;
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #4fe3ff;
+}
+
+.window h3::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #8c939b, rgba(140, 147, 155, 0));
+}
+
+.window section p {
+  margin: 0 0 12px;
+  font: 13px/1.75 Georgia, "Times New Roman", serif;
+  color: #dde2e6;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Listen everywhere: the mark, the singles, the store profiles. */
+.listen {
+  margin: 26px auto 0;
+  max-width: 520px;
+  padding: 18px 16px 16px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, #2b3a44, #15181d 70%);
+  border: 3px ridge #a7aeb5;
+}
+
+.listen-mark {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 6px;
+}
+
+.listen-note {
+  margin: 0 0 14px;
+  font: italic 13px/1.5 Georgia, "Times New Roman", serif;
+  color: #c9ced3;
+}
+
+.listen-singles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.hold .listen-singles a,
+.hold .listen-singles a:visited {
+  display: block;
+  padding: 8px 6px 7px;
+  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #e3e7ea;
+  background: linear-gradient(#48505a, #262b32);
+  border: 2px outset #939aa1;
+}
+
+.hold .listen-singles a:hover,
+.hold .listen-singles a:focus-visible {
+  color: #4fe3ff;
+  text-shadow: 0 0 6px #4fe3ff;
+  border-color: #4fe3ff;
+  outline: none;
+}
+
+.hold .listen-singles a:active { border-style: inset; }
+
+.listen-play { color: #4fe3ff; font-size: 9px; }
+
+.listen-profiles { margin-top: 0; }
+
+a.badge[href*="spotify"]    { background: #1db954; color: #fff; }
+a.badge[href*="spotify"] b  { background: #0b4f24; }
+a.badge[href*="apple"]      { background: linear-gradient(90deg, #fb5c74, #fa233b); color: #fff; }
+a.badge[href*="apple"] b    { background: #6d0c1a; }
+a.badge[href*="deezer"]     { background: #a238ff; color: #fff; }
+a.badge[href*="deezer"] b   { background: #3d1266; }
+a.badge[href*="iheart"]     { background: #ffffff; }
+a.badge[href*="iheart"] b   { background: #c6002b; }
+
+/* ---------- the same skin on a phone ----------
+
+   One column, full width, in the order a visitor wants it: banner, tabs,
+   records, the story, then the logo and links. The period type sizes (11-12px) do
+   not survive a phone screen, so the text is set larger here; everything
+   else — tiles, bevels, window bars, the player, the buttons — carries
+   over as it is. */
+
+@media (max-width: 859px) {
+  body.hold-page { padding: 10px 8px 28px; font-size: 14px; }
+
+  .hold {
+    padding: 5px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .masthead { padding: 26px 8px 18px; }
+
+  .hold .artist {
+    font-size: 36px;
+    letter-spacing: 0.14em;
+    text-indent: 0.14em;
+  }
+
+  .hold .notice,
+  .hold .notice:not(.notice-long) {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
+  }
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+    padding: 5px 5px 0;
+  }
+
+  .tabs a,
+  .tabs a:visited {
+    padding: 11px 0 10px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  .tape span { font-size: 10px; }
+
+  /* The sidebar follows the story. */
+  .spread {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+  }
+
+  .spread > .side { display: contents; }
+
+  .spread > .records       { order: 1; }
+  .spread > .presentation  { order: 2; }
+  .links-box               { order: 3; }
+
+  /* One Bandcamp player per row: two side by side would be too small. */
+  .spread > .records { grid-template-columns: 1fr; }
+  .spread .album-card + .album-card { margin-top: 16px; }
+
+  .module-bar { padding: 5px 8px 4px; font-size: 11px; }
+
+  .spread .record { font-size: 15px; }
+  .spread .kind   { font-size: 11px; }
+
+  .spread .presentation-title { font-size: 17px; }
+
+  .spread .presentation p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+
+  .links-box .logo-mark img { width: 230px; max-width: 100%; }
+
+  .hold .colophon .est { font-size: 12px; }
+
+  .window { margin-top: 5px; }
+  .window-body { padding: 8px 14px 18px; }
+  .window-title { font-size: 21px; }
+  .window-figure { width: 42%; margin: 4px 0 10px 12px; }
+  .window section p { font-size: 14px; line-height: 1.65; }
+  .window h3 { font-size: 11px; letter-spacing: 0.24em; }
+  .listen { padding: 16px 10px 14px; }
+  .listen-singles { grid-template-columns: 1fr; }
+  .hold .listen-singles a { padding: 12px 6px 11px; font-size: 12px; }
+}
+
+/* A very narrow phone: one cover per row, and a smaller name. */
+@media (max-width: 360px) {
+  .spread > .records { grid-template-columns: 1fr; }
+
+  .hold .artist { font-size: 29px; }
+
+  .tabs a,
+  .tabs a:visited { font-size: 10px; letter-spacing: 0; }
+}

@@ -1,0 +1,55 @@
+---
+layout: null
+permalink: /404.html
+---
+{%- assign top = site.data.top -%}
+{%- assign page_text = site.data.not_found -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Phones get the desktop page too: laid out at 1024px and scaled to fit. -->
+<meta name="viewport" content="width=1024">
+<meta name="theme-color" content="#000000">
+<title>{{ page_text.page_title | escape }}</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&amp;display=swap&amp;text={{ top.wordmark | url_encode }}">
+<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="plaque">
+    <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
+  </div>
+
+  <div class="slab">
+
+    <h2 class="album">{{ page_text.heading | escape }}</h2>
+    <p class="sub">{{ page_text.message | escape }}</p>
+
+    <div class="rule"><span>&#10022;</span></div>
+
+    <p class="go">
+      <a class="button" href="/">{{ page_text.button | escape }}</a>
+    </p>
+
+  </div>
+
+  <div class="plaque bottom">
+    <p>{{ page_text.footer | escape }}</p>
+  </div>
+
+</div>
+
+{%- comment -%} Visit counts, without cookies: https://mintsuit.goatcounter.com {%- endcomment %}
+<script data-goatcounter="https://mintsuit.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

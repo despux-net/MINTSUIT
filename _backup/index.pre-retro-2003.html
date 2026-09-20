@@ -294,7 +294,7 @@ layout: null
              alt="{{ top.wordmark | escape }} &mdash; {{ record.title | escape }}, album cover">
       </a>
 {%- endif %}
-      <h2 class="record"><a href="{{ record.url | escape }}">{{ record.title | escape }}</a>{%- if forloop.first %}<span class="new-flag">New</span>{%- endif %}</h2>
+      <h2 class="record"><a href="{{ record.url | escape }}">{{ record.title | escape }}</a></h2>
       <p class="kind">{{ record.kind | escape }}{% if record.year and record.year != "" %} &middot; {{ record.year | escape }}{% endif %}</p>
       {%- if record.blurb and record.blurb != "" %}
       <p class="blurb">{{ record.blurb | escape }}</p>
@@ -381,15 +381,6 @@ layout: null
     &nbsp;&middot; <span>{{ bottom.contact | escape }}
     <a href="mailto:{{ bottom.email | escape }}">{{ bottom.email | escape }}</a></span></p>
 
-{%- comment -%}
-  The bracketed index every front page closed with in 1998, and an odometer
-  that states the one number it can state honestly: the year this started.
-  Real visit counts live at mintsuit.goatcounter.com.
-{%- endcomment %}
-  <p class="site-index">[<a href="#records">main&nbsp;page</a>{%- for link in bottom.links %}<em>|</em><a href="{{ link.url | escape }}">{{ link.label | downcase | escape }}</a>{%- endfor %}<em>|</em><a href="#vaporwave">about</a><em>|</em><a href="mailto:{{ bottom.email | escape }}">e-mail</a>]</p>
-
-  <p class="counter"><span>On air since</span><b><i>2</i><i>0</i><i>1</i><i>7</i></b></p>
-
   <div class="badges">
     <span class="badge badge-ie" aria-hidden="true"><b>e</b><span>Best viewed in IE&nbsp;6.0</span></span>
     <span class="badge badge-xhtml" aria-hidden="true"><b>W3C</b><span>XHTML 1.0</span></span>
@@ -412,7 +403,7 @@ layout: null
   }
   show(location.hash);
   document.addEventListener('click', function (e) {
-    var link = e.target.closest && e.target.closest('.tabs a, .site-index a[href^="#"], .window-close');
+    var link = e.target.closest && e.target.closest('.tabs a, .window-close');
     if (!link) return;
     var hash = link.getAttribute('href');
     e.preventDefault();
