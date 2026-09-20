@@ -385,12 +385,11 @@ layout: null
 {%- endcomment -%}
 {%- assign codes = site.data.codes -%}
 {%- if codes.albums and codes.albums.size > 0 %}
-  <details class="redeem">
-    <summary>Redeem code</summary>
+  <div class="redeem">
     <p class="redeem-note">{{ codes.message | escape }} <a href="{{ codes.redeem_url | escape }}" target="_blank" rel="noopener">{{ codes.redeem_url | remove: "https://" | remove: "http://" | escape }}</a></p>
     <div class="redeem-box">
       {%- for album in codes.albums %}
-      <ul class="redeem-list" style="--ink: {{ album.color | default: "#ffffff" | escape }}">
+      <ul class="redeem-list" data-album="{{ album.title | escape }}" style="--ink: {{ album.color | default: "#000000" | escape }}">
         <li class="redeem-title">{{ album.title | escape }}</li>
         {%- comment -%}
           The codes arrive as one block of text. Every line is trimmed and
@@ -408,7 +407,7 @@ layout: null
       </ul>
       {%- endfor %}
     </div>
-  </details>
+  </div>
 {%- endif %}
 {%- comment -%}
   A silent looping video under the codes ("Loop video" in the panel). It
@@ -485,6 +484,146 @@ layout: null
     history.replaceState(null, '', panels[hash] ? hash : location.pathname + location.search);
   });
   window.addEventListener('hashchange', function () { show(location.hash); });
+})();
+</script>
+{%- comment -%}
+  The download codes. Without this script the page shows every code as a
+  plain list, the way it always did; with it, the list becomes a button per
+  album and one code at a time, in the order they were pasted, with a
+  refresh beside it for the next one. The codes and the colours are read
+  out of that same list, so the panel stays the only place they are set.
+{%- endcomment %}
+<script>
+(function () {
+  var redeem = document.querySelector('.redeem');
+  if (!redeem) return;
+  var box = redeem.querySelector('.redeem-box');
+  var lists = box ? [].slice.call(box.querySelectorAll('.redeem-list')) : [];
+  if (!lists.length) return;
+
+  var albums = lists.map(function (list) {
+    return {
+      title: list.getAttribute('data-album') || '',
+      ink: (list.style.getPropertyValue('--ink') || '').trim() || 'inherit',
+      codes: [].slice.call(list.querySelectorAll('code')).map(function (c) {
+        return c.textContent.trim();
+      })
+    };
+  }).filter(function (a) { return a.codes.length; });
+  if (!albums.length) return;
+
+  box.hidden = true;
+
+  var picker = document.createElement('div');
+  picker.className = 'redeem-picker';
+
+  var out = document.createElement('div');
+  out.className = 'redeem-out';
+  out.hidden = true;
+  out.innerHTML =
+    '<p class="redeem-for"></p>' +
+    '<div class="redeem-row">' +
+      '<button type="button" class="redeem-code"></button>' +
+      '<button type="button" class="redeem-again" title="Another code" aria-label="Another code">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+          '<polyline points="21 5 21 10 16 10"></polyline>' +
+          '<polyline points="3 19 3 14 8 14"></polyline>' +
+          '<path d="M5.1 9.2a7.5 7.5 0 0 1 12.4-2.8L21 10"></path>' +
+          '<path d="M3 14l3.5 3.6a7.5 7.5 0 0 0 12.4-2.8"></path>' +
+        '</svg>' +
+      '</button>' +
+    '</div>' +
+    '<p class="redeem-hint" role="status"></p>';
+
+  var forEl = out.querySelector('.redeem-for');
+  var codeEl = out.querySelector('.redeem-code');
+  var againEl = out.querySelector('.redeem-again');
+  var hintEl = out.querySelector('.redeem-hint');
+  var COPY = 'Click the code to copy it';
+  var current = null;
+
+  /* Where this visitor had got to in each album's list, so reloading the
+     page hands out the next code rather than the same one again. */
+  function seen(album) {
+    try { return parseInt(localStorage.getItem('mintsuit.code.' + album.title), 10) || 0; }
+    catch (e) { return 0; }
+  }
+  function store(album, i) {
+    try { localStorage.setItem('mintsuit.code.' + album.title, i); } catch (e) {}
+  }
+
+  function draw(album, index) {
+    var i = ((index % album.codes.length) + album.codes.length) % album.codes.length;
+    current = { album: album, index: i };
+    forEl.textContent = album.title;
+    codeEl.textContent = album.codes[i];
+    codeEl.style.color = album.ink;
+    hintEl.textContent = COPY;
+    out.hidden = false;
+    store(album, i + 1);
+  }
+
+  albums.forEach(function (album) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'redeem-pick';
+    var small = document.createElement('span');
+    small.textContent = 'Bandcamp code';
+    var name = document.createElement('b');
+    name.textContent = album.title;
+    b.appendChild(small);
+    b.appendChild(name);
+    b.addEventListener('click', function () {
+      picker.querySelectorAll('.redeem-pick').forEach(function (o) {
+        o.classList.toggle('is-open', o === b);
+      });
+      draw(album, seen(album));
+    });
+    picker.appendChild(b);
+  });
+
+  againEl.addEventListener('click', function () {
+    if (current) draw(current.album, current.index + 1);
+  });
+
+  function said(message) {
+    hintEl.textContent = message;
+    setTimeout(function () {
+      if (hintEl.textContent === message) hintEl.textContent = COPY;
+    }, 2000);
+  }
+
+  /* Three goes at it, because the clipboard is not always ours to write:
+     the modern call, then the old one over a selection, and failing both
+     the code is left selected for the visitor to copy themselves. */
+  function fallback() {
+    var range = document.createRange();
+    range.selectNodeContents(codeEl);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    var copied = false;
+    try { copied = document.execCommand('copy'); } catch (e) {}
+    if (copied) {
+      selection.removeAllRanges();
+      said('Copied');
+    } else {
+      hintEl.textContent = 'Selected — press Ctrl+C';
+    }
+  }
+
+  codeEl.addEventListener('click', function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(codeEl.textContent).then(function () {
+        said('Copied');
+      }, fallback);
+    } else {
+      fallback();
+    }
+  });
+
+  redeem.insertBefore(picker, box);
+  redeem.insertBefore(out, box);
 })();
 </script>
 {%- comment -%} Visit counts, without cookies: https://mintsuit.goatcounter.com {%- endcomment %}

@@ -301,7 +301,7 @@ content:
         label: Video
         type: file
         description: >-
-          Plays on its own, silent and looping, under the Redeem code button.
+          Plays on its own, silent and looping, under the code buttons.
           To change it, remove the current file here, upload the new one and
           save; the file can have any name. Keep it short and small (a few
           MB, MP4 works everywhere). Leave it empty to hide the video.
@@ -323,8 +323,9 @@ content:
         type: object
         list: true
         description: >-
-          One column per album under the Redeem code button. Bandcamp only
-          exports unredeemed codes, so paste a fresh export to drop used ones.
+          One button per album in the left column, each handing out its codes
+          one at a time, in this order. Bandcamp only exports unredeemed
+          codes, so paste a fresh export to drop the used ones.
         fields:
           - name: title
             label: Album
@@ -333,7 +334,9 @@ content:
           - name: color
             label: Text colour
             type: string
-            description: A CSS colour, e.g. #ffffff for white or #4fb8ff for blue.
+            description: >-
+              The colour this album's codes print in, e.g. #000000 for black
+              or #0033cc for blue.
           - name: codes
             label: Codes
             type: text

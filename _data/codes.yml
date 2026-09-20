@@ -6,7 +6,7 @@ redeem_url: https://mintsuit.bandcamp.com/yum
 message: Redeem your code at
 albums:
   - title: Sublime
-    color: "#ffffff"
+    color: "#000000"
     codes: |
       hnqe-3hjx
       pge4-yxxr
@@ -30,7 +30,7 @@ albums:
       dah4-6bcy
       jexj-jxwt
   - title: Global Report
-    color: "#4fb8ff"
+    color: "#0033cc"
     codes: |
       erbj-xtze
       rprb-hx8z
