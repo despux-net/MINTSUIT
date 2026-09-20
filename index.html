@@ -17,7 +17,12 @@ layout: null
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- comment -%}
+  No mobile layout on purpose: phones get the desktop page. The browser lays
+  it out at 1024px and shrinks the whole thing to fit the screen, the way a
+  site from 1998 would. Pinch to zoom still works.
+{%- endcomment %}
+<meta name="viewport" content="width=1024">
 <meta name="theme-color" content="#14171c">
 <meta name="google-site-verification" content="BnBIf478BiV4xo74loHMY_x8kmQGPE7cRNkZ8mEJ8gU" />
 <title>{{ share.page_title | escape }}</title>
