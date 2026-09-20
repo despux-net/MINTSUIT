@@ -258,20 +258,28 @@ html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
 
 .records .module-bar { grid-column: 1 / -1; }
 
-.album-card { padding: 0 0 6px; }
+/* The card is the width of its player, centred in the column, so the title
+   under it lines up with the player's left edge and the space left over
+   falls evenly on both sides. */
+.album-card {
+  width: 262px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 0 6px;
+}
 
 .bandcamp { margin: 0 0 8px; }
 
-/* Bandcamp's large player is its cover art plus a title row, a byline and
-   the track row with the seek bar. Anything shorter than the 350 x 470 its
-   own embed code asks for cuts the seek bar off the bottom, so the frame
-   keeps that ratio and scales with the column. The player is transparent
-   on white, so slack at the bottom cannot be seen. */
+/* Bandcamp's large player is a square of cover art the width of the frame,
+   and under it a title row, a byline, the track row and the seek bar — and
+   those are a fixed 118px however wide the player is. So the frame is not a
+   plain proportion: it is the width plus that 118. At 262 wide, 380 tall.
+   Shrink one without the other and the seek bar goes over the edge. */
 .bandcamp iframe {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 350 / 470;
+  aspect-ratio: 262 / 380;
   border: 1px solid var(--line);
   background: #ffffff;
 }
