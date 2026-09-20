@@ -218,6 +218,9 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "records" "about" "side";
   }
+
+  /* Stacked, there are no columns to divide. */
+  .side { padding-right: 0; border-right: none; }
 }
 
 /* ---------- discography ---------- */
@@ -323,8 +326,14 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
    The left column
    =========================================================== */
 
+/* The hairline down the right of this column is the divider between the
+   two columns, so it has to be as tall as the taller one. The spread sets
+   align-items: start, which would shrink this column to its own contents
+   and leave the line stopping short, with a stub of it hanging past the
+   last thing in the column; stretching it back fills the cell. */
 .side {
   grid-area: side;
+  align-self: stretch;
   padding-right: 18px;
   border-right: 1px solid var(--line);
 }
