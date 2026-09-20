@@ -11,6 +11,7 @@ layout: null
 {%- assign text = site.data.presentation -%}
 {%- assign bottom = site.data.bottom -%}
 {%- assign vapor = site.data.vaporwave -%}
+{%- assign merch = site.data.merch -%}
 {%- assign background = site.data.background.image | strip -%}
 {%- assign home = "/" | absolute_url -%}
 <!doctype html>
@@ -150,15 +151,6 @@ layout: null
 
 <main class="hold">
 
-{%- comment -%}
-  The black strip that ran across the top right of every corporate front
-  page in 2000, orange pipes and all. The links are the ones in the panel.
-{%- endcomment %}
-  <div class="topbar">
-    {%- for link in bottom.links %}<a href="{{ link.url | escape }}">{{ link.label | escape }}</a>{%- endfor %}
-    <a href="mailto:{{ bottom.email | escape }}">Contact</a>
-  </div>
-
   <header class="masthead" id="top"{% if background != "" %} style="--photo: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}>
   <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
 {%- comment -%}
@@ -186,6 +178,9 @@ layout: null
     <a href="#records">Records</a>
     {%- if vapor.sections and vapor.sections.size > 0 %}
     <a href="#vaporwave">{{ vapor.tab | default: "Vaporwave" | escape }}</a>
+    {%- endif %}
+    {%- if merch.items and merch.items.size > 0 %}
+    <a href="#merch">{{ merch.tab | default: "Merch" | escape }}</a>
     {%- endif %}
   </nav>
 {% if top.construction and top.construction != "" %}
@@ -280,6 +275,51 @@ layout: null
       {%- endif %}
     </div>
 {%- endif %}
+    </div>
+  </article>
+{%- endif %}
+
+{%- comment -%}
+  The Merch tab ("Merch" in the panel). Same window as the About tab: it
+  opens in place of the page and closes when another tab (or the x) is
+  clicked. The sidebar's own Merch link opens this very tab.
+{%- endcomment -%}
+{%- if merch.items and merch.items.size > 0 %}
+  <article class="window" id="merch" aria-labelledby="merch-title">
+    <div class="window-bar"><span>{{ merch.tab | default: "Merch" | escape }}</span><a class="window-close" href="#records" aria-label="Close">&times;</a></div>
+    <div class="window-body">
+    <h2 class="window-title" id="merch-title">{{ merch.title | escape }}</h2>
+    {%- if merch.intro and merch.intro != "" %}
+    <p class="window-intro">{{ merch.intro | escape }}</p>
+    {%- endif %}
+
+    <div class="shop">
+      {%- for item in merch.items %}
+      <section class="shop-item">
+        <div class="shop-shot">
+          <img src="{{ item.image | relative_url | escape }}" width="800" height="800"
+               alt="{{ item.image_alt | escape }}" loading="lazy">
+        </div>
+        <h3 class="shop-name">{{ item.title | escape }}</h3>
+        <p class="shop-format">{{ item.format | escape }}{% if item.year and item.year != "" %} &middot; {{ item.year | escape }}{% endif %}</p>
+        {%- if item.description and item.description != "" %}
+        <p class="shop-copy">{{ item.description | escape }}</p>
+        {%- endif %}
+        {%- if item.specs and item.specs.size > 0 %}
+        <ul class="shop-specs">
+          {%- for spec in item.specs %}
+          <li>{{ spec | escape }}</li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+        <p class="shop-status">{{ item.status | default: "Sold out" | escape }}</p>
+      </section>
+      {%- endfor %}
+    </div>
+
+    {%- if merch.note and merch.note != "" %}
+    <p class="shop-note">{{ merch.note | escape }}</p>
+    {%- endif %}
     </div>
   </article>
 {%- endif %}
@@ -380,6 +420,21 @@ layout: null
     <video src="{{ loop.video | relative_url | escape }}" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
   </div>
 {%- endif %}
+{%- comment -%}
+  The two merch photographs, crossfading five seconds apart for as long as
+  the page is open, over a link into the Merch tab. The pictures are the
+  ones set on the merch items, so changing them there changes these.
+{%- endcomment -%}
+{%- if merch.items and merch.items.size > 0 %}
+  <div class="merch-teaser">
+    <a class="merch-link merch-slides" href="#merch" aria-label="{{ merch.tab | default: "Merch" | escape }}">
+      {%- for item in merch.items %}
+      <img src="{{ item.image | relative_url | escape }}" width="800" height="800" alt="" loading="lazy">
+      {%- endfor %}
+    </a>
+    <a class="merch-link merch-cta" href="#merch">{{ merch.tab | default: "Merch" | escape }}</a>
+  </div>
+{%- endif %}
   </div>
   </aside>
 
@@ -395,7 +450,7 @@ layout: null
   that states the one number it can state honestly: the year this started.
   Real visit counts live at mintsuit.goatcounter.com.
 {%- endcomment %}
-  <p class="site-index">[<a href="#records">main&nbsp;page</a>{%- for link in bottom.links %}<em>|</em><a href="{{ link.url | escape }}">{{ link.label | downcase | escape }}</a>{%- endfor %}<em>|</em><a href="#vaporwave">about</a><em>|</em><a href="mailto:{{ bottom.email | escape }}">e-mail</a>]</p>
+  <p class="site-index">[<a href="#records">main&nbsp;page</a>{%- for link in bottom.links %}<em>|</em><a href="{{ link.url | escape }}">{{ link.label | downcase | escape }}</a>{%- endfor %}<em>|</em><a href="#vaporwave">about</a>{%- if merch.items and merch.items.size > 0 %}<em>|</em><a href="#merch">merch</a>{%- endif %}<em>|</em><a href="mailto:{{ bottom.email | escape }}">e-mail</a>]</p>
 
   <p class="counter"><span>On air since</span><b><i>2</i><i>0</i><i>1</i><i>7</i></b></p>
 
@@ -416,17 +471,18 @@ layout: null
 <script>
 (function () {
   var root = document.documentElement;
+  var panels = { '#vaporwave': 'vaporwave', '#merch': 'merch' };
   function show(hash) {
-    root.setAttribute('data-tab', hash === '#vaporwave' ? 'vaporwave' : 'records');
+    root.setAttribute('data-tab', panels[hash] || 'records');
   }
   show(location.hash);
   document.addEventListener('click', function (e) {
-    var link = e.target.closest && e.target.closest('.tabs a, .site-index a[href^="#"], .window-close');
+    var link = e.target.closest && e.target.closest('.tabs a, .site-index a[href^="#"], .merch-link, .window-close');
     if (!link) return;
     var hash = link.getAttribute('href');
     e.preventDefault();
     show(hash);
-    history.replaceState(null, '', hash === '#vaporwave' ? '#vaporwave' : location.pathname + location.search);
+    history.replaceState(null, '', panels[hash] ? hash : location.pathname + location.search);
   });
   window.addEventListener('hashchange', function () { show(location.hash); });
 })();

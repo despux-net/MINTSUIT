@@ -19,6 +19,9 @@ include:
 
 exclude:
   - README.md
+  # The full-size merch photographs are kept as the source; the site
+  # serves the smaller copies in assets/.
+  - MERCH
 
 defaults:
   - scope:

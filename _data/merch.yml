@@ -1,0 +1,46 @@
+tab: Merch
+title: Merch
+intro: >-
+  Both MINT SUIT records were pressed to compact disc: jewel case, printed
+  disc, four-panel insert with the running order on the back. Everything is
+  sold out. The page stays up so you can see what the pressings looked like.
+note: >-
+  Nothing is in stock. Both albums stream and download everywhere, and the
+  Bandcamp pages under Records carry the full audio.
+items:
+
+  - title: Sublime
+    format: Compact Disc
+    year: "2019"
+    image: /assets/merch-sublime.jpg
+    image_alt: >-
+      The Sublime compact disc: jewel case with the blonde cover, the printed
+      disc beside it and the back insert showing the running order.
+    description: >-
+      The 2019 original release, built from beauty commercials and perfume
+      campaigns: warmer, faster and made to move. Nine tracks, closing on the
+      two demos and Divine.
+    specs:
+      - Compact disc in a jewel case
+      - 9 tracks · 33:26
+      - Running order printed on the back insert
+      - 2019 original release
+    status: Sold out
+
+  - title: Global Report
+    format: Compact Disc
+    year: "2017"
+    image: /assets/merch-global-report.jpg
+    image_alt: >-
+      The Global Report compact disc: jewel case with the weather-map cover,
+      the printed disc beside it and the insert listing both sides.
+    description: >-
+      The first MINT SUIT album: weather broadcasts from Japan and North
+      America slowed into one long, drifting transmission. No track titles —
+      two sides, and each runs unbroken from end to end.
+    specs:
+      - Compact disc in a jewel case
+      - Side A 21:35 · Side B 22:22 · 43:57 in all
+      - Disc printed with the cover artwork
+      - 2017 first pressing
+    status: Sold out

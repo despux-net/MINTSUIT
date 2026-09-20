@@ -1,8 +1,7 @@
 /* ===========================================================
    MINT SUIT — official site
    Built the way microsoft.com was built in 2000: white page,
-   a black strip of links across the top, one blue navigation
-   bar, a left column of headings and blue underlined links,
+   one blue navigation bar, a left column of headings and blue underlined links,
    grey gradient title bars over every panel, Verdana at eleven
    pixels, hairlines instead of boxes. Light and quiet.
    =========================================================== */
@@ -18,7 +17,6 @@
   --bar2: #d4d4d4;         /* and bottom */
   --line: #cccccc;         /* hairlines */
   --edge: #999999;         /* the darker edge of a title bar */
-  --pipe: #ffa100;         /* the orange pipe in the black strip */
 }
 
 html { background: #ffffff; }
@@ -56,31 +54,6 @@ a:visited { color: var(--seen); }
 a:hover { color: #cc0000; }
 
 p { margin: 0 0 10px; }
-
-/* ===========================================================
-   The black strip — the secondary links, top right
-   =========================================================== */
-
-.topbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 22px;
-  padding: 0 16px;
-  background: #000000;
-}
-
-.topbar a {
-  padding: 0 14px;
-  font-size: 10px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #ffffff;
-}
-
-/* The orange pipe between them, the one detail everybody copied. */
-.topbar a + a { border-left: 1px solid var(--pipe); }
-.topbar a:hover { color: var(--pipe); }
 
 /* ===========================================================
    The banner
@@ -170,8 +143,10 @@ p { margin: 0 0 10px; }
 .tabs a:hover { color: #ffffff; background: rgba(0, 0, 0, 0.22); }
 
 /* The open tab, marked the way the bar marked the page you were on. */
-html:not([data-tab]) .hold:has(.window:target) .tabs a[href="#vaporwave"],
-html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
+html:not([data-tab]) .hold:has(#vaporwave:target) .tabs a[href="#vaporwave"],
+html[data-tab="vaporwave"] .tabs a[href="#vaporwave"],
+html:not([data-tab]) .hold:has(#merch:target) .tabs a[href="#merch"],
+html[data-tab="merch"] .tabs a[href="#merch"] {
   background: rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 -3px 0 #ffcc00;
 }
@@ -471,6 +446,144 @@ html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
 .loop video { display: block; width: 100%; height: auto; }
 
 /* ===========================================================
+   The merch panel in the left column
+   =========================================================== */
+
+.merch-teaser { margin: 14px 0 0; }
+
+/* Two photographs in the same square, the second lying underneath and the
+   first fading off it and back every ten seconds — five seconds each. The
+   crossfade happens over the picture below rather than over the page, so
+   nothing flashes white in between. Built for two pictures: a third would
+   sit under both and never be seen. */
+.merch-slides {
+  display: block;
+  position: relative;
+  aspect-ratio: 1;
+  background: #ffffff;
+  border: 1px solid var(--line);
+}
+
+.merch-slides img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.merch-slides img:first-child { animation: merch-turn 10s ease-in-out infinite; }
+
+@keyframes merch-turn {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* The link under them, cut like the Redeem code button above. */
+.merch-cta {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 8px;
+  font: bold 11px Verdana, Arial, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  color: #333333;
+  background: linear-gradient(var(--bar1), var(--bar2));
+  border: 1px solid var(--edge);
+}
+
+.merch-cta::after { content: " »"; color: #6f9fd8; }
+.merch-cta:hover { color: #000000; background: linear-gradient(#ffffff, #e2e2e2); }
+
+/* ===========================================================
+   The shop, inside the Merch tab
+   =========================================================== */
+
+.shop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 28px;
+  margin: 0 0 18px;
+}
+
+.shop-item {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.shop-shot {
+  margin: 0 0 10px;
+  padding: 2px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+}
+
+.shop-shot img { display: block; width: 100%; height: auto; }
+
+.shop-name {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #003399;
+  border: none;
+}
+
+.shop-format {
+  margin: 1px 0 8px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.shop-copy { margin: 0 0 10px; }
+
+.shop-specs {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+  color: #333333;
+}
+
+.shop-specs li { padding-left: 11px; }
+
+/* The blue diamond the left column uses, again. */
+.shop-specs li::before {
+  content: "♦";
+  display: inline-block;
+  width: 11px;
+  margin-left: -11px;
+  font-size: 8px;
+  color: #6f9fd8;
+  vertical-align: 1px;
+}
+
+/* Sold out: the flat stamp a shop of the period put over a listing, not a
+   button — there is nothing to click. */
+.shop-status {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 14px;
+  font: bold 10px Verdana, Arial, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a10000;
+  background: #f4f4f4;
+  border: 1px solid var(--edge);
+}
+
+.shop-note {
+  margin: 0;
+  padding-top: 14px;
+  font-size: 11px;
+  color: var(--dim);
+  border-top: 1px solid var(--line);
+}
+
+/* ===========================================================
    The About window — the second tab
    =========================================================== */
 
@@ -484,10 +597,12 @@ html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
    the window, as any anchor does). With it, data-tab on <html> does, and
    the page stays where it is. */
 html:not([data-tab]) .window:target,
-html[data-tab="vaporwave"] .window { display: block; }
+html[data-tab="vaporwave"] #vaporwave,
+html[data-tab="merch"] #merch { display: block; }
 
 html:not([data-tab]) .hold:has(.window:target) .spread,
-html[data-tab="vaporwave"] .spread { display: none; }
+html[data-tab="vaporwave"] .spread,
+html[data-tab="merch"] .spread { display: none; }
 
 .window-bar {
   display: flex;
@@ -791,4 +906,5 @@ html[data-tab="vaporwave"] .spread { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .tape span { animation: none; padding-left: 0; }
+  .merch-slides img:first-child { animation: none; }
 }

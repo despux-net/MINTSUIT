@@ -192,6 +192,67 @@ content:
                 type: string
                 required: true
 
+  - name: merch
+    label: Merch tab
+    path: _data/merch.yml
+    type: file
+    fields:
+      - name: tab
+        label: Tab name
+        type: string
+        description: The label of the tab, and of the button in the left column.
+      - name: title
+        label: Title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: items
+        label: Items
+        type: object
+        list: true
+        description: >-
+          Shown side by side in the Merch tab, and their pictures are the ones
+          that fade into each other in the left column. Delete every item to
+          hide the tab and the panel altogether.
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: format
+            label: Format
+            type: string
+            description: For example Compact Disc or Cassette.
+          - name: year
+            label: Year
+            type: string
+          - name: image
+            label: Photo
+            type: image
+            description: >-
+              A square photo works best; it is shown in the tab and, cropped
+              to a square, in the left column.
+          - name: image_alt
+            label: Photo description
+            type: string
+            description: Read aloud by screen readers, and read by Google.
+          - name: description
+            label: Description
+            type: text
+          - name: specs
+            label: Details
+            type: string
+            list: true
+            description: One line each, listed under the description.
+          - name: status
+            label: Status
+            type: string
+            description: For example Sold out. Shown as a stamp under the details.
+      - name: note
+        label: Note under the items
+        type: text
+
   - name: bottom
     label: Logo, links and footer
     path: _data/bottom.yml
