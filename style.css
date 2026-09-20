@@ -17,6 +17,9 @@
   --bar2: #d4d4d4;         /* and bottom */
   --line: #cccccc;         /* hairlines */
   --edge: #999999;         /* the darker edge of a title bar */
+  --grn1: #eefad9;         /* the code buttons, top */
+  --grn2: #c3e39b;         /* and bottom */
+  --grn-edge: #7da75a;     /* and their border */
 }
 
 html { background: #ffffff; }
@@ -405,15 +408,17 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
    line above it says what the button is. */
 .redeem-picker { display: grid; gap: 4px; }
 
+/* Pale green with a darker rim, the tone Windows used on the buttons it
+   wanted you to press. */
 .redeem-pick {
   display: block;
   width: 100%;
   padding: 4px 8px 5px;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   text-align: center;
-  color: #333333;
-  background: linear-gradient(var(--bar1), var(--bar2));
-  border: 1px solid var(--edge);
+  color: #2f4a18;
+  background: linear-gradient(var(--grn1), var(--grn2));
+  border: 1px solid var(--grn-edge);
   cursor: pointer;
 }
 
@@ -422,18 +427,19 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: #3d551f;
 }
 
-.redeem-pick b { display: block; font-size: 11px; color: #000000; }
+.redeem-pick b { display: block; font-size: 11px; color: #1c3208; }
 
-.redeem-pick:hover { background: linear-gradient(#ffffff, #e2e2e2); }
-.redeem-pick:active { background: #dcdcdc; }
+.redeem-pick:hover { background: linear-gradient(#ffffff, #d6ecb6); }
+.redeem-pick:active { background: #b6da8d; }
 
-/* The one whose codes are showing stays pressed. */
+/* The one whose codes are showing stays pressed: the same green with the
+   light at the bottom instead of the top, the way a sunken button reads. */
 .redeem-pick.is-open {
-  background: linear-gradient(#e4ecf6, #cddcef);
-  border-color: var(--nav2);
+  background: linear-gradient(#a9d179, #d8eebb);
+  border-color: #5d8a37;
 }
 
 .redeem-out { margin-top: 8px; }
