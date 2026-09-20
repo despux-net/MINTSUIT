@@ -1,0 +1,910 @@
+/* ===========================================================
+   MINT SUIT — official site
+   Dressed the way the web dressed itself between 1998 and 2003:
+   a fixed-width frame on black, a blue banner across the top,
+   bracketed navigation, Verdana at twelve pixels, green section
+   titles with a red tick beside them, and buttons that look
+   pressed. Nothing here is responsive on purpose — the page is
+   laid out at 1024px and the browser shrinks it, the way it did.
+   =========================================================== */
+
+:root {
+  --ink: #d6dbe1;          /* body text */
+  --dim: #8b949e;          /* captions, small print */
+  --link: #6fb8ff;         /* the blue every link was */
+  --seen: #b492e8;         /* and the purple it turned once visited */
+  --cyan: #4fe3ff;         /* MINT SUIT's own accent, kept */
+  --green: #3dff8e;        /* section titles, straight off a 2001 anime site */
+  --red: #ef2b2b;          /* the tick marks */
+  --rule: #1d4f86;         /* hairlines */
+  --panel: #05070d;        /* inside of a box */
+  --band1: #2360b4;        /* the blue banner, top */
+  --band2: #071c3c;        /* and bottom */
+}
+
+html {
+  background: #000;
+  /* A tiled background, because every page had one. This one is drawn in
+     CSS rather than loaded as a 40-byte GIF: faint blue graph paper. */
+  background-image:
+    linear-gradient(rgba(35, 96, 180, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(35, 96, 180, 0.11) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px;
+}
+
+body {
+  margin: 0;
+  padding: 18px 12px 40px;
+  color: var(--ink);
+  /* Verdana at twelve pixels is the single most 1999 decision on this page. */
+  font-family: Verdana, Geneva, Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+/* The photograph behind everything, dimmed until it is almost weather. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-position: center top;
+  background-size: cover;
+  opacity: 0.16;
+  filter: saturate(0.7) contrast(1.1);
+  pointer-events: none;
+}
+
+/* ---------- the frame ---------- */
+
+/* One fixed-width box, centred, with the hairline and glow that a table
+   layout of the period got out of BORDER=2 CELLSPACING=1. */
+.hold {
+  box-sizing: border-box;
+  width: 940px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 6px;
+  text-align: left;
+  background: rgba(2, 4, 10, 0.92);
+  border: 1px solid var(--rule);
+  box-shadow: 0 0 0 1px #000, 0 0 30px rgba(35, 96, 180, 0.28);
+}
+
+/* ---------- links ---------- */
+
+a { color: var(--link); text-decoration: underline; }
+a:visited { color: var(--seen); }
+a:hover { color: #fff; background: #17427a; }
+
+p { margin: 0 0 10px; }
+
+/* ===========================================================
+   The banner
+   =========================================================== */
+
+.masthead {
+  position: relative;
+  overflow: hidden;
+  padding: 26px 20px 20px;
+  text-align: center;
+  background:
+    linear-gradient(rgba(7, 28, 60, 0.55), rgba(3, 10, 24, 0.9)),
+    var(--photo, none) center 38% / cover,
+    linear-gradient(180deg, var(--band1), var(--band2));
+  border: 1px solid #3c86e0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* The bar code down each side of the banner: the vertical ticks that ran
+   along the top of anime and game sites in 2001, drawn with gradients. */
+.masthead::before,
+.masthead::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 92px;
+  background-image:
+    linear-gradient(90deg, var(--cyan) 3px, transparent 3px),
+    linear-gradient(90deg, #ffffff 2px, transparent 2px),
+    linear-gradient(90deg, var(--cyan) 5px, transparent 5px);
+  background-size: 26px 40%, 15px 24%, 41px 62%;
+  background-position: 0 6px, 8px 30%, 18px 0;
+  background-repeat: repeat-x;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.masthead::before { left: 0; }
+.masthead::after { right: 0; transform: scaleX(-1); }
+
+/* The wordmark keeps the one web font the site loads — Cormorant SC at its
+   lightest, a classical Roman capital — but now it sits on the blue and
+   carries the cyan halo those banners always had. */
+.artist {
+  position: relative;
+  margin: 0;
+  font-family: "Cormorant SC", "Cinzel", "Times New Roman", Times, serif;
+  font-weight: 300;
+  font-size: 44px;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  color: #fff;
+  text-shadow:
+    0 0 2px #fff,
+    0 0 14px rgba(79, 227, 255, 0.85),
+    0 0 34px rgba(35, 96, 180, 0.9),
+    0 2px 0 #000;
+}
+
+.notice {
+  position: relative;
+  margin: 8px auto 0;
+  max-width: 560px;
+  font-size: 11px;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: #cfe8ff;
+  text-shadow: 0 1px 2px #000;
+}
+
+.notice::before,
+.notice::after { content: "\2014"; color: var(--cyan); padding: 0 8px; }
+
+.notice-long { font-style: normal; max-width: 640px; }
+.notice-long::before,
+.notice-long::after { content: none; }
+.notice-long p { margin: 0 0 6px; }
+
+/* ===========================================================
+   Navigation — the bracketed row, straight off a 1997 front page
+   =========================================================== */
+
+.tabs {
+  display: flex;
+  align-items: stretch;
+  margin: 3px 0 0;
+  padding: 0 6px;
+  background: linear-gradient(#0d2d57, #05101f);
+  border: 1px solid var(--rule);
+  border-top: 1px solid #3c86e0;
+}
+
+.tabs a {
+  padding: 7px 22px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #bcd6f5;
+  border-right: 1px dotted #2a5d99;
+}
+
+/* The little hollow square that stood in front of every menu item. */
+.tabs a::before { content: "\25A1"; color: var(--cyan); padding-right: 9px; }
+
+.tabs a:hover { color: #fff; background: #17427a; }
+.tabs a:hover::before { content: "\25A0"; }
+
+/* ===========================================================
+   The scrolling strip — a marquee, done with an animation so the
+   deprecated tag can stay retired
+   =========================================================== */
+
+.tape {
+  overflow: hidden;
+  margin: 3px 0 0;
+  padding: 4px 0;
+  background: #ffd200;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.tape span {
+  display: inline-block;
+  padding-left: 100%;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #111;
+  animation: crawl 22s linear infinite;
+}
+
+.tape span::before,
+.tape span::after { content: "\26A0\FE0E"; padding: 0 10px; }
+
+@keyframes crawl { to { transform: translateX(-100%); } }
+
+/* ===========================================================
+   Modules — every box gets a title bar
+   =========================================================== */
+
+.records,
+.presentation,
+.links-box,
+.colophon {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+}
+
+.module-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 5px 9px 4px;
+  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  background: linear-gradient(90deg, #2360b4, #0a2350 70%, #05101f);
+  border-bottom: 1px solid #3c86e0;
+}
+
+/* The red square marker that sat beside every heading on those sites. */
+.module-bar::before {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--red);
+  box-shadow: 0 0 0 1px #000, 3px 0 0 rgba(239, 43, 43, 0.45);
+}
+
+/* ===========================================================
+   The spread: sidebar left, records and story right
+   =========================================================== */
+
+.spread {
+  display: grid;
+  grid-template-columns: 262px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "side records"
+    "side about";
+  align-items: start;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.spread > .rule { display: none; }
+
+/* A window narrower than the frame is a 2001 problem, but stacking is a
+   kinder answer than a sideways scrollbar. Phones are pinned at 1024 and
+   never reach this; only a very small desktop window does. */
+@media (max-width: 720px) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "records" "about" "side";
+  }
+}
+
+/* ---------- discography ---------- */
+
+.records {
+  grid-area: records;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 0;
+  padding: 0 0 14px;
+}
+
+.records .module-bar { grid-column: 1 / -1; }
+
+.album-card {
+  padding: 0 12px;
+  text-align: center;
+}
+
+.bandcamp { margin: 0 0 8px; }
+
+.bandcamp iframe {
+  display: block;
+  width: 100%;
+  height: 340px;
+  border: 1px solid #2a5d99;
+  background: #000;
+}
+
+.frame {
+  display: block;
+  margin: 0 0 8px;
+  padding: 3px;
+  background: #000;
+  border: 2px outset #5c85bd;
+}
+
+.frame img { display: block; width: 100%; height: auto; }
+
+.record {
+  margin: 0;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}
+
+.record a { color: #fff; text-decoration: none; }
+.record a:hover { color: var(--cyan); background: none; text-decoration: underline; }
+
+.kind {
+  margin: 1px 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.blurb {
+  margin: 0;
+  font-size: 11px;
+  color: #b7bec6;
+}
+
+/* The one thing no site of the period could resist. */
+.new-flag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 4px;
+  font: bold 9px Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: var(--red);
+  border: 1px solid #ff9a9a;
+  vertical-align: 2px;
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink { 50% { opacity: 0.15; } }
+
+/* ---------- the story ---------- */
+
+.presentation {
+  grid-area: about;
+  padding: 0 0 14px;
+}
+
+.presentation > *:not(.module-bar) { margin-left: 14px; margin-right: 16px; }
+
+.presentation-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  color: var(--green);
+  text-shadow: 0 0 10px rgba(61, 255, 142, 0.35);
+}
+
+/* Every paragraph gets the red dash that ran down the left of the text on
+   those pages, out in the margin where a bullet would be. */
+.presentation p {
+  position: relative;
+  padding-left: 16px;
+  text-align: justify;
+}
+
+.presentation p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 9px;
+  height: 3px;
+  background: var(--red);
+}
+
+.signal {
+  font-weight: bold;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+/* ===========================================================
+   Sidebar
+   =========================================================== */
+
+.side { grid-area: side; }
+
+.links-box { padding: 0 0 12px; }
+
+.logo-mark {
+  margin: 0 10px 12px;
+  padding: 4px;
+  background: #000;
+  border: 2px inset #3c86e0;
+  text-align: center;
+}
+
+.logo-mark img { display: block; width: 100%; height: auto; }
+
+/* ---------- web buttons ---------- */
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 10px;
+}
+
+/* The web button, at the proportions the web agreed on in 1997 and then
+   never changed for six years. */
+.badge {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 118px;
+  height: 31px;
+  padding: 0 5px 0 0;
+  font: bold 9px Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #eaf2ff;
+  background: linear-gradient(#27303c, #05070d);
+  border: 1px solid #5c85bd;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.22), inset -1px -1px 0 #000;
+}
+
+.badge b {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 27px;
+  align-self: stretch;
+  margin-right: 5px;
+  font-size: 11px;
+  color: #001018;
+  background: linear-gradient(#8fe9ff, #1aa6d6);
+  border-right: 1px solid #000;
+}
+
+.badge span { flex: 1; text-align: center; }
+
+.badge:hover {
+  color: #fff;
+  background: linear-gradient(#17427a, #0a1d38);
+  border-color: var(--cyan);
+}
+
+.badge:hover b { background: linear-gradient(#fff, var(--cyan)); }
+
+.link-badges { flex-direction: column; align-items: center; }
+.link-badges .badge { width: 190px; }
+
+/* ---------- download codes ---------- */
+
+.redeem { margin: 12px 10px 0; }
+
+.redeem summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 5px 8px;
+  font: bold 10px Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #eaf2ff;
+  background: linear-gradient(#2c6fc4, #0d2d57);
+  border: 2px outset #5c85bd;
+  text-align: center;
+}
+
+.redeem summary::-webkit-details-marker { display: none; }
+.redeem summary::before { content: "\25B8 "; color: var(--cyan); }
+.redeem[open] summary::before { content: "\25BE "; }
+.redeem summary:hover { background: linear-gradient(#3b86e0, #17427a); }
+.redeem[open] summary { border-style: inset; }
+
+.redeem-note {
+  margin: 8px 0 6px;
+  font-size: 10px;
+  color: var(--dim);
+  text-align: center;
+}
+
+.redeem-box {
+  max-height: 240px;
+  overflow: auto;
+  padding: 8px;
+  background: #000;
+  border: 2px inset #2a5d99;
+}
+
+.redeem-list {
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.redeem-title {
+  margin-bottom: 4px;
+  font: bold 10px Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px dotted #2a5d99;
+}
+
+.redeem-list code {
+  font: 11px "Courier New", Courier, monospace;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+/* ---------- the loop ---------- */
+
+.loop {
+  margin: 12px 10px 0;
+  padding: 3px;
+  background: #000;
+  border: 2px inset #3c86e0;
+}
+
+.loop video { display: block; width: 100%; height: auto; }
+
+/* ===========================================================
+   The About window — the second tab
+   =========================================================== */
+
+.window {
+  display: none;
+  margin-top: 4px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+}
+
+/* Without the script, :target does the switching (and the page jumps to
+   the window, as any anchor does). With it, data-tab on <html> does, and
+   the page stays where it is. */
+html:not([data-tab]) .window:target,
+html[data-tab="vaporwave"] .window { display: block; }
+
+html:not([data-tab]) .hold:has(.window:target) .spread,
+html[data-tab="vaporwave"] .spread { display: none; }
+
+html:not([data-tab]) .hold:has(.window:target) .tabs a[href="#vaporwave"],
+html[data-tab="vaporwave"] .tabs a[href="#vaporwave"] {
+  color: #fff;
+  background: linear-gradient(#2c6fc4, #0d2d57);
+  box-shadow: inset 0 0 0 1px var(--cyan);
+}
+
+.window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 9px;
+  font: bold 10px Silkscreen, Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  background: linear-gradient(90deg, #2360b4, #0a2350 70%, #05101f);
+  border-bottom: 1px solid #3c86e0;
+}
+
+.window-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 16px;
+  font: bold 12px Verdana, Tahoma, sans-serif;
+  text-decoration: none;
+  color: #000;
+  background: linear-gradient(#e8eef5, #9fb0c2);
+  border: 2px outset #e8eef5;
+}
+
+.window-close:hover { color: #fff; background: var(--red); }
+
+/* The text column stops where a 2001 page stopped it, and the picture
+   floats into the corner beside it. */
+.window-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 22px 20px;
+}
+
+.window-figure {
+  float: right;
+  width: 190px;
+  margin: 0 0 12px 18px;
+  padding: 3px;
+  background: #000;
+  border: 2px outset #5c85bd;
+}
+
+.window-figure img { display: block; width: 100%; height: auto; }
+
+.window-title {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(35, 96, 180, 0.9);
+}
+
+.window-intro {
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  font-size: 11px;
+  color: #bcd6f5;
+  border-bottom: 1px dotted #2a5d99;
+}
+
+.window-body section { margin: 0 0 18px; }
+
+/* Green heading, red tick, hairline trailing off to the right. */
+.window-body h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  text-shadow: 0 0 10px rgba(61, 255, 142, 0.4);
+}
+
+.window-body h3::before {
+  content: "";
+  flex: none;
+  width: 11px;
+  height: 3px;
+  background: var(--red);
+}
+
+.window-body h3::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #1d4f86, transparent);
+}
+
+.window-body section p {
+  margin: 0 0 9px;
+  text-align: justify;
+}
+
+/* ---------- listen everywhere ---------- */
+
+.listen {
+  clear: both;
+  margin-top: 22px;
+  padding: 16px 14px;
+  text-align: center;
+  background: linear-gradient(#071c3c, #02060e);
+  border: 1px solid var(--rule);
+  border-top: 1px solid #3c86e0;
+}
+
+.listen-mark { display: block; width: 260px; max-width: 100%; margin: 0 auto 10px; }
+
+.listen-note {
+  margin: 0 auto 14px;
+  max-width: 460px;
+  font-size: 11px;
+  color: var(--dim);
+}
+
+.listen-singles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.listen-singles a {
+  display: block;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: #eaf2ff;
+  background: linear-gradient(#27303c, #05070d);
+  border: 2px outset #5c85bd;
+}
+
+.listen-singles a:hover {
+  color: #fff;
+  background: linear-gradient(#2c6fc4, #0d2d57);
+  border-color: var(--cyan);
+}
+
+.listen-singles a:active { border-style: inset; }
+
+.listen-play { color: var(--cyan); }
+
+.listen-profiles { justify-content: center; }
+
+/* ===========================================================
+   Footer
+   =========================================================== */
+
+.colophon {
+  margin-top: 4px;
+  padding: 14px 12px 16px;
+  text-align: center;
+}
+
+.est {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: var(--dim);
+}
+
+.est span { white-space: nowrap; }
+
+/* The bracketed pipe menu that closed every front page of the period. */
+.site-index {
+  margin: 0 0 12px;
+  font-size: 11px;
+  color: #5f6c7a;
+}
+
+.site-index a { margin: 0 2px; }
+.site-index em { font-style: normal; color: #5f6c7a; padding: 0 3px; }
+
+/* The hit counter. It does not count anything — the real numbers live at
+   mintsuit.goatcounter.com — it is here because the page would be lying
+   about the year without one. */
+.counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font: 10px Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.counter b {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: #000;
+  border: 2px inset #3c86e0;
+}
+
+.counter i {
+  width: 13px;
+  font: bold 13px "Courier New", Courier, monospace;
+  font-style: normal;
+  text-align: center;
+  color: var(--green);
+  background: #04140a;
+  text-shadow: 0 0 6px rgba(61, 255, 142, 0.8);
+}
+
+.colophon .badges { justify-content: center; }
+
+.badge-ie,
+.badge-xhtml,
+.badge-res { cursor: default; }
+
+.badge-ie b { background: linear-gradient(#8fd6ff, #1f6fc4); color: #fff; }
+.badge-xhtml b { background: linear-gradient(#fff, #c9d3de); font-size: 8px; color: #000; }
+
+.badge-res {
+  justify-content: center;
+  padding: 0;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  background: #000;
+  border-color: var(--green);
+}
+
+/* ---------- divider (only seen when the columns stack) ---------- */
+
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  color: var(--cyan);
+}
+
+.rule::before,
+.rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ===========================================================
+   404
+   =========================================================== */
+
+.page {
+  width: 640px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.plaque {
+  padding: 24px 20px 20px;
+  background: linear-gradient(180deg, var(--band1), var(--band2));
+  border: 1px solid #3c86e0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.plaque p { margin: 0; }
+
+.plaque .sub {
+  margin-top: 8px;
+  font-size: 11px;
+  font-style: italic;
+  color: #cfe8ff;
+}
+
+.page .album {
+  margin: 4px 0;
+  padding: 26px 18px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+}
+
+.page .slab {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  color: var(--green);
+}
+
+.button,
+.go {
+  display: inline-block;
+  padding: 6px 18px;
+  font: bold 10px Verdana, Tahoma, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #eaf2ff;
+  background: linear-gradient(#2c6fc4, #0d2d57);
+  border: 2px outset #5c85bd;
+}
+
+.button:hover,
+.go:hover { color: #fff; background: linear-gradient(#3b86e0, #17427a); }
+
+.button:active,
+.go:active { border-style: inset; }
+
+.page .bottom {
+  padding: 12px;
+  font-size: 11px;
+  color: var(--dim);
+  background: var(--panel);
+  border: 1px solid var(--rule);
+}
+
+/* ===========================================================
+   Motion, for anyone who would rather not
+   =========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .tape span { animation: none; padding-left: 0; }
+  .new-flag { animation: none; }
+}
