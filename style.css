@@ -1037,7 +1037,9 @@ html[data-tab="merch"] .spread { display: none; }
    Motion, for anyone who would rather not
    =========================================================== */
 
+/* Only the scrolling tape stops. The merch pictures keep crossfading: it is
+   a slow fade in place, nothing moves, and phones on battery saver report
+   reduced motion too, which left them stuck on the first picture. */
 @media (prefers-reduced-motion: reduce) {
   .tape span { animation: none; padding-left: 0; }
-  .merch-slides img:first-child { animation: none; }
 }
