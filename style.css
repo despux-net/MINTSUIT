@@ -394,6 +394,31 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
   vertical-align: 1px;
 }
 
+/* Links to a site we know get that site's little 16px icon instead of the
+   diamond, drawn pixel by pixel like the favicons of the time. */
+.badge.ico { padding: 3px 0 3px 22px; }
+.badge.ico::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin-left: -22px;
+  margin-right: 6px;
+  vertical-align: -4px;
+  background-position: center;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.ico-bandcamp::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='.5' y='.5' width='15' height='15' fill='%231da0c3' stroke='%23136f88'/%3E%3Crect x='1' y='1' width='14' height='1' fill='%237fd3ea'/%3E%3Cpath d='M2 12 6 4h8l-4 8z' fill='%23fff'/%3E%3C/svg%3E");
+}
+.ico-youtube::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3ClinearGradient id='g' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ff4a4a'/%3E%3Cstop offset='1' stop-color='%23b30000'/%3E%3C/linearGradient%3E%3Crect x='.5' y='2.5' width='15' height='11' rx='2' fill='url(%23g)' stroke='%23700000'/%3E%3Crect x='2' y='3' width='12' height='1' fill='%23ff9a9a'/%3E%3Cpath d='M6 5v6l5-3z' fill='%23fff'/%3E%3C/svg%3E");
+}
+.ico-instagram::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='.5' y='.5' width='15' height='15' rx='2' fill='%23efe4cf' stroke='%235a3b20'/%3E%3Crect x='1' y='1' width='14' height='5' fill='%238a5f38'/%3E%3Crect x='3' y='1' width='1' height='5' fill='%23e33b2e'/%3E%3Crect x='4' y='1' width='1' height='5' fill='%23f5c22b'/%3E%3Crect x='5' y='1' width='1' height='5' fill='%2355b04a'/%3E%3Crect x='6' y='1' width='1' height='5' fill='%233a7bd5'/%3E%3Crect x='11' y='2' width='3' height='2' fill='%23222'/%3E%3Ccircle cx='8' cy='9.5' r='3.5' fill='%23222' stroke='%23999' shape-rendering='auto'/%3E%3Ccircle cx='8' cy='9.5' r='1.6' fill='%233a6fb0' shape-rendering='auto'/%3E%3Crect x='7' y='8' width='1' height='1' fill='%23cfe3ff'/%3E%3C/svg%3E");
+}
+
 /* ---------- download codes ---------- */
 
 .redeem { margin: 14px 0 0; }
