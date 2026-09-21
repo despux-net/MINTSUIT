@@ -376,12 +376,12 @@ layout: null
 {%- endif %}
   <div class="badges link-badges">
     {%- for link in bottom.links %}
-    {%- assign site = "" %}
-    {%- if link.url contains "bandcamp" %}{% assign site = " ico ico-bandcamp" %}
-    {%- elsif link.url contains "youtu" %}{% assign site = " ico ico-youtube" %}
-    {%- elsif link.url contains "instagram" %}{% assign site = " ico ico-instagram" %}
+    {%- assign link_ico = "" %}
+    {%- if link.url contains "bandcamp" %}{% assign link_ico = " ico ico-bandcamp" %}
+    {%- elsif link.url contains "youtu" %}{% assign link_ico = " ico ico-youtube" %}
+    {%- elsif link.url contains "instagram" %}{% assign link_ico = " ico ico-instagram" %}
     {%- endif %}
-    <a class="badge{{ site }}" href="{{ link.url | escape }}"><b aria-hidden="true">{{ link.label | slice: 0, 2 | escape }}</b><span>{{ link.label | escape }}</span></a>
+    <a class="badge{{ link_ico }}" href="{{ link.url | escape }}"><b aria-hidden="true">{{ link.label | slice: 0, 2 | escape }}</b><span>{{ link.label | escape }}</span></a>
     {%- endfor %}
   </div>
 {%- comment -%}
