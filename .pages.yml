@@ -288,6 +288,18 @@ content:
     label: Merch shop (new products)
     path: _data/shop.yml
     type: file
+    actions:
+      - name: sync-printful
+        label: Sync with Printful
+        workflow: sync-printful.yml
+        ref: current
+        confirm:
+          title: Sync with Printful?
+          message: >-
+            Reads every product in the Printful store and adds an entry here
+            for each new one. What you set for the others is kept. Reload
+            this page when it is done (about a minute).
+          button: Sync
     fields:
       - name: products
         label: Products
@@ -296,17 +308,22 @@ content:
         description: >-
           One entry per product on sale: its title, photos, description,
           details and a Sold out switch. Prices and sizes are set in
-          Printful. Products left out here still show, with their own
-          photo and name.
+          Printful. After adding products in Printful, press "Sync with
+          Printful" at the top of this page to get their entries here.
         fields:
           - name: name
             label: Printful product name
             type: string
             required: true
             description: >-
-              Exactly as the product is called in Printful: it is how the
-              site knows which product these settings are for. Shoppers
-              never see it unless "Title on the site" is left empty.
+              The product's name in Printful, kept up to date by "Sync with
+              Printful". Shoppers see it unless "Title on the site" is set.
+          - name: printful_id
+            label: Printful product number
+            type: number
+            description: >-
+              Filled in by "Sync with Printful" and never changes, even if
+              the product is renamed in Printful. Leave it as it is.
           - name: title
             label: Title on the site
             type: string

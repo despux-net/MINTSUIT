@@ -1,0 +1,48 @@
+# The "Sync with Printful" button in Pages CMS (Merch shop (new products)).
+# It reads the Printful store through the site's shop function and gives
+# every product its own entry in _data/shop.yml, then commits the change,
+# which republishes the site.
+name: Sync with Printful
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS payload as JSON
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-printful
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Read the Printful store into the panel
+        run: |
+          pip install --quiet pyyaml
+          python .github/scripts/sync_printful.py
+
+      - name: Save
+        run: |
+          if git diff --quiet -- _data/shop.yml; then
+            echo "Already in sync with Printful."
+            exit 0
+          fi
+          git config user.name "Pages CMS sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _data/shop.yml
+          git commit -m "Sync the shop's products with Printful"
+          git pull --rebase
+          git push

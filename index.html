@@ -568,17 +568,22 @@ layout: null
   }
   var cds = data('merch-items');
   var extras = data('shop-products');
-  /* Which of the panel's product entries is this Printful product? The
-     same name wins; failing that, one name that starts the other; failing
+  /* Which of the panel's product entries is this Printful product? The one
+     holding its Printful id (set by the Sync with Printful button); for an
+     entry without one, the same name wins; failing that, one name that starts the other; failing
      that, the entry whose words are nearly all in the product's name. So a
      product renamed a little in Printful ("Armor" to "Armour Original")
      keeps its photos and words. */
   function nameWords(s) {
     return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   }
-  function extraFor(name) {
-    var key = nameWords(name), keyWords = key.split(' '), best = {}, bestScore = 0;
+  function extraFor(p) {
+    for (var i = 0; i < extras.length; i++) {
+      if (extras[i].printful_id && +extras[i].printful_id === +p.id) return extras[i];
+    }
+    var key = nameWords(p.name), keyWords = key.split(' '), best = {}, bestScore = 0;
     extras.forEach(function (e) {
+      if (e.printful_id) return;
       var n = nameWords(e.name);
       if (!n) return;
       var score = 0;
@@ -595,7 +600,7 @@ layout: null
   }
   /* The name shoppers see: the panel's title when there is one. */
   function title(p) {
-    var t = String(extraFor(p.name).title || '').trim();
+    var t = String(extraFor(p).title || '').trim();
     return t || p.name;
   }
 
@@ -817,7 +822,7 @@ layout: null
   }
 
   function openProduct(p) {
-    var extra = extraFor(p.name);
+    var extra = extraFor(p);
     var w = frame('product-dialog', 'shop');
     var body = el('div', 'product-body');
     var photos = uniq((extra.mockups || []).concat(p.variants.map(function (v) { return v.image; }), [p.image]));
@@ -955,7 +960,7 @@ layout: null
   });
 
   function productCard(p) {
-    var extra = extraFor(p.name);
+    var extra = extraFor(p);
     var b = el('button', 'shop-card is-new');
     b.type = 'button';
     var shot = el('span', 'shop-card-shot');

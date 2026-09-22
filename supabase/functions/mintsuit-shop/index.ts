@@ -255,7 +255,7 @@ async function quote(variantId: number, quantity: number, country: string, state
 // What the site's panel says about each product (shop.json on the site):
 // a product switched to Sold out there can't be bought here either.
 // The panel's title for a product is also the name on the PayPal receipt.
-type PanelEntry = { name: string; title: string; soldOut: boolean };
+type PanelEntry = { id: number; name: string; title: string; soldOut: boolean };
 let panel: { at: number; entries: PanelEntry[] } | null = null;
 
 async function readPanel() {
@@ -267,7 +267,7 @@ async function readPanel() {
       panel = {
         at: Date.now(),
         entries: list.map((p: any) => ({
-          name: String(p.name ?? ""), title: String(p.title ?? "").trim(), soldOut: !!p.sold_out,
+          id: Number(p.printful_id) || 0, name: String(p.name ?? ""), title: String(p.title ?? "").trim(), soldOut: !!p.sold_out,
         })),
       };
     } catch { /* keep what was known */ }
@@ -280,11 +280,14 @@ async function readPanel() {
 function words(s: string) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
-async function entryFor(name: string): Promise<PanelEntry | null> {
+async function entryFor(id: number, name: string): Promise<PanelEntry | null> {
   const entries = (await readPanel())?.entries ?? [];
+  const tied = entries.find((e) => e.id && e.id === id);
+  if (tied) return tied;
   const key = words(name), keyWords = key.split(" ");
   let best: PanelEntry | null = null, bestScore = 0;
   for (const e of entries) {
+    if (e.id) continue;
     const n = words(e.name);
     if (!n) continue;
     let score = 0;
@@ -300,12 +303,12 @@ async function entryFor(name: string): Promise<PanelEntry | null> {
   return best;
 }
 
-async function soldOut(name: string) {
-  return (await entryFor(name))?.soldOut ?? false;
+async function soldOut(product: { id: number; name: string }) {
+  return (await entryFor(product.id, product.name))?.soldOut ?? false;
 }
 
-async function shownName(name: string) {
-  return (await entryFor(name))?.title || name;
+async function shownName(product: { id: number; name: string }) {
+  return (await entryFor(product.id, product.name))?.title || product.name;
 }
 
 // ---------- PayPal ----------
@@ -405,8 +408,11 @@ Deno.serve(async (req) => {
       });
     }
 
+    // ?fresh=1 reads the store now rather than the kept copy (the panel's
+    // Sync with Printful button uses it).
     if (route === "products" && req.method === "GET") {
-      const list = (await products()).map((p) => ({
+      const fresh = new URL(req.url).searchParams.get("fresh") === "1";
+      const list = (await products(fresh)).map((p) => ({
         id: p.id, name: p.name, image: hideImage(p.image), thumb: p.thumb,
         variants: p.variants.map(({ catalog: _c, image, ...v }) => ({ ...v, image: hideImage(image) })),
       }));
@@ -442,8 +448,8 @@ Deno.serve(async (req) => {
     if (route === "create") {
       const country = String(body.country || "").toUpperCase();
       const q = await quote(Number(body.variant), Number(body.quantity), country, undefined, true);
-      if (await soldOut(q.product.name)) throw new Error("Sorry, this item is sold out.");
-      const shown = await shownName(q.product.name);
+      if (await soldOut(q.product)) throw new Error("Sorry, this item is sold out.");
+      const shown = await shownName(q.product);
       const { ok, data } = await paypal("/v2/checkout/orders", {
         method: "POST",
         body: JSON.stringify({
