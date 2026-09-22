@@ -6,6 +6,7 @@ products:
       - /assets/under-armour-dad-hat-black-back-6ab26951f2f9c.png
       - /assets/under-armour-dad-hat-black-left-front-6ab26951f330b.png
       - /assets/under-armour-dad-hat-black-product-details-6ab26951f39c3.png
+      - /assets/Gemini_Generated_Image_j7vrtjj7vrtjj7vr.jpeg
     sold_out: false
   - name: Under Armour® MINT SUIT Hat WHITE
     printful_id: 474388594
@@ -13,6 +14,7 @@ products:
       - /assets/under-armour-dad-hat-white-front-6ab24ea9147d0.png
       - /assets/under-armour-dad-hat-white-back-6ab24ea91498c.png
       - /assets/under-armour-dad-hat-white-product-details-6ab24ea91543d.png
+      - /assets/Gemini_Generated_Image_hmheerhmheerhmhe.jpeg
     description: HAT
     sold_out: false
 show: true
