@@ -1,6 +1,11 @@
 products:
   - name: Under Armour® MINT SUIT Hat BLACK
     printful_id: 474416112
+    mockups:
+      - /assets/under-armour-dad-hat-black-front-6ab26951f29b4.png
+      - /assets/under-armour-dad-hat-black-back-6ab26951f2f9c.png
+      - /assets/under-armour-dad-hat-black-left-front-6ab26951f330b.png
+      - /assets/under-armour-dad-hat-black-product-details-6ab26951f39c3.png
     sold_out: false
   - name: Under Armour® MINT SUIT Hat WHITE
     printful_id: 474388594
