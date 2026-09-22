@@ -596,6 +596,34 @@ layout: null
     }).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || 'Error'); return d; }); });
   }
 
+  /* A message box in the style of the period's windows, for the end of a
+     purchase, so the thank-you (or what went wrong) can't be missed. */
+  function popup(kind, title, text) {
+    var d = document.createElement('dialog');
+    d.className = 'store-dialog store-dialog-' + kind;
+    var bar = el('div', 'store-dialog-bar');
+    bar.appendChild(el('span', null, title));
+    var x = el('button', 'store-dialog-x', '×');
+    x.type = 'button'; x.setAttribute('aria-label', 'Close');
+    bar.appendChild(x);
+    d.appendChild(bar);
+    var body = el('div', 'store-dialog-body');
+    body.appendChild(el('span', 'store-dialog-icon', kind === 'ok' ? '✓' : '!'));
+    body.appendChild(el('p', null, text));
+    d.appendChild(body);
+    var ok = el('button', 'store-dialog-ok', 'OK');
+    ok.type = 'button';
+    var foot = el('div', 'store-dialog-foot');
+    foot.appendChild(ok);
+    d.appendChild(foot);
+    function close() { d.close(); d.remove(); }
+    x.addEventListener('click', close);
+    ok.addEventListener('click', close);
+    d.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
+    document.body.appendChild(d);
+    if (d.showModal) { d.showModal(); ok.focus(); } else { alert(text); d.remove(); }
+  }
+
   var paypalReady = null;
   function loadPayPal(currency) {
     if (!clientId) return Promise.reject(new Error('no client id'));
@@ -709,6 +737,7 @@ layout: null
             buttons.innerHTML = '';
             msg.className = 'store-msg store-done';
             msg.textContent = 'Thank you! Your order is in. PayPal has emailed you the receipt; it ships in a few days.';
+            popup('ok', 'Order placed', 'Thank you for your order! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.');
             msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
           });
         },
@@ -721,6 +750,7 @@ layout: null
           msg.textContent = 'Something went wrong' + (e && e.message ? ': ' + e.message : '.') +
             ' If PayPal charged you, write to {{ bottom.email | escape }} and we will sort it out.';
           msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          popup('bad', 'Payment problem', msg.textContent);
         }
       }).render(buttons);
     }).catch(function () {
