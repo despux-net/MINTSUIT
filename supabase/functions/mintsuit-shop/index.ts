@@ -254,22 +254,32 @@ async function quote(variantId: number, quantity: number, country: string, state
 
 // What the site's panel says about each product (shop.json on the site):
 // a product switched to Sold out there can't be bought here either.
-let panel: { at: number; soldOut: Set<string> } | null = null;
+// The panel's title for a product is also the name on the PayPal receipt.
+let panel: { at: number; soldOut: Set<string>; titles: Map<string, string> } | null = null;
 
-async function soldOut(name: string) {
+async function readPanel() {
   if (!panel || Date.now() - panel.at > 60 * 1000) {
     try {
       const res = await fetch(`https://mintsuit.com/shop.json?t=${Date.now()}`);
       const data = await res.json();
+      const list = data.products ?? [];
       panel = {
         at: Date.now(),
-        soldOut: new Set((data.products ?? []).filter((p: any) => p.sold_out).map((p: any) => String(p.name).trim().toLowerCase())),
+        soldOut: new Set(list.filter((p: any) => p.sold_out).map((p: any) => String(p.name).trim().toLowerCase())),
+        titles: new Map(list.filter((p: any) => String(p.title ?? "").trim())
+          .map((p: any) => [String(p.name).trim().toLowerCase(), String(p.title).trim()])),
       };
-    } catch {
-      if (!panel) return false;
-    }
+    } catch { /* keep what was known */ }
   }
-  return panel!.soldOut.has(name.trim().toLowerCase());
+  return panel;
+}
+
+async function soldOut(name: string) {
+  return (await readPanel())?.soldOut.has(name.trim().toLowerCase()) ?? false;
+}
+
+async function shownName(name: string) {
+  return (await readPanel())?.titles.get(name.trim().toLowerCase()) ?? name;
 }
 
 // ---------- PayPal ----------
@@ -407,13 +417,14 @@ Deno.serve(async (req) => {
       const country = String(body.country || "").toUpperCase();
       const q = await quote(Number(body.variant), Number(body.quantity), country, undefined, true);
       if (await soldOut(q.product.name)) throw new Error("Sorry, this item is sold out.");
+      const shown = await shownName(q.product.name);
       const { ok, data } = await paypal("/v2/checkout/orders", {
         method: "POST",
         body: JSON.stringify({
           intent: "CAPTURE",
           purchase_units: [{
             custom_id: `${q.variant.id}:${q.quantity}:${country}`,
-            description: `MINT SUIT — ${q.variant.name}`.slice(0, 127),
+            description: `MINT SUIT — ${shown}`.slice(0, 127),
             amount: {
               currency_code: q.currency,
               value: q.total,
@@ -423,7 +434,7 @@ Deno.serve(async (req) => {
               },
             },
             items: [{
-              name: q.variant.name.slice(0, 127),
+              name: shown.slice(0, 127),
               quantity: String(q.quantity),
               unit_amount: { currency_code: q.currency, value: parseFloat(q.variant.price).toFixed(2) },
               category: "PHYSICAL_GOODS",

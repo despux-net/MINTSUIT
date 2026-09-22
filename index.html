@@ -575,6 +575,11 @@ layout: null
     }
     return {};
   }
+  /* The name shoppers see: the panel's title when there is one. */
+  function title(p) {
+    var t = String(extraFor(p.name).title || '').trim();
+    return t || p.name;
+  }
 
   var COUNTRIES = [
     ['ES','Spain'],['US','United States'],['MX','Mexico'],['AR','Argentina'],['CL','Chile'],
@@ -770,13 +775,13 @@ layout: null
     var thumbs = {};
     p.variants.forEach(function (v) { if (v.image && v.thumb) thumbs[v.image] = v.thumb; });
     if (p.image && p.thumb) thumbs[p.image] = p.thumb;
-    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), p.name);
+    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), title(p));
     body.appendChild(g.box);
 
     var info = el('div', 'product-info');
     var name = el('h3', 'product-name');
     name.appendChild(el('span', 'store-new', 'New'));
-    name.appendChild(document.createTextNode(' ' + p.name));
+    name.appendChild(document.createTextNode(' ' + title(p)));
     info.appendChild(name);
     var price = el('p', 'store-price');
     info.appendChild(price);
@@ -875,7 +880,7 @@ layout: null
           msg.textContent = 'Confirming your payment\u2026';
           return post('capture', { orderID: data.orderID }).then(function () {
             w.close();
-            popup('ok', 'Order confirmed', 'Thank you! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', thumbs[photos[0]] || light(photos[0]));
+            popup('ok', 'Order confirmed', 'Thank you! Your ' + title(p) + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', thumbs[photos[0]] || light(photos[0]));
           });
         },
         onCancel: function () {
@@ -907,11 +912,11 @@ layout: null
     var shot = el('span', 'shop-card-shot');
     var img = el('img');
     img.src = (extra.mockups && extra.mockups[0] && light(extra.mockups[0])) || p.thumb || p.image || '';
-    img.alt = p.name; img.loading = 'lazy'; img.width = 400; img.height = 400;
+    img.alt = title(p); img.loading = 'lazy'; img.width = 400; img.height = 400;
     shot.appendChild(img);
     shot.appendChild(el('span', 'store-new shop-card-new', 'New'));
     b.appendChild(shot);
-    b.appendChild(el('span', 'shop-card-name', p.name));
+    b.appendChild(el('span', 'shop-card-name', title(p)));
     var v = p.variants[0];
     b.appendChild(el('span', 'shop-card-meta', money(v.price, v.currency)));
     b.appendChild(el('span', 'shop-card-flag' + (extra.sold_out ? ' is-out' : ' is-buy'), extra.sold_out ? 'Sold out' : 'Buy now \u00bb'));

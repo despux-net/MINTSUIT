@@ -270,7 +270,9 @@ content:
           - name: gallery
             label: More photos
             type: image
-            list: true
+            options:
+              multiple:
+                max: 12
             description: >-
               Extra photos shown in the product's window, after the main one,
               at the size they are uploaded.
@@ -281,6 +283,82 @@ content:
       - name: note
         label: Note under the items
         type: text
+
+  - name: shop
+    label: Merch shop (new products)
+    path: _data/shop.yml
+    type: file
+    fields:
+      - name: products
+        label: Products
+        type: object
+        list: true
+        description: >-
+          One entry per product on sale: its title, photos, description,
+          details and a Sold out switch. Prices and sizes are set in
+          Printful. Products left out here still show, with their own
+          photo and name.
+        fields:
+          - name: name
+            label: Printful product name
+            type: string
+            required: true
+            description: >-
+              Exactly as the product is called in Printful: it is how the
+              site knows which product these settings are for. Shoppers
+              never see it unless "Title on the site" is left empty.
+          - name: title
+            label: Title on the site
+            type: string
+            description: >-
+              The name shoppers see on the card, in the product's window and
+              on the PayPal receipt. Empty: the Printful name is used.
+          - name: mockups
+            label: Mockups
+            type: image
+            options:
+              multiple:
+                max: 12
+            description: >-
+              Shown first in the product's window, at the size they are
+              uploaded; the first one is also the picture on its card.
+          - name: description
+            label: Description
+            type: text
+          - name: specs
+            label: Details
+            type: string
+            list: true
+            description: One line each, listed under the description.
+          - name: sold_out
+            label: Sold out
+            type: boolean
+            description: >-
+              On: the product shows a Sold out stamp and can't be bought
+              (the PayPal buttons are hidden). Off: it is on sale.
+      - name: show
+        label: Show the shop
+        type: boolean
+        description: >-
+          The new products, read live from the Printful store and paid with
+          PayPal, under the CDs in the Merch tab. Products, photos and prices
+          are changed in Printful, not here.
+      - name: title
+        label: Title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: functions_url
+        label: Supabase function address
+        type: string
+        description: Leave as it is.
+      - name: paypal_client_id
+        label: PayPal client ID
+        type: string
+        description: >-
+          The public Client ID of the PayPal app (never the secret). The
+          PayPal buttons only show once it is filled in.
 
   - name: videos
     label: Videos tab
@@ -314,69 +392,7 @@ content:
             type: string
             required: true
 
-  - name: shop
-    label: Shop (Printful)
-    path: _data/shop.yml
-    type: file
-    fields:
-      - name: show
-        label: Show the shop
-        type: boolean
-        description: >-
-          The new products, read live from the Printful store and paid with
-          PayPal, under the CDs in the Merch tab. Products, photos and prices
-          are changed in Printful, not here.
-      - name: title
-        label: Title
-        type: string
-      - name: intro
-        label: Introduction
-        type: text
-      - name: functions_url
-        label: Supabase function address
-        type: string
-        description: Leave as it is.
-      - name: paypal_client_id
-        label: PayPal client ID
-        type: string
-        description: >-
-          The public Client ID of the PayPal app (never the secret). The
-          PayPal buttons only show once it is filled in.
-      - name: products
-        label: Products
-        type: object
-        list: true
-        description: >-
-          Extra photos, words and a Sold out switch for each Printful product.
-          The name must be written exactly as in Printful. Products left out
-          here still show, with Printful's own photo.
-        fields:
-          - name: name
-            label: Printful product name
-            type: string
-            required: true
-          - name: mockups
-            label: Mockups
-            type: image
-            list: true
-            description: >-
-              Shown first in the product's window, at the size they are
-              uploaded; the first one is also the picture on its card.
-          - name: description
-            label: Description
-            type: text
-          - name: specs
-            label: Details
-            type: string
-            list: true
-            description: One line each, listed under the description.
-          - name: sold_out
-            label: Sold out
-            type: boolean
-            description: >-
-              On: the product shows a Sold out stamp and can't be bought
-              (the PayPal buttons are hidden). Off: it is on sale.
-
+  - name: bottom
     label: Logo, links and footer
     path: _data/bottom.yml
     type: file
