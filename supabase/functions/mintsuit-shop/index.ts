@@ -227,10 +227,45 @@ async function findVariant(id: number, fresh = false) {
 // comes from PayPal at payment time.
 const DEFAULT_STATE: Record<string, string> = { US: "NY", CA: "ON", AU: "NSW" };
 
+// Shipping rates can be given for a country the product can't actually be
+// made for (some branded items are only printed in Europe), which would
+// let a shopper pay for an order that then fails. So the product is first
+// priced as a real order for that country; if the maker says the variant
+// is unavailable there, the country is refused. Answers are kept an hour.
+const makeable = new Map<string, { at: number; ok: boolean }>();
+
+async function canMake(syncVariantId: number, country: string, state?: string) {
+  const key = `${syncVariantId}:${country}`;
+  const known = makeable.get(key);
+  if (known && Date.now() - known.at < 60 * 60 * 1000) return known.ok;
+  const res = await fetch(`${PRINTFUL}/orders/estimate-costs`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${Deno.env.get("PRINTFUL_TOKEN")}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      recipient: {
+        name: "Check", address1: "1 Main Street", city: "City", zip: "10001",
+        country_code: country, state_code: state || DEFAULT_STATE[country],
+      },
+      items: [{ sync_variant_id: syncVariantId, quantity: 1 }],
+    }),
+  });
+  let ok = true;
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    const message = String(data?.error?.message ?? data?.result ?? "");
+    // Only this answer means "can't be made for there"; an address the
+    // check got wrong (a missing prefecture, say) is not held against it.
+    if (/unavailable variant|not available|discontinued|out of stock/i.test(message)) ok = false;
+  }
+  makeable.set(key, { at: Date.now(), ok });
+  return ok;
+}
+
 async function quote(variantId: number, quantity: number, country: string, state?: string, fresh = false) {
   const { product, variant } = await findVariant(variantId, fresh);
   const q = Math.max(1, Math.min(10, Math.floor(quantity) || 1));
   const noShipping = "Sorry, this item can't be shipped to that country.";
+  if (!(await canMake(variant.id, country, state))) throw new Error(noShipping);
   const rates = await printful("/shipping/rates", {
     method: "POST",
     body: JSON.stringify({
