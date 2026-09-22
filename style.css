@@ -777,81 +777,126 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
 .store-done { color: #1b7a1b; font-weight: bold; }
 .store-bad { color: #cc0000; }
 
-/* The message box after a purchase: a small window with a blue title bar,
-   a round icon and an OK button, over a dimmed page. */
+/* The window after a purchase, in the site's own Y2K dress: the brushed
+   silver of the TV, a glossy blue strip with the name in pixel type, the
+   product in a ridged frame and a gel button, over a dimmed blue screen. */
 .store-dialog {
-  width: 340px;
+  width: 380px;
   max-width: calc(100vw - 32px);
   padding: 0;
+  overflow: hidden;
   font: 11px Verdana, Arial, sans-serif;
-  color: #000000;
-  background: #ece9d8;
-  border: 1px solid #0a246a;
-  border-radius: 6px 6px 0 0;
-  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.45);
+  color: #1c2530;
+  background: linear-gradient(160deg, #f7f9fb 0%, #d5dae0 40%, #eef1f4 58%, #b6bdc5 100%);
+  border: 1px solid #7c848d;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 #ffffff, 0 0 0 4px rgba(255, 255, 255, 0.35), 0 14px 40px rgba(0, 20, 60, 0.55);
+  animation: store-pop 0.28s cubic-bezier(0.2, 1.4, 0.4, 1);
 }
-.store-dialog::backdrop { background: rgba(0, 0, 0, 0.35); }
+.store-dialog::backdrop {
+  background:
+    repeating-linear-gradient(rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.08) 2px 3px),
+    radial-gradient(circle at 50% 45%, rgba(20, 70, 150, 0.35), rgba(5, 15, 40, 0.7));
+}
 
-.store-dialog-bar {
+@keyframes store-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+
+.store-dialog-head {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 4px 4px 4px 8px;
-  font-weight: bold;
+  gap: 8px;
+  padding: 9px 12px 8px;
+  background: linear-gradient(#6fb6ff, #1f73d6 48%, #0d5ec4 52%, #2f86e8);
+  border-bottom: 1px solid #0a3f8a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.store-dialog-brand {
+  font: italic bold 14px Georgia, "Times New Roman", serif;
+  letter-spacing: 2px;
   color: #ffffff;
-  background: linear-gradient(#3d95ff, #0a5fd8 45%, #0053c9 55%, #0a4fb5);
-  border-radius: 5px 5px 0 0;
-  text-shadow: 1px 1px 0 #002a6b;
+  text-shadow: 0 1px 0 #073a80, 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.store-dialog-tag {
+  padding: 1px 6px 2px;
+  font: 9px Silkscreen, "Courier New", monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #0d3f86;
+  background: linear-gradient(#ffffff, #cfe6ff);
+  border-radius: 8px;
 }
 
 .store-dialog-x {
-  width: 21px;
-  height: 21px;
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
   padding: 0;
-  font: bold 15px/1 Verdana, Arial, sans-serif;
-  color: #ffffff;
-  background: linear-gradient(#e8866c, #c9431f);
-  border: 1px solid #ffffff;
-  border-radius: 3px;
+  font: bold 13px/1 Verdana, Arial, sans-serif;
+  color: #0d3f86;
+  background: radial-gradient(circle at 40% 30%, #ffffff, #bcd9f7 70%);
+  border: 1px solid #0a3f8a;
+  border-radius: 50%;
   cursor: pointer;
 }
+.store-dialog-x:hover { color: #cc0000; }
 
 .store-dialog-body {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px 16px 8px;
-}
-.store-dialog-body p { margin: 2px 0 0; line-height: 1.5; }
-
-.store-dialog-icon {
-  flex: none;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  font: bold 18px Verdana, Arial, sans-serif;
-  color: #ffffff;
-  border-radius: 50%;
-  box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.3);
+  gap: 14px;
+  padding: 18px 18px 10px;
 }
-.store-dialog-ok .store-dialog-icon,
-.store-dialog-icon { background: radial-gradient(circle at 35% 30%, #8fe68f, #2e9c2e 70%); }
-.store-dialog-bad .store-dialog-icon { background: radial-gradient(circle at 35% 30%, #ff9a8a, #c81d11 70%); }
 
-.store-dialog-foot { padding: 8px 16px 14px; text-align: center; }
+.store-dialog-pic {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  padding: 3px;
+  background: #ffffff;
+  border: 3px ridge #c9ced4;
+}
 
-.store-dialog-ok {
-  min-width: 75px;
-  padding: 3px 12px;
-  font: 11px Verdana, Arial, sans-serif;
-  background: linear-gradient(#ffffff, #e3e1d6);
-  border: 1px solid #003c74;
-  border-radius: 3px;
+.store-dialog-title {
+  margin: 0 0 6px;
+  font: 13px Silkscreen, "Courier New", monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1f5fbf;
+  text-shadow: 1px 1px 0 #ffffff;
+}
+.store-dialog-bad .store-dialog-title { color: #b3001b; }
+
+.store-dialog-text { margin: 0; line-height: 1.55; }
+
+.store-dialog-foot { padding: 6px 18px 18px; text-align: center; }
+
+/* The gel button: a pill of glossy aqua with a white shine on its top half. */
+.store-dialog-go {
+  position: relative;
+  min-width: 150px;
+  padding: 7px 20px;
+  font: bold 11px Verdana, Arial, sans-serif;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(0, 40, 90, 0.6);
+  background: linear-gradient(#7fd0ff, #1a8fe6 50%, #0b76d1 51%, #37a6f2);
+  border: 1px solid #0a5aa8;
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0, 40, 90, 0.35);
   cursor: pointer;
 }
-.store-dialog-ok:hover { box-shadow: inset 0 0 0 2px #f8b33c; }
+.store-dialog-go:hover { background: linear-gradient(#9fdcff, #2c9cf0 50%, #1284dc 51%, #4cb3f7); }
+.store-dialog-bad .store-dialog-go {
+  background: linear-gradient(#ff9ab0, #e0305a 50%, #c81d48 51%, #ec4f74);
+  border-color: #8e0f2e;
+}
 
 .shop-note {
   margin: 0;

@@ -596,29 +596,39 @@ layout: null
     }).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || 'Error'); return d; }); });
   }
 
-  /* A message box in the style of the period's windows, for the end of a
-     purchase, so the thank-you (or what went wrong) can't be missed. */
-  function popup(kind, title, text) {
+  /* The window that opens at the end of a purchase, dressed like the rest
+     of the site: brushed silver, a glossy blue strip, pixel type, the
+     product's picture and a gel button. It can't be missed. */
+  function popup(kind, title, text, image) {
     var d = document.createElement('dialog');
     d.className = 'store-dialog store-dialog-' + kind;
-    var bar = el('div', 'store-dialog-bar');
-    bar.appendChild(el('span', null, title));
+    var head = el('div', 'store-dialog-head');
+    head.appendChild(el('span', 'store-dialog-brand', 'MINT SUIT'));
+    head.appendChild(el('span', 'store-dialog-tag', kind === 'ok' ? 'shop' : 'notice'));
     var x = el('button', 'store-dialog-x', '×');
     x.type = 'button'; x.setAttribute('aria-label', 'Close');
-    bar.appendChild(x);
-    d.appendChild(bar);
+    head.appendChild(x);
+    d.appendChild(head);
     var body = el('div', 'store-dialog-body');
-    body.appendChild(el('span', 'store-dialog-icon', kind === 'ok' ? '✓' : '!'));
-    body.appendChild(el('p', null, text));
+    if (image) {
+      var pic = el('img', 'store-dialog-pic');
+      pic.src = image; pic.alt = '';
+      body.appendChild(pic);
+    }
+    var words = el('div', 'store-dialog-words');
+    words.appendChild(el('p', 'store-dialog-title', (kind === 'ok' ? '✦ ' : '') + title + (kind === 'ok' ? ' ✦' : '')));
+    words.appendChild(el('p', 'store-dialog-text', text));
+    body.appendChild(words);
     d.appendChild(body);
-    var ok = el('button', 'store-dialog-ok', 'OK');
-    ok.type = 'button';
     var foot = el('div', 'store-dialog-foot');
+    var ok = el('button', 'store-dialog-go', kind === 'ok' ? 'Keep browsing »' : 'OK');
+    ok.type = 'button';
     foot.appendChild(ok);
     d.appendChild(foot);
     function close() { d.close(); d.remove(); }
     x.addEventListener('click', close);
     ok.addEventListener('click', close);
+    d.addEventListener('click', function (e) { if (e.target === d) close(); });
     d.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
     document.body.appendChild(d);
     if (d.showModal) { d.showModal(); ok.focus(); } else { alert(text); d.remove(); }
@@ -737,7 +747,7 @@ layout: null
             buttons.innerHTML = '';
             msg.className = 'store-msg store-done';
             msg.textContent = 'Thank you! Your order is in. PayPal has emailed you the receipt; it ships in a few days.';
-            popup('ok', 'Order placed', 'Thank you for your order! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.');
+            popup('ok', 'Order confirmed', 'Thank you! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', variant().image || p.image);
             msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
           });
         },
