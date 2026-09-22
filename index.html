@@ -568,12 +568,30 @@ layout: null
   }
   var cds = data('merch-items');
   var extras = data('shop-products');
+  /* Which of the panel's product entries is this Printful product? The
+     same name wins; failing that, one name that starts the other; failing
+     that, the entry whose words are nearly all in the product's name. So a
+     product renamed a little in Printful ("Armor" to "Armour Original")
+     keeps its photos and words. */
+  function nameWords(s) {
+    return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
   function extraFor(name) {
-    var key = String(name || '').trim().toLowerCase();
-    for (var i = 0; i < extras.length; i++) {
-      if (String(extras[i].name || '').trim().toLowerCase() === key) return extras[i];
-    }
-    return {};
+    var key = nameWords(name), keyWords = key.split(' '), best = {}, bestScore = 0;
+    extras.forEach(function (e) {
+      var n = nameWords(e.name);
+      if (!n) return;
+      var score = 0;
+      if (n === key) score = 3;
+      else if (key.indexOf(n) === 0 || n.indexOf(key) === 0) score = 2;
+      else {
+        var mine = n.split(' ');
+        var shared = mine.filter(function (w) { return keyWords.indexOf(w) >= 0; }).length;
+        if (shared / mine.length >= 0.75) score = 1 + shared / 100;
+      }
+      if (score > bestScore) { bestScore = score; best = e; }
+    });
+    return best;
   }
   /* The name shoppers see: the panel's title when there is one. */
   function title(p) {

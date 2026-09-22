@@ -255,7 +255,8 @@ async function quote(variantId: number, quantity: number, country: string, state
 // What the site's panel says about each product (shop.json on the site):
 // a product switched to Sold out there can't be bought here either.
 // The panel's title for a product is also the name on the PayPal receipt.
-let panel: { at: number; soldOut: Set<string>; titles: Map<string, string> } | null = null;
+type PanelEntry = { name: string; title: string; soldOut: boolean };
+let panel: { at: number; entries: PanelEntry[] } | null = null;
 
 async function readPanel() {
   if (!panel || Date.now() - panel.at > 60 * 1000) {
@@ -265,21 +266,46 @@ async function readPanel() {
       const list = data.products ?? [];
       panel = {
         at: Date.now(),
-        soldOut: new Set(list.filter((p: any) => p.sold_out).map((p: any) => String(p.name).trim().toLowerCase())),
-        titles: new Map(list.filter((p: any) => String(p.title ?? "").trim())
-          .map((p: any) => [String(p.name).trim().toLowerCase(), String(p.title).trim()])),
+        entries: list.map((p: any) => ({
+          name: String(p.name ?? ""), title: String(p.title ?? "").trim(), soldOut: !!p.sold_out,
+        })),
       };
     } catch { /* keep what was known */ }
   }
   return panel;
 }
 
+// The same matching as the page: the same name, else one name starting the
+// other, else nearly all of the entry's words in the product's name.
+function words(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+async function entryFor(name: string): Promise<PanelEntry | null> {
+  const entries = (await readPanel())?.entries ?? [];
+  const key = words(name), keyWords = key.split(" ");
+  let best: PanelEntry | null = null, bestScore = 0;
+  for (const e of entries) {
+    const n = words(e.name);
+    if (!n) continue;
+    let score = 0;
+    if (n === key) score = 3;
+    else if (key.startsWith(n) || n.startsWith(key)) score = 2;
+    else {
+      const mine = n.split(" ");
+      const shared = mine.filter((w) => keyWords.includes(w)).length;
+      if (shared / mine.length >= 0.75) score = 1 + shared / 100;
+    }
+    if (score > bestScore) { bestScore = score; best = e; }
+  }
+  return best;
+}
+
 async function soldOut(name: string) {
-  return (await readPanel())?.soldOut.has(name.trim().toLowerCase()) ?? false;
+  return (await entryFor(name))?.soldOut ?? false;
 }
 
 async function shownName(name: string) {
-  return (await readPanel())?.titles.get(name.trim().toLowerCase()) ?? name;
+  return (await entryFor(name))?.title || name;
 }
 
 // ---------- PayPal ----------
