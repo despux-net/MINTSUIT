@@ -904,9 +904,17 @@ layout: null
     function requote() {
       var mine = ++seq, v = variant();
       totals.textContent = 'Working out the shipping\u2026';
+      /* No shipping to the country picked: the payment buttons step aside
+         until one that works is chosen. */
       post('quote', { variant: v.id, quantity: 1, country: countrySel.value }).then(function (q) {
-        if (mine === seq) setTotals(q);
-      }).catch(function (e) { if (mine === seq) totals.textContent = e.message; });
+        if (mine !== seq) return;
+        setTotals(q);
+        buttons.hidden = false;
+      }).catch(function (e) {
+        if (mine !== seq) return;
+        totals.textContent = e.message;
+        buttons.hidden = true;
+      });
     }
     showPrice(); requote();
     if (variantSel) variantSel.addEventListener('change', function () { showPrice(); requote(); });

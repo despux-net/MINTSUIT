@@ -908,6 +908,7 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
 
 .store-totals { margin: 0 0 10px; font-size: 11px; color: #333333; }
 .store-pay { max-width: 300px; }
+.store-pay[hidden] { display: none; }
 .store-msg { margin: 8px 0 0; font-size: 11px; }
 .store-bad { color: #cc0000; }
 
