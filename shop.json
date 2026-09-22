@@ -1,0 +1,14 @@
+---
+layout: null
+permalink: /shop.json
+---
+{%- comment -%}
+  What the panel says about each Printful product, read by the
+  mintsuit-shop function so a product switched to Sold out can't be bought
+  even from an old copy of the page.
+{%- endcomment -%}
+{"products": [
+{%- for p in site.data.shop.products %}
+  {"name": {{ p.name | jsonify }}, "sold_out": {% if p.sold_out %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}
+{%- endfor %}
+]}

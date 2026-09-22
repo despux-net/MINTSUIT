@@ -5,3 +5,14 @@ intro: >-
   country to see the shipping, then pay with PayPal or a card.
 functions_url: https://mqcxwusbuuwvwrlztopp.supabase.co/functions/v1/mintsuit-shop
 paypal_client_id: BAAF2IHFNwXrnXNCa_X6E95zQlv6ZXiSteJI22ZrWoQkZcee7KG_yZ6i99xq6af-pqena7MvdzjCKe2nEE
+products:
+  - name: MINT SUIT EMBROIDERY BLACK
+    mockups: []
+    description: ""
+    specs: []
+    sold_out: false
+  - name: MINT SUIT HAT PRINTED UNDER ARMOR
+    mockups: []
+    description: ""
+    specs: []
+    sold_out: false

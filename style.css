@@ -722,15 +722,12 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   border: 1px solid var(--edge);
 }
 
-/* The new merch from Printful, under the CDs, with a NEW sticker. */
-.store {
-  margin: 4px 0 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
+/* The whole range as small cards, four to a row, so nothing needs a
+   scroll to be found; each opens its product in a window. */
+.shop-lead { margin: 0 0 12px; }
 
 .store-title {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   font-size: 15px;
   font-weight: bold;
   color: #003399;
@@ -749,32 +746,116 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   border: 1px solid #9e0036;
 }
 
-.store-intro { margin: 0 0 14px; font-size: 11px; color: #333333; }
+.store-intro { margin: 0; font-size: 11px; color: #333333; }
 
-.store-list {
+.shop-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 28px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 0 0 18px;
 }
 
-.store-wait { grid-column: 1 / -1; margin: 0; font-size: 11px; color: var(--dim); }
+.shop-wait { grid-column: 1 / -1; margin: 0; font-size: 11px; color: var(--dim); }
 
-.store-item { padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 6px 6px 8px;
+  font: 11px Verdana, Arial, sans-serif;
+  text-align: left;
+  color: #222222;
+  background: linear-gradient(#ffffff, #f1f3f5);
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+.shop-card:hover { border-color: var(--nav2); box-shadow: 0 2px 8px rgba(10, 85, 171, 0.25); }
+.shop-card:hover .shop-card-name { text-decoration: underline; }
 
-.store-price { margin: 2px 0 10px; font: bold 13px Verdana, Arial, sans-serif; color: #cc0000; }
+.shop-card-shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  margin-bottom: 4px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+}
+.shop-card-shot img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.shop-card-new { position: absolute; top: 4px; left: 4px; margin: 0; }
 
-.store-form { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 0 0 8px; }
+.shop-card-name {
+  overflow: hidden;
+  font-weight: bold;
+  line-height: 1.3;
+  color: #003399;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.shop-card-meta { font-size: 10px; color: var(--dim); }
+.is-new .shop-card-meta { font-weight: bold; font-size: 12px; color: #cc0000; }
 
+.shop-card-flag {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 2px 7px;
+  font: bold 9px Verdana, Arial, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.shop-card-flag.is-out { color: #a10000; background: #f4f4f4; border: 1px solid var(--edge); }
+.shop-card-flag.is-buy {
+  color: #ffffff;
+  background: linear-gradient(#7fd0ff, #1a8fe6 50%, #0b76d1 51%, #37a6f2);
+  border: 1px solid #0a5aa8;
+  border-radius: 10px;
+}
+
+/* The product window: photos on the left at full quality, the words and
+   the buying on the right. */
+.store-dialog.product-dialog { width: 780px; max-height: 92vh; overflow: auto; }
+
+.product-body {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  padding: 18px;
+}
+
+.product-big {
+  display: block;
+  background: #ffffff;
+  border: 3px ridge #c9ced4;
+  cursor: zoom-in;
+}
+.product-big img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+
+.product-thumbs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.product-thumb {
+  width: 54px;
+  height: 54px;
+  padding: 1px;
+  background: #ffffff;
+  border: 1px solid #9aa1a9;
+  cursor: pointer;
+}
+.product-thumb img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.product-thumb.is-on { border: 2px solid #1f73d6; }
+
+.product-name { margin: 0 0 4px; font-size: 16px; line-height: 1.3; color: #003399; }
+.product-copy { margin: 0 0 10px; line-height: 1.55; }
+
+.store-price { margin: 2px 0 12px; font: bold 16px Verdana, Arial, sans-serif; color: #cc0000; }
+
+.store-form { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 4px 0 8px; }
 .store-field { display: flex; flex-direction: column; gap: 2px; font-size: 10px; color: var(--dim); }
 .store-field span { letter-spacing: 0.08em; text-transform: uppercase; }
-.store-field select { font: 11px Verdana, Arial, sans-serif; padding: 2px; }
+.store-field select { max-width: 220px; font: 11px Verdana, Arial, sans-serif; padding: 2px; }
 
 .store-totals { margin: 0 0 10px; font-size: 11px; color: #333333; }
-
 .store-pay { max-width: 300px; }
-
 .store-msg { margin: 8px 0 0; font-size: 11px; }
-.store-done { color: #1b7a1b; font-weight: bold; }
 .store-bad { color: #cc0000; }
 
 /* The window after a purchase, in the site's own Y2K dress: the brushed

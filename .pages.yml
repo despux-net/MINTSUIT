@@ -267,6 +267,13 @@ content:
             type: string
             list: true
             description: One line each, listed under the description.
+          - name: gallery
+            label: More photos
+            type: image
+            list: true
+            description: >-
+              Extra photos shown in the product's window, after the main one,
+              at the size they are uploaded.
           - name: status
             label: Status
             type: string
@@ -335,6 +342,40 @@ content:
         description: >-
           The public Client ID of the PayPal app (never the secret). The
           PayPal buttons only show once it is filled in.
+      - name: products
+        label: Products
+        type: object
+        list: true
+        description: >-
+          Extra photos, words and a Sold out switch for each Printful product.
+          The name must be written exactly as in Printful. Products left out
+          here still show, with Printful's own photo.
+        fields:
+          - name: name
+            label: Printful product name
+            type: string
+            required: true
+          - name: mockups
+            label: Mockups
+            type: image
+            list: true
+            description: >-
+              Shown first in the product's window, at the size they are
+              uploaded; the first one is also the picture on its card.
+          - name: description
+            label: Description
+            type: text
+          - name: specs
+            label: Details
+            type: string
+            list: true
+            description: One line each, listed under the description.
+          - name: sold_out
+            label: Sold out
+            type: boolean
+            description: >-
+              On: the product shows a Sold out stamp and can't be bought
+              (the PayPal buttons are hidden). Off: it is on sale.
 
     label: Logo, links and footer
     path: _data/bottom.yml

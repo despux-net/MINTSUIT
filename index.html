@@ -308,45 +308,40 @@ layout: null
     <p class="window-intro">{{ merch.intro | escape }}</p>
     {%- endif %}
 
-    <div class="shop">
-      {%- for item in merch.items %}
-      <section class="shop-item">
-        <div class="shop-shot">
-          <img src="{{ item.image | relative_url | escape }}" width="800" height="800"
-               alt="{{ item.image_alt | escape }}" loading="lazy">
-        </div>
-        <h3 class="shop-name">{{ item.title | escape }}</h3>
-        <p class="shop-format">{{ item.format | escape }}{% if item.year and item.year != "" %} &middot; {{ item.year | escape }}{% endif %}</p>
-        {%- if item.description and item.description != "" %}
-        <p class="shop-copy">{{ item.description | escape }}</p>
-        {%- endif %}
-        {%- if item.specs and item.specs.size > 0 %}
-        <ul class="shop-specs">
-          {%- for spec in item.specs %}
-          <li>{{ spec | escape }}</li>
-          {%- endfor %}
-        </ul>
-        {%- endif %}
-        <p class="shop-status">{{ item.status | default: "Sold out" | escape }}</p>
-      </section>
-      {%- endfor %}
-    </div>
-
 {%- comment -%}
-  The new merch ("Shop (Printful)" in the panel). Only the frame is here:
-  the products, their photos and prices are read from the Printful store
-  through the mintsuit-shop function on Supabase when the tab is opened,
-  and paid with PayPal. The CDs above are untouched.
+  Every product as a small card, so the whole range is seen at once: first
+  the new merch from Printful (its cards are added by the script below,
+  with the photos, words and Sold out switch set per product in "Shop
+  (Printful)"), then the CDs. A click opens the product in its own window
+  with the photos at full size, the details and, for the new merch, PayPal.
 {%- endcomment -%}
-{%- if store.show and store.functions_url and store.functions_url != "" %}
-    <section class="store" data-api="{{ store.functions_url | escape }}" data-paypal="{{ store.paypal_client_id | strip | escape }}">
+{%- assign store_on = false -%}
+{%- if store.show and store.functions_url and store.functions_url != "" %}{% assign store_on = true %}{% endif %}
+{%- if store_on %}
+    <div class="shop-lead">
       <h3 class="store-title"><span class="store-new">New</span> {{ store.title | escape }}</h3>
       {%- if store.intro and store.intro != "" %}
       <p class="store-intro">{{ store.intro | escape }}</p>
       {%- endif %}
-      <div class="store-list"><p class="store-wait">Loading the shop&hellip;</p></div>
-    </section>
+    </div>
 {%- endif %}
+    <div class="shop-grid"{% if store_on %} data-api="{{ store.functions_url | escape }}" data-paypal="{{ store.paypal_client_id | strip | escape }}"{% endif %}>
+      {%- if store_on %}
+      <p class="shop-wait">Loading the shop&hellip;</p>
+      {%- endif %}
+      {%- for item in merch.items %}
+      <button type="button" class="shop-card" data-item="{{ forloop.index0 }}">
+        <span class="shop-card-shot"><img src="{{ item.image | relative_url | escape }}" width="400" height="400" alt="{{ item.image_alt | escape }}" loading="lazy"></span>
+        <span class="shop-card-name">{{ item.title | escape }}</span>
+        <span class="shop-card-meta">{{ item.format | escape }}{% if item.year and item.year != "" %} &middot; {{ item.year | escape }}{% endif %}</span>
+        <span class="shop-card-flag is-out">{{ item.status | default: "Sold out" | escape }}</span>
+      </button>
+      {%- endfor %}
+    </div>
+    <script type="application/json" id="merch-items">{{ merch.items | jsonify }}</script>
+    {%- if store_on %}
+    <script type="application/json" id="shop-products">{{ store.products | jsonify }}</script>
+    {%- endif %}
 
     {%- if merch.note and merch.note != "" %}
     <p class="shop-note">{{ merch.note | escape }}</p>
@@ -552,27 +547,39 @@ layout: null
 </main>
 
 {%- comment -%}
-  The shop. When the Merch tab opens, the products come from the Printful
-  store (through Supabase), each with a size or colour choice when there is
-  one, a country for the shipping, and PayPal's buttons. PayPal's script is
-  only fetched then, and only if a client ID is set in the panel.
+  The shop. Every card in the Merch tab opens its product in a window: the
+  photos at full size with a strip of thumbnails, the words, and for the
+  new merch a size or colour when there is one, a country for the shipping
+  and PayPal's buttons (or a Sold out stamp when that switch is on in the
+  panel). The new merch itself comes from the Printful store through the
+  mintsuit-shop function on Supabase when the tab is first opened.
 {%- endcomment %}
 <script>
 (function () {
-  var box = document.querySelector('.store');
-  if (!box) return;
-  var api = box.getAttribute('data-api').replace(/\/$/, '');
-  var clientId = box.getAttribute('data-paypal');
-  var list = box.querySelector('.store-list');
-  var started = false;
+  var grid = document.querySelector('.shop-grid');
+  if (!grid) return;
+  var api = (grid.getAttribute('data-api') || '').replace(/\/$/, '');
+  var clientId = grid.getAttribute('data-paypal') || '';
+  var CONTACT = {{ bottom.email | jsonify }};
+
+  function data(id) {
+    var node = document.getElementById(id);
+    try { return JSON.parse(node ? node.textContent : 'null') || []; } catch (e) { return []; }
+  }
+  var cds = data('merch-items');
+  var extras = data('shop-products');
+  function extraFor(name) {
+    var key = String(name || '').trim().toLowerCase();
+    for (var i = 0; i < extras.length; i++) {
+      if (String(extras[i].name || '').trim().toLowerCase() === key) return extras[i];
+    }
+    return {};
+  }
 
   var COUNTRIES = [
     ['ES','Spain'],['US','United States'],['MX','Mexico'],['AR','Argentina'],['CL','Chile'],
-    ['CO','Colombia'],['PE','Peru'],['UY','Uruguay'],['EC','Ecuador'],['GB','United Kingdom'],
-    ['FR','France'],['DE','Germany'],['IT','Italy'],['PT','Portugal'],['NL','Netherlands'],
-    ['BE','Belgium'],['IE','Ireland'],['AT','Austria'],['CH','Switzerland'],['SE','Sweden'],
-    ['NO','Norway'],['DK','Denmark'],['FI','Finland'],['PL','Poland'],['CA','Canada'],
-    ['AU','Australia'],['NZ','New Zealand'],['JP','Japan'],['KR','South Korea'],['BR','Brazil']
+    ['CO','Colombia'],['PE','Peru'],['GB','United Kingdom'],['FR','France'],['DE','Germany'],
+    ['IT','Italy'],['PT','Portugal'],['NL','Netherlands'],['CA','Canada'],['AU','Australia'],['JP','Japan']
   ];
   var guess = ((navigator.language || '').split('-')[1] || '').toUpperCase();
   function pickGuess() {
@@ -596,19 +603,32 @@ layout: null
     }).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || 'Error'); return d; }); });
   }
 
-  /* The window that opens at the end of a purchase, dressed like the rest
-     of the site: brushed silver, a glossy blue strip, pixel type, the
-     product's picture and a gel button. It can't be missed. */
-  function popup(kind, title, text, image) {
+  /* A window in the site's Y2K dress: brushed silver, a glossy blue strip
+     with the name, a round close button. Used for the products and for
+     the message at the end of a purchase. */
+  function frame(cls, tag) {
     var d = document.createElement('dialog');
-    d.className = 'store-dialog store-dialog-' + kind;
+    d.className = 'store-dialog ' + cls;
     var head = el('div', 'store-dialog-head');
     head.appendChild(el('span', 'store-dialog-brand', 'MINT SUIT'));
-    head.appendChild(el('span', 'store-dialog-tag', kind === 'ok' ? 'shop' : 'notice'));
-    var x = el('button', 'store-dialog-x', '×');
+    head.appendChild(el('span', 'store-dialog-tag', tag));
+    var x = el('button', 'store-dialog-x', '\u00d7');
     x.type = 'button'; x.setAttribute('aria-label', 'Close');
     head.appendChild(x);
     d.appendChild(head);
+    function close() { if (d.open) d.close(); d.remove(); }
+    x.addEventListener('click', close);
+    d.addEventListener('click', function (e) { if (e.target === d) close(); });
+    d.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
+    return { d: d, close: close };
+  }
+  function show(d) {
+    document.body.appendChild(d);
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+
+  function popup(kind, title, text, image) {
+    var w = frame('store-dialog-' + kind, kind === 'ok' ? 'shop' : 'notice');
     var body = el('div', 'store-dialog-body');
     if (image) {
       var pic = el('img', 'store-dialog-pic');
@@ -616,22 +636,18 @@ layout: null
       body.appendChild(pic);
     }
     var words = el('div', 'store-dialog-words');
-    words.appendChild(el('p', 'store-dialog-title', (kind === 'ok' ? '✦ ' : '') + title + (kind === 'ok' ? ' ✦' : '')));
+    words.appendChild(el('p', 'store-dialog-title', (kind === 'ok' ? '\u2726 ' : '') + title + (kind === 'ok' ? ' \u2726' : '')));
     words.appendChild(el('p', 'store-dialog-text', text));
     body.appendChild(words);
-    d.appendChild(body);
+    w.d.appendChild(body);
     var foot = el('div', 'store-dialog-foot');
-    var ok = el('button', 'store-dialog-go', kind === 'ok' ? 'Keep browsing »' : 'OK');
+    var ok = el('button', 'store-dialog-go', kind === 'ok' ? 'Keep browsing \u00bb' : 'OK');
     ok.type = 'button';
+    ok.addEventListener('click', w.close);
     foot.appendChild(ok);
-    d.appendChild(foot);
-    function close() { d.close(); d.remove(); }
-    x.addEventListener('click', close);
-    ok.addEventListener('click', close);
-    d.addEventListener('click', function (e) { if (e.target === d) close(); });
-    d.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
-    document.body.appendChild(d);
-    if (d.showModal) { d.showModal(); ok.focus(); } else { alert(text); d.remove(); }
+    w.d.appendChild(foot);
+    show(w.d);
+    ok.focus();
   }
 
   var paypalReady = null;
@@ -652,19 +668,101 @@ layout: null
     return paypalReady;
   }
 
-  function card(p) {
-    var item = el('div', 'store-item');
-    var shot = el('div', 'shop-shot');
-    var img = el('img');
-    img.src = p.image || ''; img.alt = p.name; img.loading = 'lazy'; img.width = 800; img.height = 800;
-    shot.appendChild(img);
-    item.appendChild(shot);
-    item.appendChild(el('h4', 'shop-name', p.name));
+  /* The photos: one large, at the size it was uploaded (a click opens the
+     original on its own), and a strip of thumbnails to switch between. */
+  function gallery(images, alt) {
+    var box = el('div', 'product-gallery');
+    var big = el('a', 'product-big');
+    big.target = '_blank'; big.rel = 'noopener'; big.title = 'Open the full-size photo';
+    var main = el('img');
+    main.alt = alt || '';
+    big.appendChild(main);
+    box.appendChild(big);
+    var strip = el('div', 'product-thumbs');
+    function pick(i) {
+      main.src = images[i]; big.href = images[i];
+      [].forEach.call(strip.children, function (t, j) { t.classList.toggle('is-on', j === i); });
+    }
+    if (images.length > 1) {
+      images.forEach(function (src, i) {
+        var t = el('button', 'product-thumb');
+        t.type = 'button'; t.setAttribute('aria-label', 'Photo ' + (i + 1));
+        var ti = el('img'); ti.src = src; ti.alt = ''; ti.loading = 'lazy';
+        t.appendChild(ti);
+        t.addEventListener('click', function () { pick(i); });
+        strip.appendChild(t);
+      });
+      box.appendChild(strip);
+    }
+    pick(0);
+    return { box: box, show: function (src) { var i = images.indexOf(src); if (i >= 0) pick(i); } };
+  }
+
+  function words(info, item) {
+    if (item.description) info.appendChild(el('p', 'product-copy', item.description));
+    if (item.specs && item.specs.length) {
+      var ul = el('ul', 'shop-specs');
+      item.specs.forEach(function (s) { ul.appendChild(el('li', null, s)); });
+      info.appendChild(ul);
+    }
+  }
+
+  function uniq(list) {
+    var out = [];
+    list.forEach(function (x) { if (x && out.indexOf(x) < 0) out.push(x); });
+    return out;
+  }
+
+  function openCD(item) {
+    var w = frame('product-dialog', 'merch');
+    var body = el('div', 'product-body');
+    var g = gallery(uniq([item.image].concat(item.gallery || [])), item.image_alt);
+    body.appendChild(g.box);
+    var info = el('div', 'product-info');
+    info.appendChild(el('h3', 'product-name', item.title));
+    info.appendChild(el('p', 'shop-format', [item.format, item.year].filter(Boolean).join(' \u00b7 ')));
+    words(info, item);
+    info.appendChild(el('p', 'shop-status', item.status || 'Sold out'));
+    body.appendChild(info);
+    w.d.appendChild(body);
+    show(w.d);
+  }
+
+  function openProduct(p) {
+    var extra = extraFor(p.name);
+    var w = frame('product-dialog', 'shop');
+    var body = el('div', 'product-body');
+    var photos = uniq((extra.mockups || []).concat(p.variants.map(function (v) { return v.image; }), [p.image]));
+    var g = gallery(photos, p.name);
+    body.appendChild(g.box);
+
+    var info = el('div', 'product-info');
+    var name = el('h3', 'product-name');
+    name.appendChild(el('span', 'store-new', 'New'));
+    name.appendChild(document.createTextNode(' ' + p.name));
+    info.appendChild(name);
     var price = el('p', 'store-price');
-    item.appendChild(price);
+    info.appendChild(price);
+    words(info, extra);
+
+    var variantSel = null;
+    function variant() { return p.variants[variantSel ? +variantSel.value : 0]; }
+    function showPrice() {
+      var v = variant();
+      price.textContent = money(v.price, v.currency);
+      if (v.image) g.show(v.image);
+    }
+
+    if (extra.sold_out) {
+      info.appendChild(el('p', 'shop-status', 'Sold out'));
+      body.appendChild(info);
+      w.d.appendChild(body);
+      showPrice();
+      show(w.d);
+      return;
+    }
 
     var form = el('div', 'store-form');
-    var variantSel = null;
     if (p.variants.length > 1) {
       var lab = el('label', 'store-field');
       lab.appendChild(el('span', null, 'Option'));
@@ -683,36 +781,35 @@ layout: null
     countrySel.value = guess;
     cLab.appendChild(countrySel);
     form.appendChild(cLab);
-    item.appendChild(form);
+    info.appendChild(form);
 
     var totals = el('p', 'store-totals', '');
-    item.appendChild(totals);
+    info.appendChild(totals);
     var buttons = el('div', 'store-pay');
-    item.appendChild(buttons);
+    info.appendChild(buttons);
     var msg = el('p', 'store-msg');
     msg.setAttribute('role', 'status');
-    item.appendChild(msg);
+    info.appendChild(msg);
+    body.appendChild(info);
+    w.d.appendChild(body);
 
-    function variant() { return p.variants[variantSel ? +variantSel.value : 0]; }
-    function showPrice() {
-      var v = variant();
-      price.textContent = money(v.price, v.currency);
-      if (v.image) img.src = v.image;
+    function setTotals(q) {
+      totals.innerHTML = '';
+      totals.appendChild(document.createTextNode('Shipping ' + money(q.shipping, q.currency) + ' \u00b7 '));
+      totals.appendChild(el('b', null, 'Total ' + money(q.total, q.currency)));
     }
     var seq = 0;
     function requote() {
       var mine = ++seq, v = variant();
       totals.textContent = 'Working out the shipping\u2026';
       post('quote', { variant: v.id, quantity: 1, country: countrySel.value }).then(function (q) {
-        if (mine !== seq) return;
-        totals.innerHTML = '';
-        totals.appendChild(document.createTextNode('Shipping ' + money(q.shipping, q.currency) + ' \u00b7 '));
-        totals.appendChild(el('b', null, 'Total ' + money(q.total, q.currency)));
+        if (mine === seq) setTotals(q);
       }).catch(function (e) { if (mine === seq) totals.textContent = e.message; });
     }
     showPrice(); requote();
     if (variantSel) variantSel.addEventListener('change', function () { showPrice(); requote(); });
-    countrySel.addEventListener('change', requote);
+    countrySel.addEventListener('change', function () { guess = countrySel.value; requote(); });
+    show(w.d);
 
     loadPayPal(p.variants[0].currency).then(function (paypal) {
       paypal.Buttons({
@@ -723,32 +820,25 @@ layout: null
             .then(function (d) { return d.id; });
         },
         /* An address in another country than the one picked here: the
-           shipping is quoted again for it and the PayPal total follows. */
+           shipping is quoted again for it and the PayPal total follows.
+           Only a country Printful really doesn't ship to is turned away. */
         onShippingAddressChange: function (data, actions) {
           var addr = data.shippingAddress || {};
-          /* Only a country Printful really doesn't ship to is turned away;
-             any other hiccup lets the address through. */
           return post('reship', { orderID: data.orderID, country: addr.countryCode, state: addr.state })
             .then(function (q) {
               if (q.noship) return actions.reject(data.errors && data.errors.COUNTRY_ERROR);
               if ([].some.call(countrySel.options, function (o) { return o.value === addr.countryCode; })) {
                 countrySel.value = addr.countryCode;
               }
-              if (!q.patched) return;
-              totals.innerHTML = '';
-              totals.appendChild(document.createTextNode('Shipping ' + money(q.shipping, q.currency) + ' · '));
-              totals.appendChild(el('b', null, 'Total ' + money(q.total, q.currency)));
+              if (q.patched) setTotals(q);
             })
             .catch(function () {});
         },
         onApprove: function (data) {
           msg.textContent = 'Confirming your payment\u2026';
           return post('capture', { orderID: data.orderID }).then(function () {
-            buttons.innerHTML = '';
-            msg.className = 'store-msg store-done';
-            msg.textContent = 'Thank you! Your order is in. PayPal has emailed you the receipt; it ships in a few days.';
-            popup('ok', 'Order confirmed', 'Thank you! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', variant().image || p.image);
-            msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            w.close();
+            popup('ok', 'Order confirmed', 'Thank you! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', photos[0]);
           });
         },
         onCancel: function () {
@@ -756,22 +846,47 @@ layout: null
           msg.textContent = 'Payment cancelled. Nothing was charged.';
         },
         onError: function (e) {
+          var text = 'Something went wrong' + (e && e.message ? ': ' + e.message : '.') +
+            ' If PayPal charged you, write to ' + CONTACT + ' and we will sort it out.';
           msg.className = 'store-msg store-bad';
-          msg.textContent = 'Something went wrong' + (e && e.message ? ': ' + e.message : '.') +
-            ' If PayPal charged you, write to {{ bottom.email | escape }} and we will sort it out.';
-          msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
-          popup('bad', 'Payment problem', msg.textContent);
+          msg.textContent = text;
+          popup('bad', 'Payment problem', text);
         }
       }).render(buttons);
     }).catch(function () {
-      buttons.appendChild(el('p', 'shop-status store-soon', 'Coming soon'));
+      buttons.appendChild(el('p', 'shop-status', 'Coming soon'));
     });
-    return item;
   }
 
+  /* The CD cards are in the page already; the new merch's are made here. */
+  [].forEach.call(grid.querySelectorAll('.shop-card[data-item]'), function (b) {
+    b.addEventListener('click', function () { openCD(cds[+b.getAttribute('data-item')]); });
+  });
+
+  function productCard(p) {
+    var extra = extraFor(p.name);
+    var b = el('button', 'shop-card is-new');
+    b.type = 'button';
+    var shot = el('span', 'shop-card-shot');
+    var img = el('img');
+    img.src = (extra.mockups && extra.mockups[0]) || p.image || '';
+    img.alt = p.name; img.loading = 'lazy'; img.width = 400; img.height = 400;
+    shot.appendChild(img);
+    shot.appendChild(el('span', 'store-new shop-card-new', 'New'));
+    b.appendChild(shot);
+    b.appendChild(el('span', 'shop-card-name', p.name));
+    var v = p.variants[0];
+    b.appendChild(el('span', 'shop-card-meta', money(v.price, v.currency)));
+    b.appendChild(el('span', 'shop-card-flag' + (extra.sold_out ? ' is-out' : ' is-buy'), extra.sold_out ? 'Sold out' : 'Buy now \u00bb'));
+    b.addEventListener('click', function () { openProduct(p); });
+    return b;
+  }
+
+  var started = false;
   window.mintsuitShop = function () {
-    if (started) return;
+    if (started || !api) return;
     started = true;
+    var wait = grid.querySelector('.shop-wait');
     /* The full list of countries Printful ships to replaces the short one
        above; if it can't be had, the short one is used. */
     var countriesReady = fetch(api + '/countries').then(function (r) { return r.json(); }).then(function (d) {
@@ -781,13 +896,11 @@ layout: null
       }
     }).catch(function () {});
     Promise.all([fetch(api + '/products').then(function (r) { return r.json(); }), countriesReady]).then(function (all) {
-      var d = all[0];
-      list.innerHTML = '';
-      if (!d.products || !d.products.length) { box.hidden = true; return; }
-      d.products.forEach(function (p) { list.appendChild(card(p)); });
+      if (wait) wait.remove();
+      var first = grid.firstChild;
+      (all[0].products || []).forEach(function (p) { grid.insertBefore(productCard(p), first); });
     }).catch(function () {
-      list.innerHTML = '';
-      list.appendChild(el('p', 'store-wait', 'The shop could not be reached. Try again in a moment.'));
+      if (wait) wait.textContent = 'The shop could not be reached. Try again in a moment.';
       started = false;
     });
   };

@@ -128,6 +128,26 @@ async function quote(variantId: number, quantity: number, country: string, state
   };
 }
 
+// What the site's panel says about each product (shop.json on the site):
+// a product switched to Sold out there can't be bought here either.
+let panel: { at: number; soldOut: Set<string> } | null = null;
+
+async function soldOut(name: string) {
+  if (!panel || Date.now() - panel.at > 60 * 1000) {
+    try {
+      const res = await fetch(`https://mintsuit.com/shop.json?t=${Date.now()}`);
+      const data = await res.json();
+      panel = {
+        at: Date.now(),
+        soldOut: new Set((data.products ?? []).filter((p: any) => p.sold_out).map((p: any) => String(p.name).trim().toLowerCase())),
+      };
+    } catch {
+      if (!panel) return false;
+    }
+  }
+  return panel!.soldOut.has(name.trim().toLowerCase());
+}
+
 // ---------- PayPal ----------
 
 async function paypalToken() {
@@ -227,6 +247,7 @@ Deno.serve(async (req) => {
     if (route === "create") {
       const country = String(body.country || "").toUpperCase();
       const q = await quote(Number(body.variant), Number(body.quantity), country);
+      if (await soldOut(q.product.name)) throw new Error("Sorry, this item is sold out.");
       const { ok, data } = await paypal("/v2/checkout/orders", {
         method: "POST",
         body: JSON.stringify({
