@@ -600,7 +600,10 @@ layout: null
     paypalReady = new Promise(function (ok, fail) {
       var s = document.createElement('script');
       s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(clientId) +
-        '&currency=' + encodeURIComponent(currency) + '&intent=capture&components=buttons';
+        '&currency=' + encodeURIComponent(currency) + '&intent=capture&components=buttons' +
+        /* Bank debits settle days later; the Printful order is placed the
+           moment the payment completes, so only PayPal and cards are offered. */
+        '&disable-funding=sepa,giropay,sofort,bancontact,blik,eps,ideal,mybank,p24,paylater';
       s.onload = function () { ok(window.paypal); };
       s.onerror = fail;
       document.head.appendChild(s);
