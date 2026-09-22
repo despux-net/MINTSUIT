@@ -1,22 +1,18 @@
 products:
-- name: Under Armour® MINT SUIT Hat BLACK
-  printful_id: 474416112
-  title: ''
-  sold_out: false
-- name: MINT SUIT EMBROIDERY BLACK
-  printful_id: 474389441
-  sold_out: true
-- name: Under Armour® MINT SUIT Hat WHITE
-  printful_id: 474388594
-  mockups:
-  - /assets/under-armour-dad-hat-white-front-6ab24ea9147d0.png
-  - /assets/under-armour-dad-hat-white-back-6ab24ea91498c.png
-  - /assets/under-armour-dad-hat-white-product-details-6ab24ea91543d.png
-  description: HAT
-  sold_out: false
+  - name: Under Armour® MINT SUIT Hat BLACK
+    printful_id: 474416112
+    sold_out: false
+  - name: Under Armour® MINT SUIT Hat WHITE
+    printful_id: 474388594
+    mockups:
+      - /assets/under-armour-dad-hat-white-front-6ab24ea9147d0.png
+      - /assets/under-armour-dad-hat-white-back-6ab24ea91498c.png
+      - /assets/under-armour-dad-hat-white-product-details-6ab24ea91543d.png
+    description: HAT
+    sold_out: false
 show: true
 title: New in the shop
-intro: Made to order just for you and shipped straight to your door. Pick your country
-  to see the shipping, then pay with PayPal or a card.
+intro: Made to order just for you and shipped straight to your door. Pick your
+  country to see the shipping, then pay with PayPal or a card.
 functions_url: https://mqcxwusbuuwvwrlztopp.supabase.co/functions/v1/mintsuit-shop
 paypal_client_id: BAAk2nOzEth-5aaxs_zd8XhxCZxxRLnlY9_W75XadOokopGXBJvGleNxONpX-n0DIc9lo9rVwavsF4KXus
