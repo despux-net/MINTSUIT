@@ -51,6 +51,22 @@ async function printful(path: string, init: RequestInit = {}) {
   return data.result;
 }
 
+// Product photos are handed out through this function (/image?src=...), so
+// no address a shopper can see points at Printful. Only Printful's own
+// file hosts are fetched this way.
+const IMAGE_HOSTS = ["files.cdn.printful.com", "img.printful.com"];
+function selfUrl() {
+  return `${Deno.env.get("SUPABASE_URL")}/functions/v1/mintsuit-shop`;
+}
+function hideImage(url: string | null) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (!IMAGE_HOSTS.includes(u.hostname)) return url;
+    return `${selfUrl()}/image?src=${encodeURIComponent(url)}`;
+  } catch { return url; }
+}
+
 type Variant = {
   id: number;          // Printful sync variant id: what an order names
   catalog: number;     // Printful catalog variant id: what shipping rates name
@@ -210,10 +226,28 @@ Deno.serve(async (req) => {
   const route = new URL(req.url).pathname.split("/").filter(Boolean).pop();
 
   try {
+    if (route === "image" && req.method === "GET") {
+      const src = new URL(req.url).searchParams.get("src") ?? "";
+      let u: URL;
+      try { u = new URL(src); } catch { return new Response("Not found", { status: 404, headers: cors(req) }); }
+      if (u.protocol !== "https:" || !IMAGE_HOSTS.includes(u.hostname)) {
+        return new Response("Not found", { status: 404, headers: cors(req) });
+      }
+      const img = await fetch(u);
+      if (!img.ok) return new Response("Not found", { status: 404, headers: cors(req) });
+      return new Response(img.body, {
+        headers: {
+          ...cors(req),
+          "Content-Type": img.headers.get("content-type") ?? "image/png",
+          "Cache-Control": "public, max-age=86400",
+        },
+      });
+    }
+
     if (route === "products" && req.method === "GET") {
       const list = (await products()).map((p) => ({
-        id: p.id, name: p.name, image: p.image,
-        variants: p.variants.map(({ catalog: _c, ...v }) => v),
+        id: p.id, name: p.name, image: hideImage(p.image),
+        variants: p.variants.map(({ catalog: _c, image, ...v }) => ({ ...v, image: hideImage(image) })),
       }));
       return json(req, { products: list });
     }
@@ -302,7 +336,7 @@ Deno.serve(async (req) => {
         q = await quote(variantId, quantity, country, state);
       } catch (e) {
         await log(route, id, `no shipping to ${country}: ${e}`);
-        return json(req, { noship: true, error: String((e as Error).message ?? e) });
+        return json(req, { noship: true, error: "Sorry, this item can't be shipped to that country." });
       }
       const unit = `/purchase_units/@reference_id=='${order.purchase_units[0].reference_id ?? "default"}'`;
       const patch = await paypal(`/v2/checkout/orders/${id}`, {
@@ -409,6 +443,7 @@ Deno.serve(async (req) => {
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     await log(route, "", message);
-    return json(req, { error: message }, 400);
+    const shown = /printful/i.test(message) ? "The shop hit a snag. Please try again in a moment." : message;
+    return json(req, { error: shown }, 400);
   }
 });

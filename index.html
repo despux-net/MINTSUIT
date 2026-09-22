@@ -658,7 +658,7 @@ layout: null
       var s = document.createElement('script');
       s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(clientId) +
         '&currency=' + encodeURIComponent(currency) + '&intent=capture&components=buttons' +
-        /* Bank debits settle days later; the Printful order is placed the
+        /* Bank debits settle days later; the order goes into production the
            moment the payment completes, so only PayPal and cards are offered. */
         '&disable-funding=sepa,giropay,sofort,bancontact,blik,eps,ideal,mybank,p24,paylater';
       s.onload = function () { ok(window.paypal); };
@@ -821,7 +821,7 @@ layout: null
         },
         /* An address in another country than the one picked here: the
            shipping is quoted again for it and the PayPal total follows.
-           Only a country Printful really doesn't ship to is turned away. */
+           Only a country that really can't be shipped to is turned away. */
         onShippingAddressChange: function (data, actions) {
           var addr = data.shippingAddress || {};
           return post('reship', { orderID: data.orderID, country: addr.countryCode, state: addr.state })
@@ -887,7 +887,7 @@ layout: null
     if (started || !api) return;
     started = true;
     var wait = grid.querySelector('.shop-wait');
-    /* The full list of countries Printful ships to replaces the short one
+    /* The full list of countries the shop ships to replaces the short one
        above; if it can't be had, the short one is used. */
     var countriesReady = fetch(api + '/countries').then(function (r) { return r.json(); }).then(function (d) {
       if (d.countries && d.countries.length) {
