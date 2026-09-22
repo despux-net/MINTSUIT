@@ -688,18 +688,20 @@ layout: null
            shipping is quoted again for it and the PayPal total follows. */
         onShippingAddressChange: function (data, actions) {
           var addr = data.shippingAddress || {};
+          /* Only a country Printful really doesn't ship to is turned away;
+             any other hiccup lets the address through. */
           return post('reship', { orderID: data.orderID, country: addr.countryCode, state: addr.state })
             .then(function (q) {
+              if (q.noship) return actions.reject(data.errors && data.errors.COUNTRY_ERROR);
               if ([].some.call(countrySel.options, function (o) { return o.value === addr.countryCode; })) {
                 countrySel.value = addr.countryCode;
               }
+              if (!q.patched) return;
               totals.innerHTML = '';
               totals.appendChild(document.createTextNode('Shipping ' + money(q.shipping, q.currency) + ' · '));
               totals.appendChild(el('b', null, 'Total ' + money(q.total, q.currency)));
             })
-            .catch(function () {
-              return actions.reject(data.errors && data.errors.COUNTRY_ERROR);
-            });
+            .catch(function () {});
         },
         onApprove: function (data) {
           msg.textContent = 'Confirming your payment\u2026';

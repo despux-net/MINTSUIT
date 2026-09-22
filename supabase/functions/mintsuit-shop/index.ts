@@ -177,6 +177,12 @@ async function db(path: string, init: RequestInit = {}) {
   return text ? JSON.parse(text) : null;
 }
 
+async function log(route: string | undefined, orderId: string, message: string) {
+  try {
+    await db("shop_log", { method: "POST", body: JSON.stringify({ route, order_id: orderId || null, message: message.slice(0, 2000) }) });
+  } catch { /* logging must never break a checkout */ }
+}
+
 // ---------- routes ----------
 
 Deno.serve(async (req) => {
@@ -270,7 +276,13 @@ Deno.serve(async (req) => {
       const { data: order } = await paypal(`/v2/checkout/orders/${id}`);
       if (!order?.id) throw new Error("PayPal does not know that order.");
       const [variantId, quantity] = String(order.purchase_units[0].custom_id).split(":").map(Number);
-      const q = await quote(variantId, quantity, country, state);
+      let q;
+      try {
+        q = await quote(variantId, quantity, country, state);
+      } catch (e) {
+        await log(route, id, `no shipping to ${country}: ${e}`);
+        return json(req, { noship: true, error: String((e as Error).message ?? e) });
+      }
       const unit = `/purchase_units/@reference_id=='${order.purchase_units[0].reference_id ?? "default"}'`;
       const patch = await paypal(`/v2/checkout/orders/${id}`, {
         method: "PATCH",
@@ -288,8 +300,13 @@ Deno.serve(async (req) => {
           { op: "replace", path: `${unit}/custom_id`, value: `${variantId}:${q.quantity}:${country}` },
         ]),
       });
-      if (!patch.ok) throw new Error(patch.data?.details?.[0]?.description ?? "Could not update the shipping.");
-      return json(req, { currency: q.currency, items: q.items, shipping: q.shipping, total: q.total });
+      if (!patch.ok) {
+        // Printful ships there, so the address stands; the order keeps the
+        // shipping it was created with rather than turning the buyer away.
+        await log(route, id, `patch ${patch.status}: ${JSON.stringify(patch.data).slice(0, 1500)}`);
+        return json(req, { patched: false });
+      }
+      return json(req, { patched: true, currency: q.currency, items: q.items, shipping: q.shipping, total: q.total });
     }
 
     if (route === "capture") {
@@ -369,6 +386,8 @@ Deno.serve(async (req) => {
 
     return json(req, { error: "Not found." }, 404);
   } catch (e) {
-    return json(req, { error: e instanceof Error ? e.message : String(e) }, 400);
+    const message = e instanceof Error ? e.message : String(e);
+    await log(route, "", message);
+    return json(req, { error: message }, 400);
   }
 });
