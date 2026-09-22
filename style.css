@@ -583,7 +583,8 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   border: 1px solid var(--line);
 }
 
-.loop video { display: block; width: 100%; height: auto; }
+.loop video,
+.loop img { display: block; width: 100%; height: auto; }
 
 /* ===========================================================
    The merch panel in the left column

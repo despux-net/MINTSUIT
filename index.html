@@ -512,12 +512,18 @@ layout: null
 {%- endif %}
 {%- comment -%}
   A silent looping video under the merch photos ("Loop video" in the panel). It
-  must be muted and inline for phones to let it play on its own.
+  must be muted and inline for phones to let it play on its own. A GIF can't
+  go in a video tag, so it is shown as a plain image, which loops by itself.
 {%- endcomment -%}
 {%- assign loop = site.data.loop -%}
 {%- if loop.video and loop.video != "" %}
+{%- assign loop_ext = loop.video | split: "." | last | downcase %}
   <div class="loop">
+{%- if loop_ext == "gif" %}
+    <img src="{{ loop.video | relative_url | escape }}" alt="" aria-hidden="true">
+{%- else %}
     <video src="{{ loop.video | relative_url | escape }}" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+{%- endif %}
   </div>
 {%- endif %}
   </div>

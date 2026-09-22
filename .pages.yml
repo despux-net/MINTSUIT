@@ -468,7 +468,7 @@ content:
           Plays on its own, silent and looping, under the code buttons.
           To change it, remove the current file here, upload the new one and
           save; the file can have any name. Keep it short and small (a few
-          MB, MP4 works everywhere). Leave it empty to hide the video.
+          MB). MP4 or GIF both work. Leave it empty to hide the video.
 
   - name: codes
     label: Download codes
