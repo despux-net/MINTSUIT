@@ -2,8 +2,8 @@ products:
   - name: ADIDAS® Mint Suit Edition
     printful_id: 474447337
     mockups:
-      - /assets/adidas-dad-hat-white-front-6ab28d8e2e3e8.png
       - /assets/adidas-dad-hat-white-right-front-6ab28d8e2f294.png
+      - /assets/adidas-dad-hat-white-front-6ab28d8e2e3e8.png
       - /assets/adidas-dad-hat-white-product-details-2-6ab28d8e2f25d.png
       - /assets/adidas-dad-hat-white-product-details-6ab28d8e2ed95.png
     description: A genuine adidas® dad hat with the MINT SUIT logo embroidered on
@@ -18,7 +18,6 @@ products:
       - Breathable, extra-soft premium fabric
       - Official adidas® hat, with its logo on the item
       - Made to order and shipped within Europe and the UK
-    available: 25
     sold_out: false
 show: true
 title: New in the shop
