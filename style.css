@@ -1112,11 +1112,44 @@ html[data-tab="videos"] .spread { display: none; }
     repeating-linear-gradient(rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.16) 2px 3px);
 }
 
-/* The on-screen display: the channel number in green, top right, and the
+/* The channel's own logo, fixed in the top right corner as stations had
+   it. It also sits on top of Drive's "open in a new tab" button (40px
+   square, 12px down and 16px in), so that button can't be seen or clicked. */
+.tv-bug {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 54px;
+  font: italic 900 22px/1 Verdana, Arial, sans-serif;
+  letter-spacing: -1px;
+  color: #ff2d7a;
+  text-shadow: -2px 0 0 #5541d4, 1px 1px 0 #00e5ff;
+  background: #07080a;
+  border: 1px solid #3a4048;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  cursor: default;
+  user-select: none;
+}
+.tv-bug small {
+  margin-top: 3px;
+  font: 9px Silkscreen, "Courier New", monospace;
+  letter-spacing: 3px;
+  color: #6dff7a;
+  text-shadow: 0 0 4px rgba(80, 255, 110, 0.7);
+}
+
+/* The on-screen display: the channel number in green, top left, and the
    title under it, gone after a few seconds. */
 .tv-osd {
   position: absolute;
-  right: 18px;
+  left: 18px;
   margin: 0;
   font-family: Silkscreen, "Courier New", monospace;
   color: #6dff7a;
