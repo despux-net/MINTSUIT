@@ -839,10 +839,11 @@ layout: null
     info.appendChild(name);
     var price = el('p', 'store-price');
     info.appendChild(price);
-    if (p.edition) {
+    var left = units(extra);
+    if (left) {
       var ed = el('p', 'store-edition');
       ed.appendChild(document.createTextNode('Limited edition \u00b7 '));
-      ed.appendChild(editionLine(p.edition, 'store-edition-count'));
+      ed.appendChild(unitsLine(left, 'store-edition-count'));
       info.appendChild(ed);
     }
     words(info, extra);
@@ -855,7 +856,7 @@ layout: null
       if (v.image) g.show(v.image);
     }
 
-    if (extra.sold_out || (p.edition && p.edition.left <= 0)) {
+    if (extra.sold_out || left === 0) {
       info.appendChild(el('p', 'shop-status', 'Sold out'));
       body.appendChild(info);
       w.d.appendChild(body);
@@ -973,15 +974,18 @@ layout: null
     b.addEventListener('click', function () { openCD(cds[+b.getAttribute('data-item')]); });
   });
 
-  /* A limited edition's count, the units left in red: "9 of 25 left". */
-  function editionLine(ed, cls) {
+  /* "Units available" from the panel, the number in red: "25 available".
+     Empty: nothing is shown; 0: the product is sold out. */
+  function units(extra) {
+    var n = extra.available;
+    if (n === null || n === undefined || n === '') return null;
+    n = Math.max(0, Math.floor(+n || 0));
+    return n;
+  }
+  function unitsLine(n, cls) {
     var line = el('span', cls);
-    if (ed.left <= 0) {
-      line.appendChild(document.createTextNode('Limited edition of ' + ed.size + ' \u00b7 all gone'));
-      return line;
-    }
-    line.appendChild(el('b', 'edition-left', String(ed.left)));
-    line.appendChild(document.createTextNode(' of ' + ed.size + ' left'));
+    line.appendChild(el('b', 'edition-left', String(n)));
+    line.appendChild(document.createTextNode(' available'));
     return line;
   }
 
@@ -999,8 +1003,9 @@ layout: null
     b.appendChild(el('span', 'shop-card-name', title(p)));
     var v = p.variants[0];
     b.appendChild(el('span', 'shop-card-meta', money(v.price, v.currency)));
-    if (p.edition) b.appendChild(editionLine(p.edition, 'shop-card-edition'));
-    var out = extra.sold_out || (p.edition && p.edition.left <= 0);
+    var left = units(extra);
+    if (left) b.appendChild(unitsLine(left, 'shop-card-edition'));
+    var out = extra.sold_out || left === 0;
     b.appendChild(el('span', 'shop-card-flag' + (out ? ' is-out' : ' is-buy'), out ? 'Sold out' : 'Buy now \u00bb'));
     b.addEventListener('click', function () { openProduct(p); });
     return b;

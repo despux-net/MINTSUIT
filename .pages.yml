@@ -347,14 +347,14 @@ content:
             type: string
             list: true
             description: One line each, listed under the description.
-          - name: edition_size
-            label: Limited edition size
+          - name: available
+            label: Units available
             type: number
             description: >-
-              For a limited edition, the number of units made (for example
-              25). The card then shows how many are left, counted from real
-              sales, and the product sells out by itself when they are gone.
-              Leave empty for no limit.
+              Shown on the card and in the product's window as "25 available"
+              with the number in red. Set it by hand and lower it after each
+              sale; at 0 the product shows Sold out and can't be bought.
+              Leave empty to show nothing.
           - name: sold_out
             label: Sold out
             type: boolean

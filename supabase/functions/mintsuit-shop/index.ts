@@ -290,7 +290,9 @@ async function quote(variantId: number, quantity: number, country: string, state
 // What the site's panel says about each product (shop.json on the site):
 // a product switched to Sold out there can't be bought here either.
 // The panel's title for a product is also the name on the PayPal receipt.
-type PanelEntry = { id: number; name: string; title: string; soldOut: boolean; edition: number };
+// "Units available" in the panel is a number set by hand (empty: not shown).
+// At 0 the product counts as sold out.
+type PanelEntry = { id: number; name: string; title: string; soldOut: boolean; available: number | null };
 let panel: { at: number; entries: PanelEntry[] } | null = null;
 
 async function readPanel() {
@@ -303,7 +305,8 @@ async function readPanel() {
         at: Date.now(),
         entries: list.map((p: any) => ({
           id: Number(p.printful_id) || 0, name: String(p.name ?? ""), title: String(p.title ?? "").trim(), soldOut: !!p.sold_out,
-          edition: Math.max(0, Math.floor(Number(p.edition_size) || 0)),
+          available: p.available === null || p.available === undefined || p.available === ""
+            ? null : Math.max(0, Math.floor(Number(p.available) || 0)),
         })),
       };
     } catch { /* keep what was known */ }
@@ -340,28 +343,8 @@ async function entryFor(id: number, name: string): Promise<PanelEntry | null> {
 }
 
 async function soldOut(product: { id: number; name: string }) {
-  return (await entryFor(product.id, product.name))?.soldOut ?? false;
-}
-
-// A limited edition ("Limited edition size" in the panel): the units sold
-// are counted from the orders table, in the order they were placed. A row
-// counts from the moment its payment is approved, just before the money is
-// taken, so two people buying the last one at once can't both have it.
-const HOLDING = "approved,paid,sent_to_printful,printful_draft,printful_failed";
-
-async function editionOrders(product: Product) {
-  const ids = product.variants.map((v) => v.id).join(",");
-  return await db(
-    `shop_orders?variant_id=in.(${ids})&status=in.(${HOLDING})` +
-    `&select=paypal_order_id,quantity,created_at&order=created_at.asc,paypal_order_id.asc`,
-  ) as { paypal_order_id: string; quantity: number | null }[];
-}
-
-async function edition(product: Product) {
-  const size = (await entryFor(product.id, product.name))?.edition ?? 0;
-  if (!size) return null;
-  const sold = (await editionOrders(product)).reduce((n, r) => n + (r.quantity || 1), 0);
-  return { size, left: Math.max(0, size - sold) };
+  const e = await entryFor(product.id, product.name);
+  return !!e && (e.soldOut || e.available === 0);
 }
 
 async function shownName(product: { id: number; name: string }) {
@@ -471,7 +454,6 @@ Deno.serve(async (req) => {
       const fresh = new URL(req.url).searchParams.get("fresh") === "1";
       const list = await Promise.all((await products(fresh)).map(async (p) => ({
         id: p.id, name: p.name, image: hideImage(p.image), thumb: p.thumb,
-        edition: await edition(p).catch(() => null),
         variants: p.variants.map(({ catalog: _c, image, ...v }) => ({ ...v, image: hideImage(image) })),
       })));
       return new Response(JSON.stringify({ products: list }), {
@@ -509,8 +491,6 @@ Deno.serve(async (req) => {
       const country = String(body.country || "").toUpperCase();
       const q = await quote(Number(body.variant), Number(body.quantity), country, undefined, true);
       if (await soldOut(q.product)) throw new Error("Sorry, this item is sold out.");
-      const ed = await edition(q.product);
-      if (ed && ed.left < q.quantity) throw new Error("Sorry, this limited edition has sold out.");
       const shown = await shownName(q.product);
       const { ok, data } = await paypal("/v2/checkout/orders", {
         method: "POST",
@@ -615,26 +595,6 @@ Deno.serve(async (req) => {
       const note = (fields: Record<string, unknown>) =>
         db(`shop_orders?paypal_order_id=eq.${id}`, { method: "PATCH", body: JSON.stringify(fields) });
 
-      // A limited edition: the row holds its place in the queue (it names
-      // the variant now), and if the units before it already fill the
-      // edition, nothing is taken.
-      const [heldVariant, heldQuantity] = String(approved.purchase_units?.[0]?.custom_id ?? "").split(":").map(Number);
-      if (heldVariant) {
-        await note({ variant_id: heldVariant, quantity: heldQuantity || 1 });
-        const { product } = await findVariant(heldVariant).catch(() => ({ product: null as Product | null }));
-        const size = product ? (await entryFor(product.id, product.name))?.edition ?? 0 : 0;
-        if (product && size) {
-          let before = 0;
-          for (const r of await editionOrders(product)) {
-            if (r.paypal_order_id === id) break;
-            before += r.quantity || 1;
-          }
-          if (before + (heldQuantity || 1) > size) {
-            await note({ status: "edition_full", error: "The limited edition was already sold out." });
-            throw new Error("Sorry, the last one of this limited edition has just sold. Nothing was charged.");
-          }
-        }
-      }
 
       const cap = await paypal(`/v2/checkout/orders/${id}/capture`, { method: "POST" });
       if (!cap.ok && cap.data?.details?.[0]?.issue !== "ORDER_ALREADY_CAPTURED") {
