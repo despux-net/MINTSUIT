@@ -14,6 +14,7 @@ is needed here.
 import json
 import re
 import sys
+import time
 import urllib.request
 
 import yaml
@@ -88,6 +89,23 @@ def main():
     with open(PATH, "w", encoding="utf-8", newline="\n") as f:
         yaml.safe_dump(shop, f, sort_keys=False, allow_unicode=True, width=78)
     print(f"{len(store)} products in the store, {len(shop['products'])} entries in the panel")
+
+    # Which countries each variant can be made for, for the "Ship to" list:
+    # asked a batch at a time, pausing between batches for the rate limit.
+    for product in store:
+        for variant in product["variants"]:
+            for _ in range(20):
+                req = urllib.request.Request(
+                    f"{api}/availability",
+                    data=json.dumps({"variant": variant["id"], "limit": 30}).encode(),
+                    headers={"Content-Type": "application/json"},
+                )
+                with urllib.request.urlopen(req, timeout=150) as res:
+                    got = json.load(res)
+                print(f"{product['name']}: {got}")
+                if got.get("remaining", 0) <= 0:
+                    break
+                time.sleep(15)
 
 
 if __name__ == "__main__":

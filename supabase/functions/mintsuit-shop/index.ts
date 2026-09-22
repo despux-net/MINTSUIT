@@ -229,15 +229,20 @@ const DEFAULT_STATE: Record<string, string> = { US: "NY", CA: "ON", AU: "NSW" };
 
 // Shipping rates can be given for a country the product can't actually be
 // made for (some branded items are only printed in Europe), which would
-// let a shopper pay for an order that then fails. So the product is first
-// priced as a real order for that country; if the maker says the variant
-// is unavailable there, the country is refused. Answers are kept an hour.
-const makeable = new Map<string, { at: number; ok: boolean }>();
+// let a shopper pay for an order that then fails. So the product is priced
+// as a real order for that country; if the maker says the variant is
+// unavailable there, the country is refused. Every answer is kept in
+// shop_availability (and in memory), which also makes the page's "Ship to"
+// list: a product's list leaves out the countries it can't go to.
+const makeable = new Map<string, boolean>();
 
-async function canMake(syncVariantId: number, country: string, state?: string) {
-  const key = `${syncVariantId}:${country}`;
-  const known = makeable.get(key);
-  if (known && Date.now() - known.at < 60 * 60 * 1000) return known.ok;
+async function knownAvailability(syncVariantId: number) {
+  const rows = await db(`shop_availability?variant_id=eq.${syncVariantId}&select=country,ok`) as { country: string; ok: boolean }[];
+  for (const r of rows) makeable.set(`${syncVariantId}:${r.country}`, r.ok);
+  return rows;
+}
+
+async function askMaker(syncVariantId: number, country: string, state?: string): Promise<boolean | null> {
   const res = await fetch(`${PRINTFUL}/orders/estimate-costs`, {
     method: "POST",
     headers: { Authorization: `Bearer ${Deno.env.get("PRINTFUL_TOKEN")}`, "Content-Type": "application/json" },
@@ -249,16 +254,60 @@ async function canMake(syncVariantId: number, country: string, state?: string) {
       items: [{ sync_variant_id: syncVariantId, quantity: 1 }],
     }),
   });
-  let ok = true;
-  if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
-    const message = String(data?.error?.message ?? data?.result ?? "");
-    // Only this answer means "can't be made for there"; an address the
-    // check got wrong (a missing prefecture, say) is not held against it.
-    if (/unavailable variant|not available|discontinued|out of stock/i.test(message)) ok = false;
-  }
-  makeable.set(key, { at: Date.now(), ok });
+  if (res.ok) return true;
+  // Too busy or down: no answer, ask again another time.
+  if (res.status === 429 || res.status >= 500) return null;
+  const data = await res.json().catch(() => ({}));
+  const message = String(data?.error?.message ?? data?.result ?? "");
+  // Only this answer means "can't be made for there"; an address the check
+  // got wrong (a missing prefecture, say) is not held against the country.
+  return !/unavailable variant|not available|discontinued|out of stock/i.test(message);
+}
+
+async function canMake(syncVariantId: number, country: string, state?: string) {
+  const key = `${syncVariantId}:${country}`;
+  if (makeable.has(key)) return makeable.get(key)!;
+  const [row] = await db(`shop_availability?variant_id=eq.${syncVariantId}&country=eq.${country}&select=ok`).catch(() => []);
+  if (row) { makeable.set(key, row.ok); return row.ok; }
+  const ok = await askMaker(syncVariantId, country, state);
+  if (ok === null) return true;
+  await remember(syncVariantId, [[country, ok]]);
   return ok;
+}
+
+async function remember(syncVariantId: number, answers: [string, boolean][]) {
+  if (!answers.length) return;
+  for (const [c, ok] of answers) makeable.set(`${syncVariantId}:${c}`, ok);
+  await db("shop_availability?on_conflict=variant_id,country", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify(answers.map(([country, ok]) => ({ variant_id: syncVariantId, country, ok }))),
+  }).catch(() => {});
+}
+
+async function allCountries() {
+  if (!countries) {
+    const list = await printful("/countries");
+    countries = list
+      .map((c: any) => ({ code: c.code, name: c.name }))
+      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+  }
+  return countries!;
+}
+
+// Ask about a few more countries for a variant (five at a time, to stay
+// well inside the maker's rate limit). Returns how many are still unknown.
+async function checkMore(syncVariantId: number, limit = 30) {
+  const known = new Set((await knownAvailability(syncVariantId)).map((r) => r.country));
+  const todo = (await allCountries()).map((c) => c.code).filter((c) => !known.has(c));
+  const batch = todo.slice(0, limit);
+  const answers: [string, boolean][] = [];
+  for (let i = 0; i < batch.length; i += 5) {
+    const got = await Promise.all(batch.slice(i, i + 5).map((c) => askMaker(syncVariantId, c).then((ok) => [c, ok] as const)));
+    for (const [c, ok] of got) if (ok !== null) answers.push([c, ok]);
+  }
+  await remember(syncVariantId, answers);
+  return { checked: answers.length, remaining: todo.length - answers.length };
 }
 
 async function quote(variantId: number, quantity: number, country: string, state?: string, fresh = false) {
@@ -461,15 +510,28 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Every country Printful ships to, for the page's "Ship to" list.
+    // Every country Printful ships to, for the page's "Ship to" list; with
+    // ?variant=, without the countries that variant is known not to reach
+    // (the ones not asked about yet stay in, and are checked when picked).
     if (route === "countries" && req.method === "GET") {
-      if (!countries) {
-        const list = await printful("/countries");
-        countries = list
-          .map((c: any) => ({ code: c.code, name: c.name }))
-          .sort((a: any, b: any) => a.name.localeCompare(b.name));
+      const all = await allCountries();
+      const variant = Number(new URL(req.url).searchParams.get("variant")) || 0;
+      if (!variant) return json(req, { countries: all });
+      const rows = await knownAvailability(variant).catch(() => []);
+      const no = new Set(rows.filter((r) => !r.ok).map((r) => r.country));
+      if (rows.length < all.length) later(checkMore(variant));
+      return json(req, { countries: all.filter((c) => !no.has(c.code)), complete: rows.length >= all.length });
+    }
+
+    // Fill in a variant's countries a batch at a time (the Sync with
+    // Printful button calls this until nothing is left).
+    if (route === "availability" && req.method === "POST") {
+      const body = await req.json().catch(() => ({}));
+      const variant = Number(body.variant) || 0;
+      if (!(await products()).some((p) => p.variants.some((v) => v.id === variant))) {
+        return json(req, { error: "Not for sale." }, 404);
       }
-      return json(req, { countries });
+      return json(req, await checkMore(variant, Math.max(5, Math.min(40, Number(body.limit) || 30))));
     }
 
     if (route === "health" && req.method === "GET") {

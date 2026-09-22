@@ -924,8 +924,15 @@ layout: null
     var cLab = el('label', 'store-field');
     cLab.appendChild(el('span', null, 'Ship to'));
     var countrySel = el('select');
-    COUNTRIES.forEach(function (c) { var o = el('option', null, c[1]); o.value = c[0]; countrySel.appendChild(o); });
-    countrySel.value = guess;
+    function fillCountries(list) {
+      var keep = countrySel.value || guess;
+      countrySel.innerHTML = '';
+      list.forEach(function (c) { var o = el('option', null, c[1]); o.value = c[0]; countrySel.appendChild(o); });
+      var has = function (code) { return list.some(function (c) { return c[0] === code; }); };
+      countrySel.value = has(keep) ? keep : has(guess) ? guess : has('ES') ? 'ES' : (list[0] || [''])[0];
+      return countrySel.value !== keep;
+    }
+    fillCountries(COUNTRIES);
     cLab.appendChild(countrySel);
     form.appendChild(cLab);
     info.appendChild(form);
@@ -961,8 +968,18 @@ layout: null
         buttons.hidden = true;
       });
     }
-    showPrice(); requote();
-    if (variantSel) variantSel.addEventListener('change', function () { showPrice(); requote(); });
+    /* Only the countries this product can be sent to: the list comes from
+       the shop function, and if the country showing is not on it, the
+       nearest sensible one is picked and the shipping worked out again. */
+    function loadCountries() {
+      var v = variant();
+      fetch(api + '/countries?variant=' + v.id).then(function (r) { return r.json(); }).then(function (d) {
+        if (v !== variant() || !d.countries || !d.countries.length) return;
+        if (fillCountries(d.countries.map(function (c) { return [c.code, c.name]; }))) requote();
+      }).catch(function () {});
+    }
+    showPrice(); requote(); loadCountries();
+    if (variantSel) variantSel.addEventListener('change', function () { showPrice(); requote(); loadCountries(); });
     countrySel.addEventListener('change', function () { guess = countrySel.value; requote(); });
     show(w.d);
 
