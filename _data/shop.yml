@@ -1,20 +1,3 @@
-products:
-  - name: Under Armour® MINT SUIT Hat BLACK
-    printful_id: 474416112
-    mockups:
-      - /assets/under-armour-dad-hat-black-front-6ab26951f29b4.png
-      - /assets/under-armour-dad-hat-black-back-6ab26951f2f9c.png
-      - /assets/under-armour-dad-hat-black-left-front-6ab26951f330b.png
-      - /assets/under-armour-dad-hat-black-product-details-6ab26951f39c3.png
-    sold_out: false
-  - name: Under Armour® MINT SUIT Hat WHITE
-    printful_id: 474388594
-    mockups:
-      - /assets/under-armour-dad-hat-white-front-6ab24ea9147d0.png
-      - /assets/under-armour-dad-hat-white-back-6ab24ea91498c.png
-      - /assets/under-armour-dad-hat-white-product-details-6ab24ea91543d.png
-    description: HAT
-    sold_out: false
 show: true
 title: New in the shop
 intro: Made to order just for you and shipped straight to your door. Pick your
