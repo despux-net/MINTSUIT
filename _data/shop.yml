@@ -1,39 +1,47 @@
 products:
-- name: ADIDAS® Mint Suit Edition G/R
-  printful_id: 474496573
-  mockups:
-  - /assets/adidas-dad-hat-white-right-front-6ab2bab865b1f.png
-  - /assets/adidas-dad-hat-white-front-6ab2bab865de8.png
-  - /assets/adidas-dad-hat-white-product-details-6ab2bab865edb-1.png
-  - /assets/adidas-dad-hat-white-product-details-2-6ab2bab865f34.png
-  description: A genuine adidas® dad hat with the MINT SUIT logo embroidered on
-    the front. A structured crown keeps its shape, the six-panel low profile sits
-    easy, and the premium fabric is breathable and extra soft. [GLOBAL REPORT edition]
-    only 25 samples
-  sold_out: false
-- name: ADIDAS® Mint Suit Edition
-  printful_id: 474447337
-  mockups:
-  - /assets/adidas-dad-hat-white-right-front-6ab28d8e2f294.png
-  - /assets/adidas-dad-hat-white-front-6ab28d8e2e3e8.png
-  - /assets/adidas-dad-hat-white-product-details-6ab28d8e2ed95.png
-  - /assets/adidas-dad-hat-white-product-details-2-6ab28d8e2f25d.png
-  description: A genuine adidas® dad hat with the MINT SUIT logo embroidered on
-    the front. A structured crown keeps its shape, the six-panel low profile sits
-    easy, and the premium fabric is breathable and extra soft. [Sublime edition]
-    only 25 samples
-  specs:
-  - One size fits all, with an adjustable snapback closure
-  - MINT SUIT logo embroidered on the front
-  - Structured crown, unstructured back
-  - 6-panel, low profile
-  - Breathable, extra-soft premium fabric
-  - Official adidas® hat, with its logo on the item
-  - Made to order and shipped within Europe and the UK
-  sold_out: false
+  - name: ADIDAS® Mint Suit Edition G/R
+    printful_id: 474496573
+    mockups:
+      - /assets/adidas-dad-hat-white-right-front-6ab2bab865b1f.png
+      - /assets/adidas-dad-hat-white-front-6ab2bab865de8.png
+      - /assets/adidas-dad-hat-white-product-details-6ab2bab865edb-1.png
+      - /assets/adidas-dad-hat-white-product-details-2-6ab2bab865f34.png
+    description: A genuine adidas® dad hat with the MINT SUIT logo embroidered on
+      the front. A structured crown keeps its shape, the six-panel low profile
+      sits easy, and the premium fabric is breathable and extra soft. [GLOBAL
+      REPORT edition] only 25 samples
+    specs:
+      - One size fits all, with an adjustable snapback closure
+      - MINT SUIT logo embroidered on the front
+      - Structured crown, unstructured back
+      - 6-panel, low profile
+      - Breathable, extra-soft premium fabric
+      - Official adidas® hat, with its logo on the item
+      - Made to order and shipped within Europe and the UK
+    sold_out: false
+  - name: ADIDAS® Mint Suit Edition
+    printful_id: 474447337
+    mockups:
+      - /assets/adidas-dad-hat-white-right-front-6ab28d8e2f294.png
+      - /assets/adidas-dad-hat-white-front-6ab28d8e2e3e8.png
+      - /assets/adidas-dad-hat-white-product-details-6ab28d8e2ed95.png
+      - /assets/adidas-dad-hat-white-product-details-2-6ab28d8e2f25d.png
+    description: A genuine adidas® dad hat with the MINT SUIT logo embroidered on
+      the front. A structured crown keeps its shape, the six-panel low profile
+      sits easy, and the premium fabric is breathable and extra soft. [Sublime
+      edition] only 25 samples
+    specs:
+      - One size fits all, with an adjustable snapback closure
+      - MINT SUIT logo embroidered on the front
+      - Structured crown, unstructured back
+      - 6-panel, low profile
+      - Breathable, extra-soft premium fabric
+      - Official adidas® hat, with its logo on the item
+      - Made to order and shipped within Europe and the UK
+    sold_out: false
 show: true
 title: New in the shop
-intro: Made to order just for you and shipped straight to your door. Pick your country
-  to see the shipping, then pay with PayPal or a card.
+intro: Made to order just for you and shipped straight to your door. Pick your
+  country to see the shipping, then pay with PayPal or a card.
 functions_url: https://mqcxwusbuuwvwrlztopp.supabase.co/functions/v1/mintsuit-shop
 paypal_client_id: BAAk2nOzEth-5aaxs_zd8XhxCZxxRLnlY9_W75XadOokopGXBJvGleNxONpX-n0DIc9lo9rVwavsF4KXus
