@@ -2,7 +2,6 @@ products:
   - name: MINT SUIT EMBROIDERY BLACK
     sold_out: true
   - name: MINT SUIT HAT PRINTED UNDER ARMOUR ORIGINAL
-    title: MINT SUIT
     mockups:
       - /assets/under-armour-dad-hat-white-front-6ab24ea9147d0.png
       - /assets/under-armour-dad-hat-white-back-6ab24ea91498c.png
