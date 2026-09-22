@@ -3,7 +3,10 @@ products:
     sold_out: true
   - name: MINT SUIT HAT PRINTED UNDER ARMOR
     mockups:
+      - /assets/under-armour-dad-hat-white-front-6ab24ea9147d0.png
+      - /assets/under-armour-dad-hat-white-back-6ab24ea91498c.png
       - /assets/under-armour-dad-hat-white-left-front-6ab24ea914aae.png
+      - /assets/under-armour-dad-hat-white-product-details-6ab24ea91543d.png
     sold_out: false
 show: true
 title: New in the shop
