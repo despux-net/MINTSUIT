@@ -307,7 +307,35 @@ content:
             type: string
             required: true
 
-  - name: bottom
+  - name: shop
+    label: Shop (Printful)
+    path: _data/shop.yml
+    type: file
+    fields:
+      - name: show
+        label: Show the shop
+        type: boolean
+        description: >-
+          The new products, read live from the Printful store and paid with
+          PayPal, under the CDs in the Merch tab. Products, photos and prices
+          are changed in Printful, not here.
+      - name: title
+        label: Title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: functions_url
+        label: Supabase function address
+        type: string
+        description: Leave as it is.
+      - name: paypal_client_id
+        label: PayPal client ID
+        type: string
+        description: >-
+          The public Client ID of the PayPal app (never the secret). The
+          PayPal buttons only show once it is filled in.
+
     label: Logo, links and footer
     path: _data/bottom.yml
     type: file

@@ -722,6 +722,61 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   border: 1px solid var(--edge);
 }
 
+/* The new merch from Printful, under the CDs, with a NEW sticker. */
+.store {
+  margin: 4px 0 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.store-title {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #003399;
+}
+
+.store-new {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 1px 6px;
+  font: bold 9px Verdana, Arial, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+  color: #ffffff;
+  background: linear-gradient(#ff4d7d, #d4004a);
+  border: 1px solid #9e0036;
+}
+
+.store-intro { margin: 0 0 14px; font-size: 11px; color: #333333; }
+
+.store-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 28px;
+}
+
+.store-wait { grid-column: 1 / -1; margin: 0; font-size: 11px; color: var(--dim); }
+
+.store-item { padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+
+.store-price { margin: 2px 0 10px; font: bold 13px Verdana, Arial, sans-serif; color: #cc0000; }
+
+.store-form { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 0 0 8px; }
+
+.store-field { display: flex; flex-direction: column; gap: 2px; font-size: 10px; color: var(--dim); }
+.store-field span { letter-spacing: 0.08em; text-transform: uppercase; }
+.store-field select { font: 11px Verdana, Arial, sans-serif; padding: 2px; }
+
+.store-totals { margin: 0 0 10px; font-size: 11px; color: #333333; }
+
+.store-pay { max-width: 300px; }
+
+.store-msg { margin: 8px 0 0; font-size: 11px; }
+.store-done { color: #1b7a1b; font-weight: bold; }
+.store-bad { color: #cc0000; }
+
 .shop-note {
   margin: 0;
   padding-top: 14px;

@@ -13,6 +13,7 @@ layout: null
 {%- assign vapor = site.data.vaporwave -%}
 {%- assign merch = site.data.merch -%}
 {%- assign tv = site.data.videos -%}
+{%- assign store = site.data.shop -%}
 {%- assign background = site.data.background.image | strip -%}
 {%- assign home = "/" | absolute_url -%}
 <!doctype html>
@@ -331,6 +332,22 @@ layout: null
       {%- endfor %}
     </div>
 
+{%- comment -%}
+  The new merch ("Shop (Printful)" in the panel). Only the frame is here:
+  the products, their photos and prices are read from the Printful store
+  through the mintsuit-shop function on Supabase when the tab is opened,
+  and paid with PayPal. The CDs above are untouched.
+{%- endcomment -%}
+{%- if store.show and store.functions_url and store.functions_url != "" %}
+    <section class="store" data-api="{{ store.functions_url | escape }}" data-paypal="{{ store.paypal_client_id | strip | escape }}">
+      <h3 class="store-title"><span class="store-new">New</span> {{ store.title | escape }}</h3>
+      {%- if store.intro and store.intro != "" %}
+      <p class="store-intro">{{ store.intro | escape }}</p>
+      {%- endif %}
+      <div class="store-list"><p class="store-wait">Loading the shop&hellip;</p></div>
+    </section>
+{%- endif %}
+
     {%- if merch.note and merch.note != "" %}
     <p class="shop-note">{{ merch.note | escape }}</p>
     {%- endif %}
@@ -535,6 +552,173 @@ layout: null
 </main>
 
 {%- comment -%}
+  The shop. When the Merch tab opens, the products come from the Printful
+  store (through Supabase), each with a size or colour choice when there is
+  one, a country for the shipping, and PayPal's buttons. PayPal's script is
+  only fetched then, and only if a client ID is set in the panel.
+{%- endcomment %}
+<script>
+(function () {
+  var box = document.querySelector('.store');
+  if (!box) return;
+  var api = box.getAttribute('data-api').replace(/\/$/, '');
+  var clientId = box.getAttribute('data-paypal');
+  var list = box.querySelector('.store-list');
+  var started = false;
+
+  var COUNTRIES = [
+    ['ES','Spain'],['US','United States'],['MX','Mexico'],['AR','Argentina'],['CL','Chile'],
+    ['CO','Colombia'],['PE','Peru'],['UY','Uruguay'],['EC','Ecuador'],['GB','United Kingdom'],
+    ['FR','France'],['DE','Germany'],['IT','Italy'],['PT','Portugal'],['NL','Netherlands'],
+    ['BE','Belgium'],['IE','Ireland'],['AT','Austria'],['CH','Switzerland'],['SE','Sweden'],
+    ['NO','Norway'],['DK','Denmark'],['FI','Finland'],['PL','Poland'],['CA','Canada'],
+    ['AU','Australia'],['NZ','New Zealand'],['JP','Japan'],['KR','South Korea'],['BR','Brazil']
+  ];
+  var guess = ((navigator.language || '').split('-')[1] || '').toUpperCase();
+  if (!COUNTRIES.some(function (c) { return c[0] === guess; })) guess = 'ES';
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function money(v, cur) {
+    try { return new Intl.NumberFormat(undefined, { style: 'currency', currency: cur }).format(+v); }
+    catch (e) { return v + ' ' + cur; }
+  }
+  function post(path, body) {
+    return fetch(api + '/' + path, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    }).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || 'Error'); return d; }); });
+  }
+
+  var paypalReady = null;
+  function loadPayPal(currency) {
+    if (!clientId) return Promise.reject(new Error('no client id'));
+    if (paypalReady) return paypalReady;
+    paypalReady = new Promise(function (ok, fail) {
+      var s = document.createElement('script');
+      s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(clientId) +
+        '&currency=' + encodeURIComponent(currency) + '&intent=capture&components=buttons';
+      s.onload = function () { ok(window.paypal); };
+      s.onerror = fail;
+      document.head.appendChild(s);
+    });
+    return paypalReady;
+  }
+
+  function card(p) {
+    var item = el('div', 'store-item');
+    var shot = el('div', 'shop-shot');
+    var img = el('img');
+    img.src = p.image || ''; img.alt = p.name; img.loading = 'lazy'; img.width = 800; img.height = 800;
+    shot.appendChild(img);
+    item.appendChild(shot);
+    item.appendChild(el('h4', 'shop-name', p.name));
+    var price = el('p', 'store-price');
+    item.appendChild(price);
+
+    var form = el('div', 'store-form');
+    var variantSel = null;
+    if (p.variants.length > 1) {
+      var lab = el('label', 'store-field');
+      lab.appendChild(el('span', null, 'Option'));
+      variantSel = el('select');
+      p.variants.forEach(function (v, i) {
+        var o = el('option', null, [v.size, v.color].filter(Boolean).join(' / ') || v.name);
+        o.value = i; variantSel.appendChild(o);
+      });
+      lab.appendChild(variantSel);
+      form.appendChild(lab);
+    }
+    var cLab = el('label', 'store-field');
+    cLab.appendChild(el('span', null, 'Ship to'));
+    var countrySel = el('select');
+    COUNTRIES.forEach(function (c) { var o = el('option', null, c[1]); o.value = c[0]; countrySel.appendChild(o); });
+    countrySel.value = guess;
+    cLab.appendChild(countrySel);
+    form.appendChild(cLab);
+    item.appendChild(form);
+
+    var totals = el('p', 'store-totals', '');
+    item.appendChild(totals);
+    var buttons = el('div', 'store-pay');
+    item.appendChild(buttons);
+    var msg = el('p', 'store-msg');
+    msg.setAttribute('role', 'status');
+    item.appendChild(msg);
+
+    function variant() { return p.variants[variantSel ? +variantSel.value : 0]; }
+    function showPrice() {
+      var v = variant();
+      price.textContent = money(v.price, v.currency);
+      if (v.image) img.src = v.image;
+    }
+    var seq = 0;
+    function requote() {
+      var mine = ++seq, v = variant();
+      totals.textContent = 'Working out the shipping\u2026';
+      post('quote', { variant: v.id, quantity: 1, country: countrySel.value }).then(function (q) {
+        if (mine !== seq) return;
+        totals.innerHTML = '';
+        totals.appendChild(document.createTextNode('Shipping ' + money(q.shipping, q.currency) + ' \u00b7 '));
+        totals.appendChild(el('b', null, 'Total ' + money(q.total, q.currency)));
+      }).catch(function (e) { if (mine === seq) totals.textContent = e.message; });
+    }
+    showPrice(); requote();
+    if (variantSel) variantSel.addEventListener('change', function () { showPrice(); requote(); });
+    countrySel.addEventListener('change', requote);
+
+    loadPayPal(p.variants[0].currency).then(function (paypal) {
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'silver', shape: 'rect', label: 'buynow', height: 36 },
+        createOrder: function () {
+          msg.textContent = '';
+          return post('create', { variant: variant().id, quantity: 1, country: countrySel.value })
+            .then(function (d) { return d.id; });
+        },
+        onShippingAddressChange: function (data, actions) {
+          if (data.shippingAddress && data.shippingAddress.countryCode !== countrySel.value) {
+            return actions.reject(data.errors && data.errors.COUNTRY_ERROR);
+          }
+        },
+        onApprove: function (data) {
+          msg.textContent = 'Confirming your payment\u2026';
+          return post('capture', { orderID: data.orderID }).then(function () {
+            buttons.innerHTML = '';
+            msg.className = 'store-msg store-done';
+            msg.textContent = 'Thank you! Your order is in. PayPal has emailed you the receipt; it ships in a few days.';
+          });
+        },
+        onError: function (e) {
+          msg.className = 'store-msg store-bad';
+          msg.textContent = (e && e.message) || 'The payment did not go through. Nothing was charged.';
+        }
+      }).render(buttons);
+    }).catch(function () {
+      buttons.appendChild(el('p', 'shop-status store-soon', 'Coming soon'));
+    });
+    return item;
+  }
+
+  window.mintsuitShop = function () {
+    if (started) return;
+    started = true;
+    fetch(api + '/products').then(function (r) { return r.json(); }).then(function (d) {
+      list.innerHTML = '';
+      if (!d.products || !d.products.length) { box.hidden = true; return; }
+      d.products.forEach(function (p) { list.appendChild(card(p)); });
+    }).catch(function () {
+      list.innerHTML = '';
+      list.appendChild(el('p', 'store-wait', 'The shop could not be reached. Try again in a moment.'));
+      started = false;
+    });
+  };
+  if (location.hash === '#merch') window.mintsuitShop();
+})();
+</script>
+{%- comment -%}
   The TV: a channel button tunes the screen to that Drive video after half
   a second of static, with the number shown in green in the corner. The
   screen only loads anything once the tab is opened.
@@ -607,6 +791,7 @@ layout: null
   function show(hash) {
     root.setAttribute('data-tab', panels[hash] || 'records');
     if (panels[hash] === 'videos' && window.mintsuitTV) window.mintsuitTV();
+    if (panels[hash] === 'merch' && window.mintsuitShop) window.mintsuitShop();
   }
   show(location.hash);
   document.addEventListener('click', function (e) {
