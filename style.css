@@ -853,6 +853,7 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   display: none;
   position: absolute;
   z-index: 2;
+  box-sizing: border-box;
   width: 180px;
   height: 180px;
   background-color: #ffffff;
