@@ -152,11 +152,23 @@ async function paypal(path: string, init: RequestInit = {}) {
 
 // ---------- the orders table ----------
 
+// Projects made since the new API keys arrived get an sb_secret_ key (sent
+// as apikey only); older ones get the service_role JWT. Either works here.
+function serverKey() {
+  try {
+    const keys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") ?? "{}");
+    const k = keys.default ?? Object.values(keys)[0];
+    if (k) return { key: String(k), jwt: false };
+  } catch { /* fall through */ }
+  return { key: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", jwt: true };
+}
+
 async function db(path: string, init: RequestInit = {}) {
-  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const { key, jwt } = serverKey();
+  const auth: Record<string, string> = jwt ? { Authorization: `Bearer ${key}` } : {};
   const res = await fetch(`${Deno.env.get("SUPABASE_URL")}/rest/v1/${path}`, {
     ...init,
-    headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", ...(init.headers ?? {}) },
+    headers: { apikey: key, ...auth, "Content-Type": "application/json", ...(init.headers ?? {}) },
   });
   const text = await res.text();
   if (!res.ok) throw new Error(`Database: ${text}`);
@@ -176,6 +188,13 @@ Deno.serve(async (req) => {
         variants: p.variants.map(({ catalog: _c, ...v }) => v),
       }));
       return json(req, { products: list });
+    }
+
+    if (route === "health" && req.method === "GET") {
+      const { jwt } = serverKey();
+      let database = "ok";
+      try { await db("shop_orders?select=paypal_order_id&limit=1"); } catch (e) { database = String(e).slice(0, 200); }
+      return json(req, { key: jwt ? "service_role" : "secret", database, paypal: LIVE ? "live" : "sandbox" });
     }
 
     if (req.method !== "POST") return json(req, { error: "Not found." }, 404);
@@ -230,37 +249,50 @@ Deno.serve(async (req) => {
       const id = String(body.orderID || "");
       if (!/^[A-Z0-9]{10,40}$/.test(id)) return json(req, { error: "Bad order." }, 400);
 
+      // The row goes in before any money moves, so every approved payment
+      // is on record even if a later step fails. One row per PayPal order:
+      // a second click or a retry finds it and orders nothing twice.
+      const { data: approved } = await paypal(`/v2/checkout/orders/${id}`);
+      if (!approved?.id) throw new Error("PayPal does not know that order.");
+      const fresh = await db("shop_orders?on_conflict=paypal_order_id", {
+        method: "POST",
+        headers: { Prefer: "resolution=ignore-duplicates,return=representation" },
+        body: JSON.stringify({ paypal_order_id: id, status: "approved" }),
+      });
+      if (!fresh?.length) {
+        const [row] = await db(`shop_orders?paypal_order_id=eq.${id}&select=status`);
+        if (row && row.status !== "approved" && row.status !== "capture_failed") return json(req, { ok: true, again: true });
+      }
+      const note = (fields: Record<string, unknown>) =>
+        db(`shop_orders?paypal_order_id=eq.${id}`, { method: "PATCH", body: JSON.stringify(fields) });
+
       const cap = await paypal(`/v2/checkout/orders/${id}/capture`, { method: "POST" });
       if (!cap.ok && cap.data?.details?.[0]?.issue !== "ORDER_ALREADY_CAPTURED") {
-        throw new Error(cap.data?.details?.[0]?.description ?? "The payment did not go through.");
+        const why = cap.data?.details?.[0]?.description ?? "The payment did not go through.";
+        await note({ status: "capture_failed", error: why });
+        throw new Error(why);
       }
       const { data: order } = await paypal(`/v2/checkout/orders/${id}`);
-      if (order.status !== "COMPLETED") throw new Error("The payment is not complete.");
+      if (order.status !== "COMPLETED") {
+        await note({ status: "capture_failed", error: `PayPal status ${order.status}` });
+        throw new Error("The payment is not complete.");
+      }
 
       const unit = order.purchase_units[0];
       const [variantId, quantity] = String(unit.custom_id).split(":").map(Number);
       const ship = unit.shipping ?? {};
       const a = ship.address ?? {};
       const email = order.payer?.email_address ?? null;
-
-      // One row per PayPal order: if it is already there, Printful was
-      // already asked, so a second click or a retry orders nothing twice.
-      const rows = await db("shop_orders?on_conflict=paypal_order_id", {
-        method: "POST",
-        headers: { Prefer: "resolution=ignore-duplicates,return=representation" },
-        body: JSON.stringify({
-          paypal_order_id: id,
-          status: "paid",
-          email,
-          amount: unit.amount?.value ?? null,
-          currency: unit.amount?.currency_code ?? null,
-          variant_id: variantId,
-          quantity,
-          country: a.country_code ?? null,
-          paypal: order,
-        }),
+      await note({
+        status: "paid",
+        email,
+        amount: unit.amount?.value ?? null,
+        currency: unit.amount?.currency_code ?? null,
+        variant_id: variantId,
+        quantity,
+        country: a.country_code ?? null,
+        paypal: order,
       });
-      if (!rows?.length) return json(req, { ok: true, again: true });
 
       try {
         const pf = await printful(`/orders?confirm=${LIVE ? "true" : "false"}`, {
@@ -280,16 +312,10 @@ Deno.serve(async (req) => {
             items: [{ sync_variant_id: variantId, quantity }],
           }),
         });
-        await db(`shop_orders?paypal_order_id=eq.${id}`, {
-          method: "PATCH",
-          body: JSON.stringify({ status: LIVE ? "sent_to_printful" : "printful_draft", printful_order_id: pf.id }),
-        });
+        await note({ status: LIVE ? "sent_to_printful" : "printful_draft", printful_order_id: pf.id, error: null });
       } catch (e) {
         // The customer has paid either way; the row says what to fix by hand.
-        await db(`shop_orders?paypal_order_id=eq.${id}`, {
-          method: "PATCH",
-          body: JSON.stringify({ status: "printful_failed", error: String(e) }),
-        });
+        await note({ status: "printful_failed", error: String(e) });
       }
       return json(req, { ok: true });
     }

@@ -692,11 +692,18 @@ layout: null
             buttons.innerHTML = '';
             msg.className = 'store-msg store-done';
             msg.textContent = 'Thank you! Your order is in. PayPal has emailed you the receipt; it ships in a few days.';
+            msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
           });
+        },
+        onCancel: function () {
+          msg.className = 'store-msg';
+          msg.textContent = 'Payment cancelled. Nothing was charged.';
         },
         onError: function (e) {
           msg.className = 'store-msg store-bad';
-          msg.textContent = (e && e.message) || 'The payment did not go through. Nothing was charged.';
+          msg.textContent = 'Something went wrong' + (e && e.message ? ': ' + e.message : '.') +
+            ' If PayPal charged you, write to {{ bottom.email | escape }} and we will sort it out.';
+          msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
         }
       }).render(buttons);
     }).catch(function () {
