@@ -681,10 +681,22 @@ layout: null
           return post('create', { variant: variant().id, quantity: 1, country: countrySel.value })
             .then(function (d) { return d.id; });
         },
+        /* An address in another country than the one picked here: the
+           shipping is quoted again for it and the PayPal total follows. */
         onShippingAddressChange: function (data, actions) {
-          if (data.shippingAddress && data.shippingAddress.countryCode !== countrySel.value) {
-            return actions.reject(data.errors && data.errors.COUNTRY_ERROR);
-          }
+          var addr = data.shippingAddress || {};
+          return post('reship', { orderID: data.orderID, country: addr.countryCode, state: addr.state })
+            .then(function (q) {
+              if ([].some.call(countrySel.options, function (o) { return o.value === addr.countryCode; })) {
+                countrySel.value = addr.countryCode;
+              }
+              totals.innerHTML = '';
+              totals.appendChild(document.createTextNode('Shipping ' + money(q.shipping, q.currency) + ' · '));
+              totals.appendChild(el('b', null, 'Total ' + money(q.total, q.currency)));
+            })
+            .catch(function () {
+              return actions.reject(data.errors && data.errors.COUNTRY_ERROR);
+            });
         },
         onApprove: function (data) {
           msg.textContent = 'Confirming your payment\u2026';

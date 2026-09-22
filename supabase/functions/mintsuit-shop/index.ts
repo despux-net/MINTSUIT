@@ -102,13 +102,13 @@ async function findVariant(id: number) {
 // comes from PayPal at payment time.
 const DEFAULT_STATE: Record<string, string> = { US: "NY", CA: "ON", AU: "NSW" };
 
-async function quote(variantId: number, quantity: number, country: string) {
+async function quote(variantId: number, quantity: number, country: string, state?: string) {
   const { product, variant } = await findVariant(variantId);
   const q = Math.max(1, Math.min(10, Math.floor(quantity) || 1));
   const rates = await printful("/shipping/rates", {
     method: "POST",
     body: JSON.stringify({
-      recipient: { country_code: country, state_code: DEFAULT_STATE[country] },
+      recipient: { country_code: country, state_code: state || DEFAULT_STATE[country] },
       items: [{ variant_id: variant.catalog, quantity: q }],
       currency: variant.currency,
     }),
@@ -243,6 +243,40 @@ Deno.serve(async (req) => {
       });
       if (!ok) throw new Error(data?.details?.[0]?.description ?? "PayPal could not start the payment.");
       return json(req, { id: data.id });
+    }
+
+    // The buyer picked an address in PayPal: the shipping is worked out again
+    // for that country and the order's total changed to match, so any
+    // address Printful ships to is accepted.
+    if (route === "reship") {
+      const id = String(body.orderID || "");
+      if (!/^[A-Z0-9]{10,40}$/.test(id)) return json(req, { error: "Bad order." }, 400);
+      const country = String(body.country || "").toUpperCase();
+      if (!/^[A-Z]{2}$/.test(country)) return json(req, { error: "Bad country." }, 400);
+      const state = /^[A-Za-z0-9-]{1,6}$/.test(String(body.state || "")) ? String(body.state) : undefined;
+      const { data: order } = await paypal(`/v2/checkout/orders/${id}`);
+      if (!order?.id) throw new Error("PayPal does not know that order.");
+      const [variantId, quantity] = String(order.purchase_units[0].custom_id).split(":").map(Number);
+      const q = await quote(variantId, quantity, country, state);
+      const unit = `/purchase_units/@reference_id=='${order.purchase_units[0].reference_id ?? "default"}'`;
+      const patch = await paypal(`/v2/checkout/orders/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify([
+          {
+            op: "replace", path: `${unit}/amount`,
+            value: {
+              currency_code: q.currency, value: q.total,
+              breakdown: {
+                item_total: { currency_code: q.currency, value: q.items },
+                shipping: { currency_code: q.currency, value: q.shipping },
+              },
+            },
+          },
+          { op: "replace", path: `${unit}/custom_id`, value: `${variantId}:${q.quantity}:${country}` },
+        ]),
+      });
+      if (!patch.ok) throw new Error(patch.data?.details?.[0]?.description ?? "Could not update the shipping.");
+      return json(req, { currency: q.currency, items: q.items, shipping: q.shipping, total: q.total });
     }
 
     if (route === "capture") {
