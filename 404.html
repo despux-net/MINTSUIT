@@ -26,7 +26,13 @@ permalink: /404.html
 <div class="page">
 
   <div class="plaque">
+{%- assign title_image = top.title_image | strip -%}
+{%- if title_image == "" %}{% assign title_image = "/assets/mint-suit-portal.png" %}{% endif %}
+{%- if top.title_style == "text" %}
     <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
+{%- else %}
+    <h1 class="artist artist-image"><img src="{{ title_image | relative_url | escape }}" alt="{{ top.wordmark | escape }}"></h1>
+{%- endif %}
   </div>
 
   <div class="slab">

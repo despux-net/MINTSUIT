@@ -153,7 +153,17 @@ layout: null
 <main class="hold">
 
   <header class="masthead" id="top"{% if background != "" %} style="--photo: url(&quot;{{ background | relative_url | escape }}&quot;)"{% endif %}>
+{%- comment -%}
+  The title: the MINT SUIT PORTAL logo, a picture set in the panel in its
+  place, or the original lettering when "Title at the top" is set to Text.
+{%- endcomment -%}
+{%- assign title_image = top.title_image | strip -%}
+{%- if title_image == "" %}{% assign title_image = "/assets/mint-suit-portal.png" %}{% endif %}
+{%- if top.title_style == "text" %}
   <h1 class="artist">{{ top.wordmark | escape | replace: " ", "&nbsp;" }}</h1>
+{%- else %}
+  <h1 class="artist artist-image"><img src="{{ title_image | relative_url | escape }}" alt="{{ top.wordmark | escape }}"></h1>
+{%- endif %}
 {%- comment -%}
   One short line reads as a label in spaced small caps; anything longer, or
   more than one line, is prose and gets ordinary type in paragraphs.

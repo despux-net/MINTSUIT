@@ -107,6 +107,18 @@ p { margin: 0 0 10px; }
   color: #000000;
 }
 
+/* The title as a picture: the letters' height is what is fixed, so any logo
+   set in the panel lines up the same way. */
+.artist-image { letter-spacing: 0; line-height: 0; }
+.artist-image img {
+  display: block;
+  width: auto;
+  max-width: 520px;
+  height: 52px;
+  object-fit: contain;
+  object-position: left center;
+}
+
 .notice {
   position: relative;
   z-index: 1;

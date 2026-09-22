@@ -17,7 +17,29 @@ content:
         label: Name at the top
         type: string
         required: true
-        description: The big title, set in Roman capitals.
+        description: >-
+          The site's name. With the title as text, it is the big title in
+          Roman capitals; with a title image, it is what screen readers and
+          search engines read in its place.
+      - name: title_style
+        label: Title at the top
+        type: select
+        options:
+          values:
+            - value: image
+              label: Title image
+            - value: text
+              label: Text (the original, in Roman capitals)
+        description: >-
+          Pick "Text" to go back to the original title in letters. Pick
+          "Title image" to show the picture below instead.
+      - name: title_image
+        label: Title image
+        type: image
+        description: >-
+          Shown when "Title at the top" is "Title image". A PNG with a
+          transparent background, cropped close to the letters, works best.
+          Delete the image here to go back to the MINT SUIT PORTAL logo.
       - name: notice
         label: Line under the name
         type: text
