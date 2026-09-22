@@ -846,6 +846,30 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
 }
 @keyframes product-spin { to { transform: rotate(360deg); } }
 
+/* The magnifying glass on the new merch's photo: a round lens in a
+   brushed silver ring, with a glint on the glass. */
+.product-big.has-lens { overflow: hidden; cursor: crosshair; }
+.product-lens {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  width: 180px;
+  height: 180px;
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  border: 4px solid #c9ced4;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #7c848d, inset 0 0 0 1px #ffffff, 0 6px 16px rgba(0, 20, 60, 0.35);
+  pointer-events: none;
+}
+.product-lens::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 38%);
+}
+
 .product-thumbs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .product-thumb {
   width: 54px;

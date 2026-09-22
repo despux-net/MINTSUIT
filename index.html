@@ -675,7 +675,7 @@ layout: null
 
   /* The photos: one large, at the size it was uploaded (a click opens the
      original on its own), and a strip of thumbnails to switch between. */
-  function gallery(images, alt) {
+  function gallery(images, alt, zoom) {
     var box = el('div', 'product-gallery');
     var big = el('a', 'product-big');
     big.target = '_blank'; big.rel = 'noopener'; big.title = 'Open the full-size photo';
@@ -718,12 +718,43 @@ layout: null
       box.appendChild(strip);
     }
     pick(0);
+    if (zoom) magnify(big, main);
     return {
       box: box,
       show: function (src) {
         for (var i = 0; i < images.length; i++) if (images[i].full === src) return pick(i);
       }
     };
+  }
+
+  /* A magnifying glass over the big photo, for a mouse: a round lens that
+     follows the pointer and shows that spot of the photo 2.5 times larger,
+     taken from the full-size original once it has arrived. */
+  function magnify(big, main) {
+    var ZOOM = 2.5, SIZE = 180;
+    var lens = el('span', 'product-lens');
+    lens.setAttribute('aria-hidden', 'true');
+    big.appendChild(lens);
+    big.classList.add('has-lens');
+    function hide() { lens.style.display = 'none'; }
+    big.addEventListener('pointerleave', hide);
+    big.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse' || !main.naturalWidth) return hide();
+      var r = main.getBoundingClientRect();
+      /* Where the photo really sits inside its square (it is contained,
+         not stretched), so the lens only works over the picture. */
+      var scale = Math.min(r.width / main.naturalWidth, r.height / main.naturalHeight);
+      var w = main.naturalWidth * scale, h = main.naturalHeight * scale;
+      var x = e.clientX - r.left - (r.width - w) / 2;
+      var y = e.clientY - r.top - (r.height - h) / 2;
+      if (x < 0 || y < 0 || x > w || y > h) return hide();
+      lens.style.display = 'block';
+      lens.style.left = (main.offsetLeft + (r.width - w) / 2 + x - SIZE / 2) + 'px';
+      lens.style.top = (main.offsetTop + (r.height - h) / 2 + y - SIZE / 2) + 'px';
+      lens.style.backgroundImage = 'url("' + (main.currentSrc || main.src) + '")';
+      lens.style.backgroundSize = (w * ZOOM) + 'px ' + (h * ZOOM) + 'px';
+      lens.style.backgroundPosition = (SIZE / 2 - x * ZOOM) + 'px ' + (SIZE / 2 - y * ZOOM) + 'px';
+    });
   }
 
   function words(info, item) {
@@ -775,7 +806,7 @@ layout: null
     var thumbs = {};
     p.variants.forEach(function (v) { if (v.image && v.thumb) thumbs[v.image] = v.thumb; });
     if (p.image && p.thumb) thumbs[p.image] = p.thumb;
-    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), title(p));
+    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), title(p), true);
     body.appendChild(g.box);
 
     var info = el('div', 'product-info');
