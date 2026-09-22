@@ -575,7 +575,10 @@ layout: null
     ['AU','Australia'],['NZ','New Zealand'],['JP','Japan'],['KR','South Korea'],['BR','Brazil']
   ];
   var guess = ((navigator.language || '').split('-')[1] || '').toUpperCase();
-  if (!COUNTRIES.some(function (c) { return c[0] === guess; })) guess = 'ES';
+  function pickGuess() {
+    if (!COUNTRIES.some(function (c) { return c[0] === guess; })) guess = 'ES';
+  }
+  pickGuess();
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -727,7 +730,16 @@ layout: null
   window.mintsuitShop = function () {
     if (started) return;
     started = true;
-    fetch(api + '/products').then(function (r) { return r.json(); }).then(function (d) {
+    /* The full list of countries Printful ships to replaces the short one
+       above; if it can't be had, the short one is used. */
+    var countriesReady = fetch(api + '/countries').then(function (r) { return r.json(); }).then(function (d) {
+      if (d.countries && d.countries.length) {
+        COUNTRIES = d.countries.map(function (c) { return [c.code, c.name]; });
+        pickGuess();
+      }
+    }).catch(function () {});
+    Promise.all([fetch(api + '/products').then(function (r) { return r.json(); }), countriesReady]).then(function (all) {
+      var d = all[0];
       list.innerHTML = '';
       if (!d.products || !d.products.length) { box.hidden = true; return; }
       d.products.forEach(function (p) { list.appendChild(card(p)); });

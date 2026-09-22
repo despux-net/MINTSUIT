@@ -64,6 +64,7 @@ type Variant = {
 type Product = { id: number; name: string; image: string | null; variants: Variant[] };
 
 let cache: { at: number; products: Product[] } | null = null;
+let countries: { code: string; name: string }[] | null = null;
 
 async function products(): Promise<Product[]> {
   if (cache && Date.now() - cache.at < 5 * 60 * 1000) return cache.products;
@@ -105,6 +106,7 @@ const DEFAULT_STATE: Record<string, string> = { US: "NY", CA: "ON", AU: "NSW" };
 async function quote(variantId: number, quantity: number, country: string, state?: string) {
   const { product, variant } = await findVariant(variantId);
   const q = Math.max(1, Math.min(10, Math.floor(quantity) || 1));
+  const noShipping = "Sorry, this item can't be shipped to that country.";
   const rates = await printful("/shipping/rates", {
     method: "POST",
     body: JSON.stringify({
@@ -112,8 +114,8 @@ async function quote(variantId: number, quantity: number, country: string, state
       items: [{ variant_id: variant.catalog, quantity: q }],
       currency: variant.currency,
     }),
-  });
-  if (!rates?.length) throw new Error("No shipping to that country.");
+  }).catch(() => { throw new Error(noShipping); });
+  if (!rates?.length) throw new Error(noShipping);
   const cheapest = rates.reduce((a: any, b: any) => (parseFloat(a.rate) <= parseFloat(b.rate) ? a : b));
   const items = (parseFloat(variant.price) * q).toFixed(2);
   const shipping = parseFloat(cheapest.rate).toFixed(2);
@@ -188,6 +190,17 @@ Deno.serve(async (req) => {
         variants: p.variants.map(({ catalog: _c, ...v }) => v),
       }));
       return json(req, { products: list });
+    }
+
+    // Every country Printful ships to, for the page's "Ship to" list.
+    if (route === "countries" && req.method === "GET") {
+      if (!countries) {
+        const list = await printful("/countries");
+        countries = list
+          .map((c: any) => ({ code: c.code, name: c.name }))
+          .sort((a: any, b: any) => a.name.localeCompare(b.name));
+      }
+      return json(req, { countries });
     }
 
     if (route === "health" && req.method === "GET") {
