@@ -9,6 +9,6 @@ permalink: /shop.json
 {%- endcomment -%}
 {"products": [
 {%- for p in site.data.shop.products %}
-  {"name": {{ p.name | jsonify }}, "printful_id": {{ p.printful_id | default: 0 | jsonify }}, "title": {{ p.title | default: "" | jsonify }}, "sold_out": {% if p.sold_out %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}
+  {"name": {{ p.name | jsonify }}, "printful_id": {{ p.printful_id | default: 0 | jsonify }}, "title": {{ p.title | default: "" | jsonify }}, "edition_size": {{ p.edition_size | default: 0 | jsonify }}, "sold_out": {% if p.sold_out %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}
 {%- endfor %}
 ]}

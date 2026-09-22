@@ -19,7 +19,7 @@ import urllib.request
 import yaml
 
 PATH = "_data/shop.yml"
-ORDER = ["name", "printful_id", "title", "mockups", "description", "specs", "sold_out"]
+ORDER = ["name", "printful_id", "title", "mockups", "description", "specs", "edition_size", "sold_out"]
 
 
 def words(s):

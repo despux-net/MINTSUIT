@@ -796,6 +796,18 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
 .shop-card-meta { font-size: 10px; color: var(--dim); }
 .is-new .shop-card-meta { font-weight: bold; font-size: 12px; color: #cc0000; }
 
+/* A limited edition's count on its card and in its window. */
+.shop-card-edition { font-size: 10px; color: #333333; }
+.edition-left { font-size: 12px; color: #cc0000; }
+.store-edition {
+  margin: -6px 0 12px;
+  font: bold 10px Verdana, Arial, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #555555;
+}
+.store-edition .edition-left { font-size: 13px; }
+
 .shop-card-flag {
   align-self: flex-start;
   margin-top: 2px;
