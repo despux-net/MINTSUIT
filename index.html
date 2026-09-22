@@ -504,15 +504,17 @@ layout: null
   </div>
 {%- endif %}
 {%- comment -%}
-  The two merch photographs, crossfading five seconds apart for as long as
-  the page is open, over a link into the Merch tab. The pictures are the
-  ones set on the merch items, so changing them there changes these.
+  The merch photographs, crossfading one into the next every five seconds
+  for as long as the page is open, over a link into the Merch tab: the CDs
+  set on the merch items, then the first photo of each new product, added
+  by the shop script once the shop has loaded. Without the script, the
+  first CD simply stays.
 {%- endcomment -%}
 {%- if merch.items and merch.items.size > 0 %}
   <div class="merch-teaser">
     <a class="merch-link merch-slides" href="#merch" aria-label="{{ merch.tab | default: "Merch" | escape }}">
       {%- for item in merch.items %}
-      <img src="{{ item.image | relative_url | escape }}" width="800" height="800" alt="" loading="lazy">
+      <img src="{{ item.image | relative_url | escape }}" width="800" height="800" alt=""{% if forloop.first %} class="is-on"{% endif %}>
       {%- endfor %}
     </a>
     <a class="merch-link merch-cta" href="#merch">{{ merch.tab | default: "Merch" | escape }}</a>
@@ -546,6 +548,48 @@ layout: null
 
 </main>
 
+{%- comment -%}
+  The merch photographs in the left column. Each change lays the next photo
+  on top and fades it in over the one showing, so the square never flashes
+  white; a photo not loaded yet is skipped until it is. The shop script
+  adds the new merch's photos with window.mintsuitSlide.
+{%- endcomment %}
+<script>
+(function () {
+  var box = document.querySelector('.merch-slides');
+  if (!box) return;
+  var photos = [].slice.call(box.querySelectorAll('img'));
+  var at = 0, layer = 1;
+
+  function ready(img) { return img.complete && img.naturalWidth > 0; }
+
+  function next() {
+    if (photos.length < 2) return;
+    for (var step = 1; step < photos.length; step++) {
+      var i = (at + step) % photos.length;
+      if (!ready(photos[i])) continue;
+      var shown = photos[i];
+      shown.style.zIndex = ++layer;
+      shown.classList.add('is-on');
+      at = i;
+      setTimeout(function () {
+        photos.forEach(function (p) { if (p !== shown) p.classList.remove('is-on'); });
+      }, 1300);
+      return;
+    }
+  }
+  setInterval(next, 5000);
+
+  window.mintsuitSlide = function (src) {
+    if (!src || photos.some(function (p) { return p.getAttribute('src') === src; })) return;
+    var img = new Image();
+    img.alt = ''; img.width = 800; img.height = 800; img.decoding = 'async';
+    img.src = src;
+    box.appendChild(img);
+    photos.push(img);
+  };
+})();
+</script>
 {%- comment -%}
   The shop. Every card in the Merch tab opens its product in a window: the
   photos at full size with a strip of thumbnails, the words, and for the
@@ -989,13 +1033,20 @@ layout: null
     return line;
   }
 
+  /* The light photo that stands for a product: its first mockup from the
+     panel, else the maker's own. Used on its card and in the left column. */
+  function cardPhoto(p) {
+    var extra = extraFor(p);
+    return (extra.mockups && extra.mockups[0] && light(extra.mockups[0])) || p.thumb || p.image || '';
+  }
+
   function productCard(p) {
     var extra = extraFor(p);
     var b = el('button', 'shop-card is-new');
     b.type = 'button';
     var shot = el('span', 'shop-card-shot');
     var img = el('img');
-    img.src = (extra.mockups && extra.mockups[0] && light(extra.mockups[0])) || p.thumb || p.image || '';
+    img.src = cardPhoto(p);
     img.alt = title(p); img.loading = 'lazy'; img.width = 400; img.height = 400;
     shot.appendChild(img);
     shot.appendChild(el('span', 'store-new shop-card-new', 'New'));
@@ -1027,7 +1078,10 @@ layout: null
     Promise.all([fetch(api + '/products').then(function (r) { return r.json(); }), countriesReady]).then(function (all) {
       if (wait) wait.remove();
       var first = grid.firstChild;
-      (all[0].products || []).forEach(function (p) { grid.insertBefore(productCard(p), first); });
+      (all[0].products || []).forEach(function (p) {
+        grid.insertBefore(productCard(p), first);
+        if (window.mintsuitSlide) window.mintsuitSlide(cardPhoto(p));
+      });
     }).catch(function () {
       if (wait) wait.textContent = 'The shop could not be reached. Try again in a moment.';
       started = false;
