@@ -12,6 +12,7 @@ layout: null
 {%- assign bottom = site.data.bottom -%}
 {%- assign vapor = site.data.vaporwave -%}
 {%- assign merch = site.data.merch -%}
+{%- assign tv = site.data.videos -%}
 {%- assign background = site.data.background.image | strip -%}
 {%- assign home = "/" | absolute_url -%}
 <!doctype html>
@@ -182,6 +183,9 @@ layout: null
     {%- if merch.items and merch.items.size > 0 %}
     <a href="#merch">{{ merch.tab | default: "Merch" | escape }}</a>
     {%- endif %}
+    {%- if tv.channels and tv.channels.size > 0 %}
+    <a href="#videos">{{ tv.tab | default: "Videos" | escape }}</a>
+    {%- endif %}
   </nav>
 {% if top.construction and top.construction != "" %}
   <div class="tape" role="note"><span>{{ top.construction | escape }}</span></div>
@@ -324,6 +328,58 @@ layout: null
   </article>
 {%- endif %}
 
+{%- comment -%}
+  The Videos tab ("Videos tab" in the panel): a silver TV set from around
+  2002 with a numbered button per channel. Each channel is a Google Drive
+  video, played in Drive's own player on the screen. Tuning shows a burst
+  of static and the channel number, drawn by the script further down;
+  without it, the buttons simply open the videos on Drive.
+{%- endcomment -%}
+{%- if tv.channels and tv.channels.size > 0 %}
+  <article class="window" id="videos" aria-labelledby="videos-title">
+    <div class="window-bar"><span>{{ tv.tab | default: "Videos" | escape }}</span><a class="window-close" href="#records" aria-label="Close">&times;</a></div>
+    <div class="window-body tv-body">
+    <h2 class="window-title" id="videos-title">{{ tv.title | escape }}</h2>
+    {%- if tv.intro and tv.intro != "" %}
+    <p class="window-intro">{{ tv.intro | escape }}</p>
+    {%- endif %}
+    <div class="tv">
+      <div class="tv-set">
+        <div class="tv-screen">
+          <iframe class="tv-feed" title="{{ tv.title | escape }}" allow="autoplay; fullscreen" allowfullscreen></iframe>
+          <canvas class="tv-static" width="160" height="120" aria-hidden="true"></canvas>
+          <div class="tv-lines" aria-hidden="true"></div>
+          <p class="tv-osd tv-osd-ch" aria-hidden="true"></p>
+          <p class="tv-osd tv-osd-name" aria-live="polite"></p>
+        </div>
+        <div class="tv-chin">
+          <span class="tv-brand">MINT&nbsp;SUIT<small>vision</small></span>
+          <span class="tv-grille" aria-hidden="true"></span>
+          <span class="tv-led" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="tv-remote">
+        <p class="tv-remote-head">Channels</p>
+        <ol class="tv-channels">
+          {%- for ch in tv.channels %}
+          {%- assign vid = ch.url | strip %}
+          {%- if vid contains "/d/" %}{% assign vid = vid | split: "/d/" | last | split: "/" | first | split: "?" | first %}
+          {%- elsif vid contains "id=" %}{% assign vid = vid | split: "id=" | last | split: "&" | first %}
+          {%- endif %}
+          <li><a class="tv-ch" href="https://drive.google.com/file/d/{{ vid | escape }}/view" data-src="https://drive.google.com/file/d/{{ vid | escape }}/preview" target="_blank" rel="noopener"><b>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</b><span>{{ ch.title | escape }}</span></a></li>
+          {%- endfor %}
+        </ol>
+        <div class="tv-updown">
+          <button type="button" class="tv-step" data-step="-1" aria-label="Previous channel">&#9650;</button>
+          <span>CH</span>
+          <button type="button" class="tv-step" data-step="1" aria-label="Next channel">&#9660;</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </article>
+{%- endif %}
+
   <div class="spread">
 
   <div class="records" id="records">
@@ -454,7 +510,7 @@ layout: null
   that states the one number it can state honestly: the year this started.
   Real visit counts live at mintsuit.goatcounter.com.
 {%- endcomment %}
-  <p class="site-index">[<a href="#records">main&nbsp;page</a>{%- for link in bottom.links %}<em>|</em><a href="{{ link.url | escape }}">{{ link.label | downcase | escape }}</a>{%- endfor %}<em>|</em><a href="#vaporwave">about</a>{%- if merch.items and merch.items.size > 0 %}<em>|</em><a href="#merch">merch</a>{%- endif %}<em>|</em><a href="mailto:{{ bottom.email | escape }}">e-mail</a>]</p>
+  <p class="site-index">[<a href="#records">main&nbsp;page</a>{%- for link in bottom.links %}<em>|</em><a href="{{ link.url | escape }}">{{ link.label | downcase | escape }}</a>{%- endfor %}<em>|</em><a href="#vaporwave">about</a>{%- if merch.items and merch.items.size > 0 %}<em>|</em><a href="#merch">merch</a>{%- endif %}{%- if tv.channels and tv.channels.size > 0 %}<em>|</em><a href="#videos">videos</a>{%- endif %}<em>|</em><a href="mailto:{{ bottom.email | escape }}">e-mail</a>]</p>
 
   <p class="counter"><span>On air since</span><b><i>2</i><i>0</i><i>1</i><i>7</i></b></p>
 
@@ -468,6 +524,67 @@ layout: null
 </main>
 
 {%- comment -%}
+  The TV: a channel button tunes the screen to that Drive video after half
+  a second of static, with the number shown in green in the corner. The
+  screen only loads anything once the tab is opened.
+{%- endcomment %}
+<script>
+(function () {
+  var tv = document.querySelector('.tv');
+  if (!tv) return;
+  var feed = tv.querySelector('.tv-feed');
+  var noise = tv.querySelector('.tv-static');
+  var chEl = tv.querySelector('.tv-osd-ch');
+  var nameEl = tv.querySelector('.tv-osd-name');
+  var chans = [].slice.call(tv.querySelectorAll('.tv-ch'));
+  var ctx = noise.getContext('2d');
+  var img = ctx.createImageData(noise.width, noise.height);
+  var current = -1, until = 0, osdTimer = 0, frame = 0;
+
+  function snow() {
+    var d = img.data;
+    for (var i = 0; i < d.length; i += 4) {
+      var v = Math.random() * 255 | 0;
+      d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    if (Date.now() < until) frame = requestAnimationFrame(snow);
+    else tv.classList.remove('is-tuning');
+  }
+
+  function tune(i) {
+    i = (i + chans.length) % chans.length;
+    current = i;
+    chans.forEach(function (a, j) {
+      a.classList.toggle('is-on', j === i);
+      if (j === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    tv.classList.add('is-tuning');
+    until = Date.now() + 650;
+    cancelAnimationFrame(frame);
+    snow();
+    feed.src = 'about:blank';
+    setTimeout(function () { if (current === i) feed.src = chans[i].getAttribute('data-src'); }, 350);
+    chEl.textContent = 'CH ' + chans[i].querySelector('b').textContent;
+    nameEl.textContent = chans[i].querySelector('span').textContent;
+    tv.classList.add('show-osd');
+    clearTimeout(osdTimer);
+    osdTimer = setTimeout(function () { tv.classList.remove('show-osd'); }, 3500);
+  }
+
+  chans.forEach(function (a, i) {
+    a.addEventListener('click', function (e) { e.preventDefault(); tune(i); });
+  });
+  [].forEach.call(tv.querySelectorAll('.tv-step'), function (b) {
+    b.addEventListener('click', function () {
+      tune((current < 0 ? 0 : current) + parseInt(b.getAttribute('data-step'), 10));
+    });
+  });
+
+  window.mintsuitTV = function () { if (current < 0) tune(0); };
+})();
+</script>
+{%- comment -%}
   Tabs that switch without scrolling: a click on a tab (or the window's x)
   swaps what is shown and updates the address, but leaves the page where it
   is, so the visitor scrolls when they want to.
@@ -475,9 +592,10 @@ layout: null
 <script>
 (function () {
   var root = document.documentElement;
-  var panels = { '#vaporwave': 'vaporwave', '#merch': 'merch' };
+  var panels = { '#vaporwave': 'vaporwave', '#merch': 'merch', '#videos': 'videos' };
   function show(hash) {
     root.setAttribute('data-tab', panels[hash] || 'records');
+    if (panels[hash] === 'videos' && window.mintsuitTV) window.mintsuitTV();
   }
   show(location.hash);
   document.addEventListener('click', function (e) {

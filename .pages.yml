@@ -253,6 +253,38 @@ content:
         label: Note under the items
         type: text
 
+  - name: videos
+    label: Videos tab
+    path: _data/videos.yml
+    type: file
+    fields:
+      - name: tab
+        label: Tab name
+        type: string
+      - name: title
+        label: Title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: channels
+        label: Channels
+        type: object
+        list: true
+        description: >-
+          One channel per video, numbered in this order on the TV. Put the
+          video in Google Drive, share it as "Anyone with the link", and
+          paste that link here. Delete every channel to hide the tab.
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: url
+            label: Google Drive link
+            type: string
+            required: true
+
   - name: bottom
     label: Logo, links and footer
     path: _data/bottom.yml

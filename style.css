@@ -149,7 +149,9 @@ p { margin: 0 0 10px; }
 html:not([data-tab]) .hold:has(#vaporwave:target) .tabs a[href="#vaporwave"],
 html[data-tab="vaporwave"] .tabs a[href="#vaporwave"],
 html:not([data-tab]) .hold:has(#merch:target) .tabs a[href="#merch"],
-html[data-tab="merch"] .tabs a[href="#merch"] {
+html[data-tab="merch"] .tabs a[href="#merch"],
+html:not([data-tab]) .hold:has(#videos:target) .tabs a[href="#videos"],
+html[data-tab="videos"] .tabs a[href="#videos"] {
   background: rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 -3px 0 #ffcc00;
 }
@@ -731,11 +733,13 @@ html[data-tab="merch"] .tabs a[href="#merch"] {
    the page stays where it is. */
 html:not([data-tab]) .window:target,
 html[data-tab="vaporwave"] #vaporwave,
-html[data-tab="merch"] #merch { display: block; }
+html[data-tab="merch"] #merch,
+html[data-tab="videos"] #videos { display: block; }
 
 html:not([data-tab]) .hold:has(.window:target) .spread,
 html[data-tab="vaporwave"] .spread,
-html[data-tab="merch"] .spread { display: none; }
+html[data-tab="merch"] .spread,
+html[data-tab="videos"] .spread { display: none; }
 
 .window-bar {
   display: flex;
@@ -1032,6 +1036,201 @@ html[data-tab="merch"] .spread { display: none; }
 
 .button:hover { color: #000000; background: linear-gradient(#ffffff, #d3e3f5); border-color: var(--nav2); }
 .button:active { background: #dcdcdc; }
+
+/* ===========================================================
+   The Videos tab — a silver TV set and its channel buttons
+   =========================================================== */
+
+.tv-body { max-width: 860px; }
+
+.tv {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+/* The set: brushed silver, rounded the way every TV of 2002 was, with a
+   darker ring round the tube. */
+.tv-set {
+  flex: 1;
+  padding: 20px 20px 0;
+  background: linear-gradient(160deg, #f4f6f8 0%, #c9ced4 38%, #e9ecef 55%, #9aa1a9 100%);
+  border: 1px solid #7c848d;
+  border-radius: 22px 22px 16px 16px;
+  box-shadow: inset 0 2px 0 #ffffff, inset 0 -3px 6px rgba(0, 0, 0, 0.25), 0 6px 14px rgba(0, 0, 0, 0.28);
+}
+
+.tv-screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #050607;
+  border: 6px solid #2a2e33;
+  border-radius: 26px / 20px;
+  box-shadow: 0 0 0 1px #0d0f11, inset 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+.tv-feed,
+.tv-static,
+.tv-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.tv-feed { background: #050607; }
+
+/* Snow, only while tuning. */
+.tv-static {
+  opacity: 0;
+  image-rendering: pixelated;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+.tv.is-tuning .tv-static { opacity: 1; }
+
+/* Scanlines and the curve of the glass, over the picture but out of the
+   way of the player's own buttons. */
+.tv-lines {
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.35) 100%),
+    repeating-linear-gradient(rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.16) 2px 3px);
+}
+
+/* The on-screen display: the channel number in green, top right, and the
+   title under it, gone after a few seconds. */
+.tv-osd {
+  position: absolute;
+  right: 18px;
+  margin: 0;
+  font-family: Silkscreen, "Courier New", monospace;
+  color: #6dff7a;
+  text-shadow: 0 0 6px rgba(80, 255, 110, 0.8), 2px 2px 0 #003a08;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.tv-osd-ch { top: 12px; font-size: 26px; }
+.tv-osd-name { top: 46px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+.tv.show-osd .tv-osd { opacity: 1; }
+
+.tv-chin {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 6px 12px;
+}
+
+.tv-brand {
+  font: italic bold 13px Georgia, "Times New Roman", serif;
+  letter-spacing: 1px;
+  color: #3b4148;
+  text-shadow: 0 1px 0 #ffffff;
+}
+.tv-brand small {
+  margin-left: 2px;
+  font: normal 9px Verdana, Arial, sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #2a7fd4;
+}
+
+.tv-grille {
+  flex: 1;
+  height: 10px;
+  background: repeating-linear-gradient(90deg, #6d747c 0 2px, rgba(0, 0, 0, 0) 2px 5px);
+  opacity: 0.55;
+}
+
+.tv-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #d7ffd9, #29d13d 55%, #0b6b17);
+  box-shadow: 0 0 6px #37ff55;
+}
+
+/* The buttons beside the set, cut like a remote in the same silver. */
+.tv-remote {
+  flex: none;
+  width: 190px;
+  padding: 10px;
+  background: linear-gradient(#eef0f2, #c3c8ce);
+  border: 1px solid #7c848d;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 #ffffff, 0 3px 8px rgba(0, 0, 0, 0.22);
+}
+
+.tv-remote-head {
+  margin: 0 0 8px;
+  font: bold 9px Verdana, Arial, sans-serif;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #555555;
+}
+
+.tv-channels {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tv-channels li { margin: 0 0 5px; }
+
+.tv-ch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  font: 11px Verdana, Arial, sans-serif;
+  text-decoration: none;
+  color: #222222;
+  background: linear-gradient(#ffffff, #dde1e5);
+  border: 1px solid #8a929b;
+  border-radius: 4px;
+}
+
+.tv-ch b {
+  flex: none;
+  width: 26px;
+  padding: 1px 0;
+  font: 12px Silkscreen, "Courier New", monospace;
+  text-align: center;
+  color: #6dff7a;
+  background: #0d1a10;
+  border-radius: 2px;
+}
+
+.tv-ch span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tv-ch:hover { background: linear-gradient(#ffffff, #d3e3f5); border-color: var(--nav2); }
+.tv-ch.is-on { background: linear-gradient(#e9f5ff, #b9d6f3); border-color: var(--nav2); font-weight: bold; }
+
+.tv-updown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  font: bold 9px Verdana, Arial, sans-serif;
+  letter-spacing: 2px;
+  color: #555555;
+}
+
+.tv-step {
+  width: 34px;
+  height: 24px;
+  font-size: 10px;
+  color: #333333;
+  background: linear-gradient(#ffffff, #cfd4d9);
+  border: 1px solid #7c848d;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.tv-step:hover { background: linear-gradient(#ffffff, #d3e3f5); }
 
 /* ===========================================================
    Motion, for anyone who would rather not
