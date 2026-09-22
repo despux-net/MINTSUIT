@@ -2,6 +2,7 @@
 // and this function sits between them so no key ever reaches the browser.
 //
 //   GET  /mintsuit-shop/products            what is for sale, from Printful
+//   GET  /mintsuit-shop/thumb?f=..&w=480    a light JPEG copy of a photo, for cards
 //   POST /mintsuit-shop/quote   {variant, quantity, country}
 //   POST /mintsuit-shop/create  {variant, quantity, country}   -> PayPal order id
 //   POST /mintsuit-shop/capture {orderID}   takes the money, then orders from Printful
@@ -9,6 +10,8 @@
 // Secrets (supabase secrets set ...): PRINTFUL_TOKEN, PAYPAL_CLIENT_ID,
 // PAYPAL_SECRET, PAYPAL_ENV ("live" or "sandbox"). Prices always come from
 // Printful here, never from the page.
+
+import { Image } from "https://deno.land/x/imagescript@1.3.0/mod.ts";
 
 const PRINTFUL = "https://api.printful.com";
 const PAYPAL = Deno.env.get("PAYPAL_ENV") === "live"
@@ -56,6 +59,9 @@ async function printful(path: string, init: RequestInit = {}) {
 // shopper can see points at Printful. Only Printful's own file hosts are
 // fetched this way.
 const IMAGE_HOSTS = ["files.cdn.printful.com", "img.printful.com"];
+// Photos the light copies may be made from: the maker's, and the site's own
+// (the mockups uploaded in the panel).
+const THUMB_HOSTS = [...IMAGE_HOSTS, "mintsuit.com", "www.mintsuit.com"];
 function selfUrl() {
   return `${Deno.env.get("SUPABASE_URL")}/functions/v1/mintsuit-shop`;
 }
@@ -74,6 +80,52 @@ function unhideImage(token: string) {
   return atob(b64 + "===".slice((b64.length + 3) % 4));
 }
 
+// ---------- light copies of the photos ----------
+
+// A card needs a picture a few hundred pixels wide, not the 1–2 MB original:
+// the first time one is asked for, it is scaled, flattened onto white,
+// saved as a JPEG in the public shop-thumbs bucket, and from then on
+// served straight from storage.
+const BUCKET = "shop-thumbs";
+
+async function sha(text: string) {
+  const d = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(text));
+  return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function publicThumb(name: string) {
+  return `${Deno.env.get("SUPABASE_URL")}/storage/v1/object/public/${BUCKET}/${name}`;
+}
+
+async function makeThumb(url: string, width: number): Promise<string> {
+  const name = `${await sha(url)}-${width}.jpg`;
+  const where = publicThumb(name);
+  const head = await fetch(where, { method: "HEAD" });
+  if (head.ok) return where;
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`photo ${res.status}`);
+  const img = await Image.decode(new Uint8Array(await res.arrayBuffer()));
+  if (img.width > width) img.resize(width, Image.RESIZE_AUTO);
+  const flat = new Image(img.width, img.height).fill(0xffffffff).composite(img, 0, 0);
+  const jpeg = await flat.encodeJPEG(82);
+
+  const { key, jwt } = serverKey();
+  const up = await fetch(`${Deno.env.get("SUPABASE_URL")}/storage/v1/object/${BUCKET}/${name}`, {
+    method: "POST",
+    headers: {
+      apikey: key,
+      ...(jwt ? { Authorization: `Bearer ${key}` } : {}),
+      "Content-Type": "image/jpeg",
+      "Cache-Control": "max-age=31536000",
+      "x-upsert": "true",
+    },
+    body: jpeg,
+  });
+  if (!up.ok) throw new Error(`storage ${up.status}: ${await up.text()}`);
+  return where;
+}
+
 type Variant = {
   id: number;          // Printful sync variant id: what an order names
   catalog: number;     // Printful catalog variant id: what shipping rates name
@@ -83,14 +135,48 @@ type Variant = {
   price: string;
   currency: string;
   image: string | null;
+  thumb: string | null;
 };
-type Product = { id: number; name: string; image: string | null; variants: Variant[] };
+type Product = { id: number; name: string; image: string | null; thumb: string | null; variants: Variant[] };
 
+// The product list is kept in memory, and in the shop_cache table so a
+// fresh instance has it at once. Older than five minutes, it is still
+// served but read again from Printful in the background; a payment always
+// reads it fresh, so the price charged is the one set in Printful.
+const FRESH = 5 * 60 * 1000;
 let cache: { at: number; products: Product[] } | null = null;
+let refreshing: Promise<Product[]> | null = null;
 let countries: { code: string; name: string }[] | null = null;
 
-async function products(): Promise<Product[]> {
-  if (cache && Date.now() - cache.at < 5 * 60 * 1000) return cache.products;
+async function products(fresh = false): Promise<Product[]> {
+  if (fresh) return await refresh();
+  if (cache && Date.now() - cache.at < FRESH) return cache.products;
+  if (!cache) {
+    try {
+      const [row] = await db("shop_cache?key=eq.products&select=data,at");
+      if (row) cache = { at: new Date(row.at).getTime(), products: row.data };
+    } catch { /* no stored copy: read it now */ }
+  }
+  if (cache) {
+    if (Date.now() - cache.at >= FRESH) later(refresh());
+    return cache.products;
+  }
+  return await refresh();
+}
+
+function later(p: Promise<unknown>) {
+  const task = p.catch(() => {});
+  // deno-lint-ignore no-explicit-any
+  const rt = (globalThis as any).EdgeRuntime;
+  if (rt?.waitUntil) rt.waitUntil(task);
+}
+
+function refresh(): Promise<Product[]> {
+  if (!refreshing) refreshing = readPrintful().finally(() => { refreshing = null; });
+  return refreshing;
+}
+
+async function readPrintful(): Promise<Product[]> {
   const list = await printful("/store/products?limit=100");
   const out: Product[] = [];
   for (const p of list) {
@@ -107,15 +193,30 @@ async function products(): Promise<Product[]> {
         price: v.retail_price,
         currency: v.currency,
         image: v.files?.find((f: any) => f.type === "preview")?.preview_url ?? p.thumbnail_url ?? null,
+        thumb: null,
       }));
-    if (variants.length) out.push({ id: p.id, name: p.name, image: variants[0].image ?? p.thumbnail_url, variants });
+    if (variants.length) out.push({ id: p.id, name: p.name, image: variants[0].image ?? p.thumbnail_url, thumb: null, variants });
+  }
+  // The light copies are made here, once per photo, so the page never waits.
+  const known = new Map((cache?.products ?? []).flatMap((p) => p.variants.map((v) => [v.image, v.thumb] as const)));
+  for (const p of out) {
+    for (const v of p.variants) {
+      if (!v.image) continue;
+      v.thumb = known.get(v.image) ?? await makeThumb(v.image, 480).catch(() => null);
+    }
+    p.thumb = p.variants[0].thumb;
   }
   cache = { at: Date.now(), products: out };
+  await db("shop_cache?on_conflict=key", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify({ key: "products", data: out, at: new Date().toISOString() }),
+  }).catch(() => {});
   return out;
 }
 
-async function findVariant(id: number) {
-  for (const p of await products()) {
+async function findVariant(id: number, fresh = false) {
+  for (const p of await products(fresh)) {
     const v = p.variants.find((v) => v.id === id);
     if (v) return { product: p, variant: v };
   }
@@ -126,8 +227,8 @@ async function findVariant(id: number) {
 // comes from PayPal at payment time.
 const DEFAULT_STATE: Record<string, string> = { US: "NY", CA: "ON", AU: "NSW" };
 
-async function quote(variantId: number, quantity: number, country: string, state?: string) {
-  const { product, variant } = await findVariant(variantId);
+async function quote(variantId: number, quantity: number, country: string, state?: string, fresh = false) {
+  const { product, variant } = await findVariant(variantId, fresh);
   const q = Math.max(1, Math.min(10, Math.floor(quantity) || 1));
   const noShipping = "Sorry, this item can't be shipped to that country.";
   const rates = await printful("/shipping/rates", {
@@ -251,9 +352,26 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (route === "thumb" && req.method === "GET") {
+      const q = new URL(req.url).searchParams;
+      const width = Math.max(120, Math.min(800, parseInt(q.get("w") ?? "480", 10) || 480));
+      let u: URL;
+      try { u = new URL(unhideImage(q.get("f") ?? "")); } catch {
+        return new Response("Not found", { status: 404, headers: cors(req) });
+      }
+      if (u.protocol !== "https:" || !THUMB_HOSTS.includes(u.hostname)) {
+        return new Response("Not found", { status: 404, headers: cors(req) });
+      }
+      const where = await makeThumb(u.href, width);
+      return new Response(null, {
+        status: 302,
+        headers: { ...cors(req), Location: where, "Cache-Control": "public, max-age=86400" },
+      });
+    }
+
     if (route === "products" && req.method === "GET") {
       const list = (await products()).map((p) => ({
-        id: p.id, name: p.name, image: hideImage(p.image),
+        id: p.id, name: p.name, image: hideImage(p.image), thumb: p.thumb,
         variants: p.variants.map(({ catalog: _c, image, ...v }) => ({ ...v, image: hideImage(image) })),
       }));
       return json(req, { products: list });
@@ -287,7 +405,7 @@ Deno.serve(async (req) => {
 
     if (route === "create") {
       const country = String(body.country || "").toUpperCase();
-      const q = await quote(Number(body.variant), Number(body.quantity), country);
+      const q = await quote(Number(body.variant), Number(body.quantity), country, undefined, true);
       if (await soldOut(q.product.name)) throw new Error("Sorry, this item is sold out.");
       const { ok, data } = await paypal("/v2/checkout/orders", {
         method: "POST",

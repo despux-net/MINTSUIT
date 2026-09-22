@@ -830,6 +830,21 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   cursor: zoom-in;
 }
 .product-big img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+/* While the original photo is on its way, a small spinning disc says so. */
+.product-big { position: relative; }
+.product-big.is-loading::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid rgba(31, 115, 214, 0.25);
+  border-top-color: #1f73d6;
+  border-radius: 50%;
+  animation: product-spin 0.8s linear infinite;
+}
+@keyframes product-spin { to { transform: rotate(360deg); } }
 
 .product-thumbs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .product-thumb {

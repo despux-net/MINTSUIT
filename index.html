@@ -679,15 +679,33 @@ layout: null
     big.appendChild(main);
     box.appendChild(big);
     var strip = el('div', 'product-thumbs');
+    var showing = -1;
+    /* The light copy is up at once; the original replaces it as soon as it
+       has arrived, so the window never waits on a big file. */
     function pick(i) {
-      main.src = images[i]; big.href = images[i];
+      showing = i;
+      var photo = images[i];
+      big.href = photo.full;
+      big.classList.add('is-loading');
+      main.src = photo.thumb || photo.full;
+      if (photo.thumb && photo.thumb !== photo.full) {
+        var hi = new Image();
+        hi.onload = function () {
+          if (showing !== i) return;
+          main.src = photo.full;
+          big.classList.remove('is-loading');
+        };
+        hi.src = photo.full;
+      } else {
+        big.classList.remove('is-loading');
+      }
       [].forEach.call(strip.children, function (t, j) { t.classList.toggle('is-on', j === i); });
     }
     if (images.length > 1) {
-      images.forEach(function (src, i) {
+      images.forEach(function (photo, i) {
         var t = el('button', 'product-thumb');
         t.type = 'button'; t.setAttribute('aria-label', 'Photo ' + (i + 1));
-        var ti = el('img'); ti.src = src; ti.alt = ''; ti.loading = 'lazy';
+        var ti = el('img'); ti.src = photo.thumb || photo.full; ti.alt = ''; ti.loading = 'lazy';
         t.appendChild(ti);
         t.addEventListener('click', function () { pick(i); });
         strip.appendChild(t);
@@ -695,7 +713,12 @@ layout: null
       box.appendChild(strip);
     }
     pick(0);
-    return { box: box, show: function (src) { var i = images.indexOf(src); if (i >= 0) pick(i); } };
+    return {
+      box: box,
+      show: function (src) {
+        for (var i = 0; i < images.length; i++) if (images[i].full === src) return pick(i);
+      }
+    };
   }
 
   function words(info, item) {
@@ -707,6 +730,15 @@ layout: null
     }
   }
 
+  /* A light copy of a photo for cards and thumbnails, made (once) by the
+     shop function; the full photo is only fetched in the product window. */
+  function light(src) {
+    if (!src || !api) return src;
+    var abs = new URL(src, location.href).href;
+    var token = btoa(abs).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    return api + '/thumb?w=480&f=' + token;
+  }
+
   function uniq(list) {
     var out = [];
     list.forEach(function (x) { if (x && out.indexOf(x) < 0) out.push(x); });
@@ -716,7 +748,9 @@ layout: null
   function openCD(item) {
     var w = frame('product-dialog', 'merch');
     var body = el('div', 'product-body');
-    var g = gallery(uniq([item.image].concat(item.gallery || [])), item.image_alt);
+    var g = gallery(uniq([item.image].concat(item.gallery || [])).map(function (src) {
+      return { full: src, thumb: light(src) };
+    }), item.image_alt);
     body.appendChild(g.box);
     var info = el('div', 'product-info');
     info.appendChild(el('h3', 'product-name', item.title));
@@ -733,7 +767,10 @@ layout: null
     var w = frame('product-dialog', 'shop');
     var body = el('div', 'product-body');
     var photos = uniq((extra.mockups || []).concat(p.variants.map(function (v) { return v.image; }), [p.image]));
-    var g = gallery(photos, p.name);
+    var thumbs = {};
+    p.variants.forEach(function (v) { if (v.image && v.thumb) thumbs[v.image] = v.thumb; });
+    if (p.image && p.thumb) thumbs[p.image] = p.thumb;
+    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), p.name);
     body.appendChild(g.box);
 
     var info = el('div', 'product-info');
@@ -838,7 +875,7 @@ layout: null
           msg.textContent = 'Confirming your payment\u2026';
           return post('capture', { orderID: data.orderID }).then(function () {
             w.close();
-            popup('ok', 'Order confirmed', 'Thank you! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', photos[0]);
+            popup('ok', 'Order confirmed', 'Thank you! Your ' + p.name + ' is on its way to the workshop. PayPal has emailed you the receipt, and it ships in a few days.', thumbs[photos[0]] || light(photos[0]));
           });
         },
         onCancel: function () {
@@ -869,7 +906,7 @@ layout: null
     b.type = 'button';
     var shot = el('span', 'shop-card-shot');
     var img = el('img');
-    img.src = (extra.mockups && extra.mockups[0]) || p.image || '';
+    img.src = (extra.mockups && extra.mockups[0] && light(extra.mockups[0])) || p.thumb || p.image || '';
     img.alt = p.name; img.loading = 'lazy'; img.width = 400; img.height = 400;
     shot.appendChild(img);
     shot.appendChild(el('span', 'store-new shop-card-new', 'New'));
@@ -904,7 +941,11 @@ layout: null
       started = false;
     });
   };
+  /* The shop is fetched as soon as the page has settled, so the Merch tab
+     is ready when it is opened; opening it earlier fetches it then. */
   if (location.hash === '#merch') window.mintsuitShop();
+  else if (window.requestIdleCallback) requestIdleCallback(window.mintsuitShop, { timeout: 3000 });
+  else setTimeout(window.mintsuitShop, 1500);
 })();
 </script>
 {%- comment -%}
