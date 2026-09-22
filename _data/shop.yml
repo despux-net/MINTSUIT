@@ -4,7 +4,7 @@ intro: >-
   Made to order and shipped from the nearest Printful workshop. Pick your
   country to see the shipping, then pay with PayPal or a card.
 functions_url: https://mqcxwusbuuwvwrlztopp.supabase.co/functions/v1/mintsuit-shop
-paypal_client_id: BAAF2IHFNwXrnXNCa_X6E95zQlv6ZXiSteJI22ZrWoQkZcee7KG_yZ6i99xq6af-pqena7MvdzjCKe2nEE
+paypal_client_id: BAAk2nOzEth-5aaxs_zd8XhxCZxxRLnlY9_W75XadOokopGXBJvGleNxONpX-n0DIc9lo9rVwavsF4KXus
 products:
   - name: MINT SUIT EMBROIDERY BLACK
     mockups: []
