@@ -494,16 +494,6 @@ layout: null
   </div>
 {%- endif %}
 {%- comment -%}
-  A silent looping video under the codes ("Loop video" in the panel). It
-  must be muted and inline for phones to let it play on its own.
-{%- endcomment -%}
-{%- assign loop = site.data.loop -%}
-{%- if loop.video and loop.video != "" %}
-  <div class="loop">
-    <video src="{{ loop.video | relative_url | escape }}" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
-  </div>
-{%- endif %}
-{%- comment -%}
   The merch photographs, crossfading one into the next every five seconds
   for as long as the page is open, over a link into the Merch tab: the CDs
   set on the merch items, then the first photo of each new product, added
@@ -518,6 +508,16 @@ layout: null
       {%- endfor %}
     </a>
     <a class="merch-link merch-cta" href="#merch">{{ merch.tab | default: "Merch" | escape }}</a>
+  </div>
+{%- endif %}
+{%- comment -%}
+  A silent looping video under the merch photos ("Loop video" in the panel). It
+  must be muted and inline for phones to let it play on its own.
+{%- endcomment -%}
+{%- assign loop = site.data.loop -%}
+{%- if loop.video and loop.video != "" %}
+  <div class="loop">
+    <video src="{{ loop.video | relative_url | escape }}" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
   </div>
 {%- endif %}
   </div>
