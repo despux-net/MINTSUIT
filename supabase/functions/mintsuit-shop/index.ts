@@ -51,9 +51,10 @@ async function printful(path: string, init: RequestInit = {}) {
   return data.result;
 }
 
-// Product photos are handed out through this function (/image?src=...), so
-// no address a shopper can see points at Printful. Only Printful's own
-// file hosts are fetched this way.
+// Product photos are handed out through this function (/image?f=...), with
+// the original address packed into an opaque token, so no address a
+// shopper can see points at Printful. Only Printful's own file hosts are
+// fetched this way.
 const IMAGE_HOSTS = ["files.cdn.printful.com", "img.printful.com"];
 function selfUrl() {
   return `${Deno.env.get("SUPABASE_URL")}/functions/v1/mintsuit-shop`;
@@ -63,8 +64,14 @@ function hideImage(url: string | null) {
   try {
     const u = new URL(url);
     if (!IMAGE_HOSTS.includes(u.hostname)) return url;
-    return `${selfUrl()}/image?src=${encodeURIComponent(url)}`;
+    const token = btoa(url).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    return `${selfUrl()}/image?f=${token}`;
   } catch { return url; }
+}
+
+function unhideImage(token: string) {
+  const b64 = token.replace(/-/g, "+").replace(/_/g, "/");
+  return atob(b64 + "===".slice((b64.length + 3) % 4));
 }
 
 type Variant = {
@@ -227,9 +234,9 @@ Deno.serve(async (req) => {
 
   try {
     if (route === "image" && req.method === "GET") {
-      const src = new URL(req.url).searchParams.get("src") ?? "";
+      const token = new URL(req.url).searchParams.get("f") ?? "";
       let u: URL;
-      try { u = new URL(src); } catch { return new Response("Not found", { status: 404, headers: cors(req) }); }
+      try { u = new URL(unhideImage(token)); } catch { return new Response("Not found", { status: 404, headers: cors(req) }); }
       if (u.protocol !== "https:" || !IMAGE_HOSTS.includes(u.hostname)) {
         return new Response("Not found", { status: 404, headers: cors(req) });
       }
