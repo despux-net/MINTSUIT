@@ -1,6 +1,11 @@
 show: true
 title: New in the shop
-intro: Made to order just for you and shipped straight to your door. Pick your
-  country to see the shipping, then pay with PayPal or a card.
+intro: Made to order just for you and shipped straight to your door. Pick your country
+  to see the shipping, then pay with PayPal or a card.
 functions_url: https://mqcxwusbuuwvwrlztopp.supabase.co/functions/v1/mintsuit-shop
 paypal_client_id: BAAk2nOzEth-5aaxs_zd8XhxCZxxRLnlY9_W75XadOokopGXBJvGleNxONpX-n0DIc9lo9rVwavsF4KXus
+products:
+- name: ADIDAS® Mint Suit Edition
+  printful_id: 474447337
+  title: ''
+  sold_out: false
