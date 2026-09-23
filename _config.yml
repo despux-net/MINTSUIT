@@ -1,6 +1,6 @@
 # GitHub Pages builds the site with Jekyll. The pages are plain HTML with a
 # little Liquid; everything they show lives in _data/ and is edited from
-# Pages CMS (see .pages.yml and the README).
+# Pages CMS (see .pages.yml).
 
 url: https://mintsuit.com
 
@@ -18,7 +18,6 @@ include:
   - "_*.PNG"
 
 exclude:
-  - README.md
   # The full-size merch photographs are kept as the source; the site
   # serves the smaller copies in assets/.
   - MERCH
