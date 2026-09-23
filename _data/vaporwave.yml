@@ -1,68 +1,75 @@
 tab: About
-title: Vaporwave & Future Funk — a short history
+title: Vaporwave & Future Funk, a (kinda) short history
 image: /assets/digital-audio-revolution.jpg
 image_alt: 'A hand balancing a compact disc on its fingertips: "The Digital Audio Revolution."'
 intro: >-
-  Two genres born on the internet, out of the same old tapes, heading in
-  opposite directions: one slows the past down until it aches, the other
-  speeds it up until it dances. This is where they came from, and where
-  MINT SUIT sits between them.
+  ok so these are two genres that were basically born on the internet, out of
+  the same old tapes, but they went in totally opposite directions. One slows
+  the past down until it hurts, the other speeds it up until you cant help
+  dancing. Heres where they came from and where MINT SUIT kind of sits in
+  between.
 sections:
   - heading: Where vaporwave came from
     text: >-
-      Vaporwave appeared around 2010 and 2011, not in a city or a club but on
-      Bandcamp pages, Tumblr blogs and music forums. It grew out of
-      hypnagogic pop, chillwave and the older plunderphonics tradition of
-      building new music entirely from existing recordings.
+      Vaporwave showed up around 2010-2011, and not in some city or club
+      scene, it was all Bandcamp pages, Tumblr blogs and music forums. It came
+      out of hypnagogic pop, chillwave and the older plunderphonics thing
+      where you make new music entirely out of existing recordings.
 
-      Daniel Lopatin's Chuck Person's Eccojams Vol. 1 (2010) looped and slowed
-      fragments of 80s pop until they sounded like memories played back on a
-      failing tape. James Ferraro's Far Side Virtual (2011) turned ringtones
-      and stock software sounds into a portrait of consumer life. Later that
-      year, Vektroid's Floral Shoppe, released as Macintosh Plus, became the
-      record that defined the genre for everyone who came after.
+      The big ones for me. Daniel Lopatin's Chuck Person's Eccojams Vol. 1
+      (2010) looped and slowed bits of 80s pop until they sounded like a
+      memory on a tape thats about to die. James Ferraro's Far Side Virtual
+      (2011) made ringtones and stock computer sounds into this weird portrait
+      of consumer life. And then later that year Vektroid put out Floral
+      Shoppe as Macintosh Plus, and honestly thats the record that defined the
+      genre for everyone who came after. If you only listen to one, its that
+      one.
   - heading: The sound
     text: >-
-      The raw material is the music nobody was supposed to listen to closely:
-      muzak, smooth jazz, elevator and shopping-mall music, corporate
-      training videos, late-night TV commercials and the soft jazz that ran
-      under weather forecasts.
+      The raw material is all the music nobody was ever supposed to actually
+      listen to. Muzak, smooth jazz, elevator and mall music, corporate
+      training videos, late night TV ads, the soft jazz that played under the
+      weather forecast.
 
-      Those sources are slowed down, pitched, chopped, looped and drowned in
-      reverb. The result is warm and unsettling at once: nostalgia for a
-      shiny future that was promised in the 80s and 90s and never quite
-      arrived, heard through fog. Around that core sound grew smaller scenes
-      such as mallsoft, all reverb and distant muzak, and signalwave, built
-      from broken television and radio transmissions.
+      You slow it down, pitch it, chop it, loop it and drown it in reverb.
+      What comes out is warm and kinda creepy at the same time, like
+      nostalgia for this shiny future they promised us in the 80s and 90s that
+      never really showed up, heard through fog. A couple of smaller scenes
+      grew around that too, like mallsoft (all reverb and distant muzak) and
+      signalwave (made from broken TV and radio transmissions).
   - heading: Future funk
     text: >-
-      Around 2012 and 2013 an offshoot turned the dial the other way. Instead
-      of slowing its samples down, future funk speeds them up. It takes
-      Japanese city pop, 80s boogie, disco and anime themes and dresses them
-      in French-house filters, pumping sidechain compression and a steady
-      four-on-the-floor kick.
+      Around 2012-2013 an offshoot turned the dial the other way. Instead of
+      slowing samples down, future funk speeds them up. It grabs Japanese
+      city pop, 80s boogie, disco and anime themes and throws French house
+      filters on them, that pumping sidechain, and a steady four on the floor
+      kick.
 
-      That method was not new: Daft Punk had already written the blueprint.
+      None of that was new tbh, Daft Punk already wrote the blueprint.
       Homework (1997) and Discovery (2001) took old disco and soul records,
-      looped a few bars, swept a filter across them and let the whole thing
-      breathe — Da Funk, Around the World, One More Time. French house, and
-      Daft Punk above all, is the direct musical ancestor of future funk.
+      looped a couple bars, swept a filter over them and just let it breathe.
+      Da Funk, Around the World, One More Time. French house, and Daft Punk
+      more than anyone, is pretty much the direct ancestor of future funk.
 
-      Producers such as Saint Pepsi, Macross 82-99, Yung Bae and Night Tempo
-      picked that up and made it bright, danceable and far more approachable
-      than its parent genre, while keeping the same love for the glossy sound
-      of the past.
+      Then producers like Saint Pepsi, Macross 82-99, Yung Bae and Night
+      Tempo picked it up and made it bright, danceable and way easier to get
+      into than vaporwave, while still keeping that same love for the glossy
+      sound of the past.
   - heading: Where MINT SUIT fits
     text: >-
-      Global Report (2017), the first MINT SUIT album, is old-school
-      vaporwave, pure and uncompromising: weather broadcasts from Japan and
-      North America slowed into a long, drifting transmission with no hooks
-      and no concessions.
+      Global Report (2017), the first MINT SUIT album, is old school
+      vaporwave, no compromises. Weather broadcasts from Japan and North
+      America slowed into one long drifting transmission, no hooks, nothing to
+      hold on to. You either vibe with it or you dont.
 
-      Sublime (2019) keeps the vaporwave soul but carries the heart of future
-      funk. Built from beauty commercials and perfume campaigns, it is
-      warmer, faster, more commercial and made to move — vaporwave you can
+      Sublime (2019) still has the vaporwave soul but the heart is more future
+      funk. Its made from beauty commercials and perfume ads, and its warmer,
+      faster, more catchy and made to move. Basically vaporwave you can
       dance to.
+
+      On both of them I layered my own arrangements on top of the samples,
+      played on a CASIO keyboard through VST plugins, with synths in alot of
+      places.
 listen:
   title: Listen everywhere
   note: >-
