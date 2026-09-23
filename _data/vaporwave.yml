@@ -1,32 +1,20 @@
 tab: About
 title: vaporwave and future funk (my take)
 image: /assets/digital-audio-revolution.jpg
-image_alt: 'A hand balancing a compact disc on its fingertips: "The Digital Audio Revolution."'
-intro: >-
-  people ask me what genre this is so heres my short version. not a history
+image_alt: 'A hand balancing a compact disc on its fingertips: "The Digital
+  Audio Revolution."'
+intro: people ask me what genre this is so heres my short version. not a history
   lesson, just how i see it
 sections:
   - heading: vaporwave
-    text: >-
-      started around 2010, 2011 on the internet, bandcamp and tumblr mostly.
-      nobody was playing it in clubs lol. Eccojams by Daniel Lopatin is kind of
-      the start of it, 80s pop slowed and looped till it sounds like a dying
-      tape. but if you only hear one its Floral Shoppe by Macintosh Plus
-      (Vektroid). thats the one everybody knows, the statue cover
-
-      the samples are the music no one was ever meant to pay attention to.
-      elevator music, mall music, smooth jazz, old ads, the stuff under the
+    text: elevator music, mall music, smooth jazz, old ads, the stuff under the
       weather channel. slow it, add a ton of reverb and it gets nostalgic and a
       little creepy at the same time. like remembering a future that never
       happened
   - heading: future funk
-    text: >-
-      a couple years later some people went the opposite way and sped the
-      samples up instead. japanese city pop, disco, anime openings, with the
-      filter and the pumping kick from french house. and honestly thats just
-      Daft Punk. go listen to Da Funk or One More Time, same idea, old records
-      looped with a filter on them
-
+    text: >2-
+       honestly thats just Daft Punk. go listen to Da Funk or One More Time,
+      same idea, old records looped with a filter on them
       Saint Pepsi, Macross 82-99, Night Tempo, Yung Bae. start with any of
       those, its way more fun and easy to get into than vaporwave
   - heading: and me
@@ -41,8 +29,7 @@ sections:
       mainly, over the samples
 listen:
   title: Listen everywhere
-  note: >-
-    The Sublime singles are out on Spotify, Apple Music, Amazon Music, Deezer,
+  note: The Sublime singles are out on Spotify, Apple Music, Amazon Music, Deezer,
     iHeart and more.
   singles:
     - title: Sex & Velvet
