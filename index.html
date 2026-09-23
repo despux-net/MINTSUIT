@@ -352,10 +352,11 @@ layout: null
 
 {%- comment -%}
   The Videos tab ("Videos tab" in the panel): a silver TV set from around
-  2002 with a numbered button per channel. Each channel is a Google Drive
-  video, played in Drive's own player on the screen. Tuning shows a burst
-  of static and the channel number, drawn by the script further down;
-  without it, the buttons simply open the videos on Drive.
+  2002 with a numbered button per channel. Each channel is a YouTube video
+  (a Google Drive link still works too), played in its own player on the
+  screen. Tuning shows a burst of static and the channel number, drawn by
+  the script further down; without it, the buttons simply open the videos
+  on YouTube.
 {%- endcomment -%}
 {%- if tv.channels and tv.channels.size > 0 %}
   <article class="window" id="videos" aria-labelledby="videos-title">
@@ -386,10 +387,23 @@ layout: null
         <ol class="tv-channels">
           {%- for ch in tv.channels %}
           {%- assign vid = ch.url | strip %}
+          {%- if vid contains "youtu" %}
+          {%- if vid contains "youtu.be/" %}{% assign vid = vid | split: "youtu.be/" | last %}
+          {%- elsif vid contains "v=" %}{% assign vid = vid | split: "v=" | last %}
+          {%- elsif vid contains "/shorts/" %}{% assign vid = vid | split: "/shorts/" | last %}
+          {%- elsif vid contains "/embed/" %}{% assign vid = vid | split: "/embed/" | last %}
+          {%- endif %}
+          {%- assign vid = vid | split: "&" | first | split: "?" | first | split: "/" | first | split: "#" | first %}
+          {%- capture ch_href %}https://www.youtube.com/watch?v={{ vid }}{% endcapture %}
+          {%- capture ch_src %}https://www.youtube-nocookie.com/embed/{{ vid }}?rel=0&playsinline=1{% endcapture %}
+          {%- else %}
           {%- if vid contains "/d/" %}{% assign vid = vid | split: "/d/" | last | split: "/" | first | split: "?" | first %}
           {%- elsif vid contains "id=" %}{% assign vid = vid | split: "id=" | last | split: "&" | first %}
           {%- endif %}
-          <li><a class="tv-ch" href="https://drive.google.com/file/d/{{ vid | escape }}/view" data-src="https://drive.google.com/file/d/{{ vid | escape }}/preview" target="_blank" rel="noopener"><b>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</b><span>{{ ch.title | escape }}</span></a></li>
+          {%- capture ch_href %}https://drive.google.com/file/d/{{ vid }}/view{% endcapture %}
+          {%- capture ch_src %}https://drive.google.com/file/d/{{ vid }}/preview{% endcapture %}
+          {%- endif %}
+          <li><a class="tv-ch" href="{{ ch_href | escape }}" data-src="{{ ch_src | escape }}" target="_blank" rel="noopener"><b>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</b><span>{{ ch.title | escape }}</span></a></li>
           {%- endfor %}
         </ol>
         <div class="tv-updown">
@@ -1122,7 +1136,7 @@ layout: null
 })();
 </script>
 {%- comment -%}
-  The TV: a channel button tunes the screen to that Drive video after half
+  The TV: a channel button tunes the screen to that video after half
   a second of static, with the number shown in green in the corner. The
   screen only loads anything once the tab is opened.
 {%- endcomment %}

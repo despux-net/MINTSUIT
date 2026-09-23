@@ -404,16 +404,16 @@ content:
         type: object
         list: true
         description: >-
-          One channel per video, numbered in this order on the TV. Put the
-          video in Google Drive, share it as "Anyone with the link", and
-          paste that link here. Delete every channel to hide the tab.
+          One channel per video, numbered in this order on the TV. Paste
+          the video's YouTube link (a Google Drive link shared as "Anyone
+          with the link" works too). Delete every channel to hide the tab.
         fields:
           - name: title
             label: Title
             type: string
             required: true
           - name: url
-            label: Google Drive link
+            label: YouTube link
             type: string
             required: true
 
