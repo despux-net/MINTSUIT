@@ -907,6 +907,7 @@ layout: null
     }
 
     if (extra.sold_out || left === 0) {
+      info.removeChild(price);
       info.appendChild(el('p', 'shop-status', 'Sold out'));
       body.appendChild(info);
       w.d.appendChild(body);
@@ -1076,10 +1077,10 @@ layout: null
     b.appendChild(shot);
     b.appendChild(el('span', 'shop-card-name', title(p)));
     var v = p.variants[0];
-    b.appendChild(el('span', 'shop-card-meta', money(v.price, v.currency)));
     var left = units(extra);
-    if (left) b.appendChild(unitsLine(left, 'shop-card-edition'));
     var out = extra.sold_out || left === 0;
+    if (!out) b.appendChild(el('span', 'shop-card-meta', money(v.price, v.currency)));
+    if (left) b.appendChild(unitsLine(left, 'shop-card-edition'));
     b.appendChild(el('span', 'shop-card-flag' + (out ? ' is-out' : ' is-buy'), out ? 'Sold out' : 'Buy now \u00bb'));
     b.addEventListener('click', function () { openProduct(p); });
     return b;
