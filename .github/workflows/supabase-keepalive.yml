@@ -1,0 +1,28 @@
+# A daily pulse for the Supabase project: free projects are paused after a
+# week without activity, so once a day GitHub asks the shop function's health
+# check, which reads the database. It runs on GitHub's servers, with no
+# computer on and nobody visiting the site. If the database does not answer
+# the run fails, and GitHub emails the repository owner.
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: "17 9 * * *"   # every day, 09:17 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the database
+        run: |
+          for try in 1 2 3; do
+            body=$(curl -sS -m 60 https://mqcxwusbuuwvwrlztopp.supabase.co/functions/v1/mintsuit-shop/health) && \
+              echo "$body" | grep -q '"database":"ok"' && { echo "Alive: $body"; exit 0; }
+            echo "Try $try: ${body:-no answer}"
+            sleep 30
+          done
+          echo "::error::Supabase did not answer the health check."
+          exit 1
