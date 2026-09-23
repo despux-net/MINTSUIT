@@ -746,14 +746,18 @@ layout: null
     return paypalReady;
   }
 
-  /* The photos: one large, at the size it was uploaded (a click opens the
-     original on its own), and a strip of thumbnails to switch between. */
-  function gallery(images, alt, zoom) {
+  /* The photos: one large, at the size it was uploaded, and a strip of
+     thumbnails to switch between. The large one is only looked at through
+     the magnifier: it is not a link, and it can't be dragged out or opened
+     from the right-click menu. */
+  function gallery(images, alt) {
     var box = el('div', 'product-gallery');
-    var big = el('a', 'product-big');
-    big.target = '_blank'; big.rel = 'noopener'; big.title = 'Open the full-size photo';
+    var big = el('div', 'product-big');
     var main = el('img');
     main.alt = alt || '';
+    main.draggable = false;
+    big.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    big.addEventListener('dragstart', function (e) { e.preventDefault(); });
     big.appendChild(main);
     box.appendChild(big);
     var strip = el('div', 'product-thumbs');
@@ -763,7 +767,6 @@ layout: null
     function pick(i) {
       showing = i;
       var photo = images[i];
-      big.href = photo.full;
       big.classList.add('is-loading');
       main.src = photo.thumb || photo.full;
       if (photo.thumb && photo.thumb !== photo.full) {
@@ -791,7 +794,7 @@ layout: null
       box.appendChild(strip);
     }
     pick(0);
-    if (zoom) magnify(big, main);
+    magnify(big, main);
     return {
       box: box,
       show: function (src) {
@@ -879,7 +882,7 @@ layout: null
     var thumbs = {};
     p.variants.forEach(function (v) { if (v.image && v.thumb) thumbs[v.image] = v.thumb; });
     if (p.image && p.thumb) thumbs[p.image] = p.thumb;
-    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), title(p), true);
+    var g = gallery(photos.map(function (src) { return { full: src, thumb: thumbs[src] || light(src) }; }), title(p));
     body.appendChild(g.box);
 
     var info = el('div', 'product-info');

@@ -827,9 +827,8 @@ html[data-tab="videos"] .tabs a[href="#videos"] {
   display: block;
   background: #ffffff;
   border: 3px ridge #c9ced4;
-  cursor: zoom-in;
 }
-.product-big img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+.product-big img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
 /* While the original photo is on its way, a small spinning disc says so. */
 .product-big { position: relative; }
 .product-big.is-loading::after {
