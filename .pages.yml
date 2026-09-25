@@ -280,6 +280,12 @@ content:
             label: Status
             type: string
             description: For example Sold out. Shown as a stamp under the details.
+          - name: hidden
+            label: Hide this item
+            type: boolean
+            description: >-
+              On: the item is not shown on the site (neither in the Merch tab
+              nor in the photos of the left column). Off: it is shown.
       - name: note
         label: Note under the items
         type: text
@@ -361,6 +367,13 @@ content:
             description: >-
               On: the product shows a Sold out stamp and can't be bought
               (the PayPal buttons are hidden). Off: it is on sale.
+          - name: hidden
+            label: Hide this product
+            type: boolean
+            description: >-
+              On: the product is not shown on the site (neither in the Merch
+              tab nor in the photos of the left column) and can't be bought.
+              Off: it is shown.
       - name: show
         label: Show the shop
         type: boolean

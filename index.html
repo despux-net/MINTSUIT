@@ -330,6 +330,7 @@ layout: null
       <p class="shop-wait">Loading the shop&hellip;</p>
       {%- endif %}
       {%- for item in merch.items %}
+      {%- if item.hidden %}{% continue %}{% endif %}
       <button type="button" class="shop-card" data-item="{{ forloop.index0 }}">
         <span class="shop-card-shot"><img src="{{ item.image | relative_url | escape }}" width="400" height="400" alt="{{ item.image_alt | escape }}" loading="lazy"></span>
         <span class="shop-card-name">{{ item.title | escape }}</span>
@@ -517,8 +518,11 @@ layout: null
 {%- if merch.items and merch.items.size > 0 %}
   <div class="merch-teaser">
     <a class="merch-link merch-slides" href="#merch" aria-label="{{ merch.tab | default: "Merch" | escape }}">
+      {%- assign slide_on = false %}
       {%- for item in merch.items %}
-      <img src="{{ item.image | relative_url | escape }}" width="800" height="800" alt=""{% if forloop.first %} class="is-on"{% endif %}>
+      {%- if item.hidden %}{% continue %}{% endif %}
+      <img src="{{ item.image | relative_url | escape }}" width="800" height="800" alt=""{% unless slide_on %} class="is-on"{% endunless %}>
+      {%- assign slide_on = true %}
       {%- endfor %}
     </a>
     <a class="merch-link merch-cta" href="#merch">{{ merch.tab | default: "Merch" | escape }}</a>
@@ -1120,6 +1124,7 @@ layout: null
       if (wait) wait.remove();
       var first = grid.firstChild;
       (all[0].products || []).forEach(function (p) {
+        if (extraFor(p).hidden) return;
         grid.insertBefore(productCard(p), first);
         if (window.mintsuitSlide) window.mintsuitSlide(cardPhoto(p));
       });

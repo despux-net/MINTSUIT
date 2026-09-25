@@ -5,10 +5,10 @@ permalink: /shop.json
 {%- comment -%}
   What the panel says about each Printful product, read by the
   mintsuit-shop function so a product switched to Sold out can't be bought
-  even from an old copy of the page.
+  even from an old copy of the page. A hidden product counts as sold out.
 {%- endcomment -%}
 {"products": [
 {%- for p in site.data.shop.products %}
-  {"name": {{ p.name | jsonify }}, "printful_id": {{ p.printful_id | default: 0 | jsonify }}, "title": {{ p.title | default: "" | jsonify }}, "available": {% if p.available == nil or p.available == "" %}null{% else %}{{ p.available | jsonify }}{% endif %}, "sold_out": {% if p.sold_out %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}
+  {"name": {{ p.name | jsonify }}, "printful_id": {{ p.printful_id | default: 0 | jsonify }}, "title": {{ p.title | default: "" | jsonify }}, "available": {% if p.available == nil or p.available == "" %}null{% else %}{{ p.available | jsonify }}{% endif %}, "sold_out": {% if p.sold_out or p.hidden %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}
 {%- endfor %}
 ]}
