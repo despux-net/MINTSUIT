@@ -19,6 +19,7 @@ products:
       - Official adidas® hat, with its logo on the item
       - Made to order and shipped within Europe and the UK
     sold_out: true
+    hidden: true
   - name: ADIDAS® Mint Suit Edition
     printful_id: 474447337
     mockups:
@@ -39,6 +40,7 @@ products:
       - Official adidas® hat, with its logo on the item
       - Made to order and shipped within Europe and the UK
     sold_out: true
+    hidden: true
 show: true
 title: New in the shop
 intro: Made to order just for you and shipped straight to your door. Pick your
