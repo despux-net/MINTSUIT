@@ -609,6 +609,9 @@ layout: null
     var img = new Image();
     img.alt = ''; img.width = 800; img.height = 800; img.decoding = 'async';
     img.src = src;
+    /* With every CD hidden, the first product photo is the only one, so it
+       has to be shown straight away rather than waiting for a crossfade. */
+    if (!photos.length) img.className = 'is-on';
     box.appendChild(img);
     photos.push(img);
   };
