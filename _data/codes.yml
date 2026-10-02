@@ -2,6 +2,7 @@
 # pressed. Each album's codes are one block of text, one code per line, so a
 # column can be pasted in one go; a whole Bandcamp CSV export works too, as
 # only lines shaped like a code (abcd-efgh) are shown.
+hidden: false
 redeem_url: https://mintsuit.bandcamp.com/yum
 message: Redeem your code at
 albums:

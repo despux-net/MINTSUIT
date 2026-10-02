@@ -488,6 +488,12 @@ content:
     path: _data/codes.yml
     type: file
     fields:
+      - name: hidden
+        label: Hide the code buttons
+        type: boolean
+        description: >-
+          On: the download code buttons and the redeem message are not shown
+          on the site (the codes below are kept). Off: they are shown.
       - name: redeem_url
         label: Redeem page
         type: string

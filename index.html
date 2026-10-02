@@ -483,7 +483,7 @@ layout: null
   A details element does the opening and closing, so no script is needed.
 {%- endcomment -%}
 {%- assign codes = site.data.codes -%}
-{%- if codes.albums and codes.albums.size > 0 %}
+{%- if codes.albums and codes.albums.size > 0 and codes.hidden != true %}
   <div class="redeem">
     <p class="redeem-note">{{ codes.message | escape }} <a href="{{ codes.redeem_url | escape }}" target="_blank" rel="noopener">{{ codes.redeem_url | remove: "https://" | remove: "http://" | escape }}</a></p>
     <div class="redeem-box">
