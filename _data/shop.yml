@@ -18,7 +18,7 @@ products:
       - Breathable, extra-soft premium fabric
       - Official adidas® hat, with its logo on the item
       - Made to order and shipped within Europe and the UK
-    sold_out: true
+    sold_out: false
     hidden: false
   - name: ADIDAS® Mint Suit Edition
     printful_id: 474447337
